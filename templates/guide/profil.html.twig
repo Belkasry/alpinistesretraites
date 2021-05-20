@@ -1,0 +1,181 @@
+{% extends 'base.html.twig' %}
+
+        {% block title %}{{ guide.nom ~" "~ guide.prenom }}{% endblock %}
+        {% block body %}
+
+            <div class="container">
+                <div class="page-heading jumbotron mt-3">
+                    <div class="media clearfix ">
+                        <div class=" pr-5 ">
+                            <a href="#">
+
+                                <div class="rounded-circle rounded-circle-avatar"
+                                     style="background-image:url(' {% if  guide.imageName|default %}{{ asset('images/guides/') ~ guide.imageName }}{% else %}{{ 'https://via.placeholder.com/350x150' }}{% endif %}')"
+                                     alt="..."></div>
+                            </a>
+                        </div>
+                        <div class="media-body va-m">
+                            <h2 class="media-heading">{{ guide.nom ~" "~ guide.prenom }}
+                                <small> - Guide<span class="pl-3 fa fa-check-circle text-primary"></span></small>
+                            </h2>
+                            <p class="lead">{{ guide.description | raw}}</p>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+
+                                <div class="p-2 pt-3 bd-highlight "><span
+                                            class="fa fa-thumb-tack pr-2 text-secondary"></span>{{ guide.location }}
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <button type="button" class="btn btn-outline-primary"><img class="pr-2"
+                                                                                               src="{{ asset('img/alpinistesretraites.ico.png') }}"
+                                                                                               width="50px"/>Follow
+                                    </button>
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target=".bd-phone-modal-sm"><span
+                                                class="fa fa-phone pr-2"> </span>Afficher le numéro
+                                    </button>
+                                </div>
+                                <div class="modal fade bd-phone-modal-sm">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>{{ guide.phone }}</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary">Copier</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="p-2 bd-highlight">
+                                    <button type="button" class="btn btn-outline-success"><span
+                                                class="fa fa-comment pr-2"> </span>Chat
+                                    </button>
+                                </div>
+                                <div class="ml-auto p-2 bd-highlight">
+                                    {% if guide.links.fb_link is defined and guide.links['fb_link'] != "" %}
+                                    <a href="https://www.facebook.com/{{guide.links['fb_link']}}"
+                                                                         class="btn btn-outline-info mr-2"><span
+                                                class="fa fa-facebook "></span></a>
+                                    {% endif %}
+                                    {% if guide.links.ig_link is defined and guide.links['ig_link'] != "" %}
+                                    <a href="https://www.instagram.com/{{guide.links['ig_link']}}"
+                                                                                      class="btn btn-outline-warning"><span
+                                                class="fa fa-instagram "></span></a>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card bg-light mb-3" style="max-width: 20rem;">
+                            <div class="card-header"><strong>Type d'Activté</strong></div>
+                            <div class="card-body">
+                                {% for activite in activites %}
+                                    <h4 class="float-left m-1 "><span class="badge badge-secondary">{{ activite }}</span></h4>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="card bg-light mb-3" style="max-width: 20rem;">
+                            <div class="card-header"><strong>Destinations</strong></div>
+                            <div class="card-body">
+                                {% for activite in activites %}
+                                    <h4 class="float-left m-1 "><span class="badge badge-info">{{ activite }}</span></h4>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-8 card border-default p-4">
+
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#activite"><span
+                                            class="fa fa-calendar pr-2"></span><strong>Activités</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#profile"><span
+                                            class="fa fa-info-circle pr-2"></span><strong>Infos</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " data-toggle="tab" href="#media"><span
+                                            class="fa fa-picture-o pr-2"></span><strong>Médias</strong></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " href="#"><span
+                                            class="fa fa-rss-square pr-2"></span><strong>Abonnés</strong></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                                   aria-haspopup="true" aria-expanded="false"><strong>Plus</strong></a>
+                                <div class="dropdown-menu" style="">
+                                    <a class="dropdown-item" href="#">Reviews</a>
+                                    <a class="dropdown-item" href="#">Anciennes activités</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane active show " id="activite">
+
+                                {% include 'activity.html.twig' with {'foo': 'bar'} %}
+                            </div>
+                            <div class="tab-pane fade " id="profile">
+                                <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee
+                                    squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes
+                                    anderson artisan four loko farm-to-table craft beer twee. Qui photo booth
+                                    letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
+                                    cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus
+                                    mollit.</p>
+                            </div>
+                            <div class="tab-pane fade" id="media">
+                                {% include 'media_profil.html.twig' with {'foo': 'bar'} %}
+                            </div>
+                            <div class="tab-pane fade" id="dropdown2">
+                                <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they
+                                    sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny
+                                    pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin.
+                                    Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS
+                                    viral locavore cosby sweater.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/BigPicture.js') }}"></script>
+    <script>
+        ;(function() {
+            // four image gallery
+            var imageLinks = document.querySelectorAll('#image_container a')
+            for (var i = 0; i < imageLinks.length; i++) {
+                imageLinks[i].addEventListener('click', function(e) {
+                    e.preventDefault()
+                    BigPicture({
+                        el: e.target,
+                        gallery: '#image_container',
+                    })
+                })
+            }
+
+
+           })()
+    </script>
+{% endblock  %}
+

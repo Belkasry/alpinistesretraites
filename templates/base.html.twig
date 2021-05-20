@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" type="text/css"
+              href="{{ asset('bundles/bmatznerfontawesome/css/font-awesome.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" rel="stylesheet">
+
+
+        <link rel="stylesheet" type="text/css"
+        href="{{ asset('css/base.css') }}"/>
+
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-fixed-top bg-light ">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><img src="{{ asset('img/alpinistesretraites.png') }}" width="100px"/></a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collection of nav links, forms, and other content for toggling -->
+        <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
+            <div class="navbar-nav">
+                <a href="/"
+                   class="nav-item nav-link {% if  current_home|default %}{{ current_home }}{% endif %}">Home</a>
+                <a href="/guides"
+                   class="nav-item nav-link {% if  current_guide|default %}{{ current_guide }}{% endif %}">Guides</a>
+                <a href="#" class="nav-item nav-link ">Agences</a>
+                <a href="/destinations" class="nav-item nav-link ">Destinations</a>
+                <div class="nav-item dropdown">
+                    <a href="#" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle">Inscription</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/guide/nouveau">Nouveau Guide</a>
+                        <a class="dropdown-item" href="#">Nouvelle Agence</a>
+                        <a class="dropdown-item" href="#">Nouveau Utilisateur</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Separated link</a>
+                    </div>
+                </div>
+                <a href="#" class="nav-item nav-link ">About</a>
+            </div>
+            {#<form class="navbar-form form-inline">#}
+                {#<div class="input-group search-box">#}
+                    {#<input type="text" id="search" class="form-control" placeholder="Search here...">#}
+                    {#<div class="input-group-append">#}
+					{#<span class="input-group-text">#}
+						{#<small><i class="fa fa-sm fa-search text-sm "></i></small>#}
+					{#</span>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+            {% if app.user %}
+                <div class="navbar-nav ml-auto">
+                    <a href="#" class="nav-item nav-link notifications"><i class="fa fa-bell-o"></i><span
+                                class="badge">1</span></a>
+                    <a href="#" class="nav-item nav-link messages"><i class="fa fa-envelope-o"></i><span
+                                class="badge">10</span></a></a>
+                    <div class="nav-item dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle user-action"><img
+                                    src="{{ asset('images/guides/') ~ app.user.guide.imageName|default(null) }}" class="avatar"
+                                    alt="Avatar"> {{ app.user.guide.FullName|default(null) }} <b
+                                    class="caret"></b></a>
+                        <div class="dropdown-menu">
+                            {% if is_granted('ROLE_GUIDE') %}
+                            <a href="/account" class="dropdown-item"><i class="fa fa-user-o"></i> Profile</a></a>
+                            {% endif %}
+                            <a href="#" class="dropdown-item"><i class="fa fa-calendar-o"></i> Calendar</a></a>
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="/admin" class="dropdown-item"><i class="fa fa-sliders"></i> Settings</a></a>
+                            {% endif %}
+                            <div class="dropdown-divider"></div>
+                            <a href="/logout" clasimageNames="dropdown-item"><i class="fa fa-sign-out"></i> Logout</a></a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="navbar-nav ml-auto action-buttons">
+                    <div class="nav-item dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle mr-4">Login</a>
+                        <div class="dropdown-menu action-form">
+                            <form action="{{ path("login_user") }}" method="post">
+                                <p class="hint-text">Sign in with your social media account</p>
+                                <div class="form-group social-btn clearfix">
+                                    <a href="#" class="btn btn-secondary facebook-btn float-left"><i
+                                                class="fa fa-facebook"></i> Facebook</a>
+                                    <a href="#" class="btn btn-secondary google-btn float-right"><i
+                                                class="fa fa-google"></i> Google</a>
+                                </div>
+                                <div class="or-seperator"><b>ou</b></div>
+                                <div class="form-group">
+                                    <input name="_username" id="username" type="text" class="form-control"
+                                           placeholder="Username" required="required">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="_password" id="password" class="form-control"
+                                           placeholder="Password" required="required">
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-block" value="Login">
+                                <div class="text-center mt-2">
+                                    <a href="#">Forgot Your password?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <a href="/guide/nouveau" class="btn btn-primary dropdown-toggle sign-up-btn">Nouveau
+                        ?</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+<div class="content">
+{% block body %}
+
+    <div class="jumbotron">
+        <h1 class="display-3">Hello, world!</h1>
+        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+            featured content or information.</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p>
+    </div>
+
+{% endblock %}
+</div>
+{% block javascripts %}
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+    <script>
+
+        jQuery.validator.setDefaults({
+            errorElement: 'span',
+            errorPlacement: function (error, element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).addClass('is-invalid');
+                $(element).removeClass('is-valid');
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                $(element).removeClass('is-invalid');
+                $(element).addClass('is-valid');
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+
+            var select, chosen;
+
+            select = $(".chosen-select-1");
+            select.chosen({no_results_text: 'Appuie sur Entrer pour ajouter une nouvelle localisation :'});
+            $(".chosen-select").chosen();
+            chosen = $('#inscription_guide_location_chosen');
+            chosen.find('input').keyup(function (e) {
+                if (e.which === 13 && chosen.find('li.no-results').length > 0) {
+                    var option = $("<option>").val(this.value).text(this.value);
+                    select.prepend(option);
+                    select.find(option).prop('selected', true);
+                    select.trigger("chosen:updated");
+                }
+            });
+        });
+
+    </script>
+
+
+
+
+{% endblock %}
+</body>
+</html>

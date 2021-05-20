@@ -1,0 +1,56 @@
+
+
+
+<div class="col-12" style="min-height: 420px ;min-width: 800px" id="page-{{ nbrpage }}">
+
+    <ul class="cards">
+
+        {% for guide in guides %}
+
+            <li>
+                {% set   angle = '24deg' %}
+                {% set baseColor = "hsl("~random(0,360)~","~random(0,100)~"%," %}
+                {% set newColor1 = baseColor ~ "10.59%)" %}
+                {% set newColor2 = baseColor ~ "90.59%)" %}
+                <!-- Copy the content below until next comment -->
+                <div class="card  card-custom bg-white border-white border-0 ml-1">
+                    <div class="card-custom-img"
+                         style="background-image: linear-gradient({{ angle }}, {{ newColor1 }}, {{ newColor2 }});"></div>
+                    <div class="card-custom-avatar">
+                        <img class="img-fluid" src="{% if  guide.imageName|default %}{{ asset('images/guides/') ~ guide.imageName }}{% else %}{{ 'https://via.placeholder.com/60' }}{% endif %}" alt="Avatar" />
+                    </div>
+                    <div class="card-body" >
+                        <h4 class="card-title text-info">{{ guide.nom }} {{ guide.prenom }}</h4>
+                        <p class="card-text lead" style="font-size: 0.8rem;">{{ guide.description|slice(0, 200) }} ...
+                    </div>
+                    <div class="card-footer" style="background: inherit; border-color: inherit;">
+                        <span style="font-size: 0.8rem;"><span class="fa fa-thumb-tack pr-2 text-secondary" ></span>{{ guide.location }}</span>
+                        <a href="/guide/{{ guide.id }}" class="btn btn-outline-primary btn-sm float-right mt-2">Détail</a>
+                    </div>
+                </div>
+                <!-- Copy until here -->
+                {##}
+                {#<a href="/guide/{{ guide.id }}" class="card-guide ">#}
+                    {#<img src="{% if  guide.imageName|default %}{{ asset('images/guides/') ~ guide.imageName }}{% else %}{{ 'https://via.placeholder.com/60' }}{% endif %}"#}
+                         {#class="card__image" alt=""/>#}
+                    {#<div class="card__overlay">#}
+                        {#<div class="card__header">#}
+                            {#<svg class="card__arc" xmlns="http://www.w3.org/2000/svg">#}
+                                {#<path/>#}
+                            {#</svg>#}
+
+                            {#<div class="card__header-text">#}
+                                {#<h3 class="card__title">{{ guide.nom }} {{ guide.prenom }}</h3>#}
+                                {#<span class="card__status">#}
+                        {#<span class="fa fa-thumb-tack pr-2 text-secondary"></span>{{ guide.location }}</span>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<p class="card__description">{{ guide.description|slice(0, 100) }}</p>#}
+                    {#</div>#}
+                {#</a>#}
+           {##}
+            </li>
+
+        {% endfor %}
+    </ul>
+</div>

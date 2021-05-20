@@ -1,0 +1,16 @@
+{% set page = pagination.page %}
+{% set pages = pagination.pages %}
+<ul class="pagination pagination-sm  justify-content-md-center">
+    <li class="page-item {% if page == 1 %}disabled{% endif %}" id="btn-page-first">
+        <a class="page-link" onclick="listGuide('previous') " href="#">&laquo; </a>
+    </li>
+    {% for i in 1..pages %}
+        <li class="page-item {% if page == i %}active{% endif %}" id="btn-page-{{ i }}" >
+            <a class="page-link" onclick="listGuide({{ i }}) " href="#">{{ i }} </a>
+        </li>
+    {% endfor %}
+    <li class="page-item {% if page == pages %}disabled{% endif %}" id="btn-page-last">
+        <a class="page-link" onclick="listGuide('next') " href="#">&raquo; </a>
+    </li>
+    <input id="hidden_page" type="hidden" value="{{ page }}"/>
+</ul>

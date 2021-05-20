@@ -1,0 +1,100 @@
+<div class="step-tab-panel" data-step="step1" id="formInfo">
+    {{ form_start(frmLogin,{'attr': {'id': 'frm'}}) }}
+    <div class="row">
+        <div class="col">
+            <div class="form-group">{{ form_row(frmLogin.guide.nom) }}</div>
+        </div>
+        <div class="col">{{ form_row(frmLogin.guide.prenom) }}</div>
+        <div class="w-100"></div>
+        <div class="col">{{ form_row(frmLogin.guide.phone) }}</div>
+        <div class="col" id="location_div">{{ form_row(frmLogin.guide.location) }}</div>
+        <div class="w-100"></div>
+        <div class="col">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Facebook Account</label>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        {{ form_widget(frmLogin.guide.links.fb_link) }}                        <div class="input-group-append">
+                            <span class="input-group-text"> <i class="fa fa-facebook"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <label for="exampleInputEmail1">Instagram Account</label>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        {{ form_widget(frmLogin.guide.links.ig_link) }}
+                        <div class="input-group-append">
+                            <span class="input-group-text"> <i class="fa fa-instagram"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-100"></div>
+        <div class="col">{{ form_row(frmLogin.guide.description) }}</div>
+        <div class="col">
+            {{ form_label(frmLogin.guide.activites) }}
+            {{ form_widget(frmLogin.guide.activites,{ 'attr': {'name': 'foo'} }) }}
+        </div>
+
+        <div class="w-100"></div>
+        <div class="col imgUp">
+            <div class="form-group">
+                {{ form_label(frmLogin.guide.imageFile) }}
+                {{ form_widget(frmLogin.guide.imageFile,{ 'id': 'imageFile' }) }}
+                <div class="imagePreview col-12 form-control"
+                     onclick="document.getElementById('inscription_guide_imageFile_file').click();">
+                </div>
+                <small class="form-text text-danger ">
+                    {{ form_errors(frmLogin.guide.imageFile) }}</small>
+            </div>
+
+        </div>
+        <div class="col"></div>
+
+
+    </div>
+</div>
+<div class="step-tab-panel" data-step="step2" id="formLogin">
+
+    <div class="row" id="divLogin">
+        <div class="col">
+            <div class="form-group">{{ form_row(frmLogin.login) }}</div>
+        </div>
+        <div class="col">{{ form_row(frmLogin.email) }}</div>
+        <div class="w-100"></div>
+        <div class="col">{{ form_row(frmLogin.password_hash) }}</div>
+        <div class="col">{{ form_row(frmLogin.password_confirm) }}</div>
+        <div class="w-100"></div>
+        <div class="input-group date col" data-provide="datepicker">
+            {{ form_row(frmLogin.birthday) }}
+            <div class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </div>
+        </div>
+        <div class="col"></div>
+
+
+    </div>
+
+
+</div>
+
+<div class="step-tab-panel" data-step="step3">
+    <div class="row" id="divAgreement">
+        <div class="col">
+            {{ form_row(frmLogin.agreeTerms) }}
+            <div class="alert alert-dismissible alert-warning" id="alert_agreement">
+                <button type="button" class="close" onclick="$('#alert_agreement').hide()">&times;</button>
+                <h4 class="alert-heading">Warning!</h4>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(frmLogin) }}
+
+

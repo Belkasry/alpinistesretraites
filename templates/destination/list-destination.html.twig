@@ -1,0 +1,50 @@
+<nav aria-label="breadcrumb" class="col-10 " style="margin-left: 65px;">
+    <ol class="breadcrumb">
+        <li id="level0.0" class="breadcrumb-item text-primary">
+            <i class="fa fa-home"></i>
+        </li>
+        {% for key in arbre|keys %}
+            <li id="level{{ key }}" class="breadcrumb-item {% if loop.last %}active text-info{% endif %}">
+
+                {% if not loop.last %} <a class="text-primary" href="/destination/{{ key }}"><u>{% endif %}
+                        {{ arbre[key] }}
+                        {% if not loop.last %}</u></a>{% endif %}
+            </li>
+        {% endfor %}
+    </ol>
+</nav>
+<div class="col-12" style="min-height: 420px ;min-width: 800px" id="page-{{ nbrpage }}">
+    <ul class="cards">
+
+        {% for destination in destinations %}
+            <li>
+
+                {% set   angle = '24deg' %}
+                {% set baseColor = "hsl("~random(0,360)~","~random(0,100)~"%," %}
+                {% set newColor1 = baseColor ~ "10.59%)" %}
+                {% set newColor2 = baseColor ~ "90.59%)" %}
+                <div class="card  card-custom bg-white border-white border-0 ml-1">
+                    <div class="card-custom-img"
+                         style="background-image: linear-gradient({{ angle }}, {{ newColor1 }}, {{ newColor2 }});"></div>
+                    <div class="card-custom-avatar">
+                        <img class="img-fluid" src="{{ 'https://via.placeholder.com/60' }}" alt="Avatar"/>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title text-info">{{ destination.name }}</h4>
+                        <p class="card-text lead" style="font-size: 0.8rem;">
+                            {{ destination.description|slice(0,100) }}  ...
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex flex-row justify-content-end" style="background: inherit; border-color: inherit;">
+                        <a href="/destination_detail/{{ destination.id }}" class="btn btn-outline-primary p-2 mr-2 "><span class="fa fa-info pr-2 pl-2"> </span></a>
+                        <a href="/destination/{{ destination.id }}" class="btn btn-outline-secondary pr-1 pl-1"><span
+                                    class="fa fa-sitemap pr-2 pl-2"></span></a>
+
+                    </div>
+                </div>
+
+            </li>
+
+        {% endfor %}
+    </ul>
+</div>

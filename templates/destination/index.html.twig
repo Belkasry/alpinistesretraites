@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Destinations{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css"
+          href="{{ asset('css/card.css') }}"/>
+{% endblock %}
+
+{% block body %}
+    <style>
+        .feedback {
+            background-color: #31B0D5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            border-color: #46b8da;
+        }
+
+        #mybutton {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 230px;
+            position: fixed;
+            z-index: 1;
+            top: 80px;
+            left: 0;
+            overflow-x: hidden;
+        }
+    </style>
+    <div class="sidenav list-group ml-2 p-2">
+        {% include "/partial/filter-search-destination.html.twig" %}
+    </div>
+    <div class="container" style=" margin-left: 150px;">
+
+        <div class="col-12" id="list-destination" style="min-height: 420px ;min-width: 800px">
+            {% include "/destination/list-destination.html.twig"  with {'pagination': pagination} %}
+        </div>
+
+        <div class=" col-12" id="pagination-guide">
+            {% include "/partial/loadnavigation.html.twig"  with {'pagination': pagination} %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function updatePagination(page) {
+            $("#hidden_page").val(page);
+            // $(".page-item").removeClass("active");
+            // $("#btn-page-" + page).addClass("active");
+
+            if (page == {{ pagination.pages }}) {
+                $("#btn-page-first").removeClass("disabled");
+                $("#btn-page-last").addClass("disabled");
+            }
+            else if (page == 1) {
+                $("#btn-page-first").addClass("disabled");
+                $("#btn-page-last").removeClass("disabled");
+            } else {
+                $("#btn-page-first").removeClass("disabled");
+                $("#btn-page-last").removeClass("disabled");
+            }
+        }
+
+        function listGuide(page) {
+            var loadstep = page;
+            switch (page) {
+                case 'next':
+                    page = parseInt($("#hidden_page").val()) + 1;
+                    break;
+                case 'previous':
+                    page = parseInt($("#hidden_page").val()) - 1;
+                    break;
+                default:
+                    break;
+            }
+
+            updatePagination(page);
+            $("html, body").animate({scrollTop: $(document).height()}, 1000);
+            $.ajax({
+                type: "GET",
+                url: "/destination_ajax/" + page,
+                success: function (result) {
+                    // $("#spinner").remove();
+                    switch (loadstep) {
+                        case 'next':
+                            $("#list-destination").append(result);
+                            $("#page-" + (page)).hide().fadeIn(2000);
+                            $("html, body").animate({scrollTop: $(document).height()}, 1000);
+                            break;
+                        case 'previous':
+                            $("#page-" + (page + 1)).remove();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+
+
+    </script>
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,10 @@
+{% set page = pagination.page %}
+{% set pages = pagination.pages %}
+<div class=" row justify-content-md-center mt-3 mb-4">
+    <a class="btn btn-outline-primary {% if page == 1 %}disabled{% endif %} mr-2" id="btn-page-first"
+       onclick="listGuide('previous') "><i class="fa fa-angle-double-up"></i> Charger moins</a>
+
+    <a class="btn btn-outline-secondary {% if page == pages %}disabled{% endif %} ml-2" id="btn-page-last"
+       onclick="listGuide('next') "><i class="fa fa-angle-double-down"></i> Charger plus</a>
+    <input id="hidden_page" type="hidden" value="{{ page }}"/>
+</div>

@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="{{ asset('css/jquery-steps.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style-steps.css') }}">
+    <style>
+        .imagePreview {
+            width: 50%;
+            background: url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+            background-color: #fff;
+            display: inline-block;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 100%;
+            margin-bottom: 30px;
+            padding: 100px;
+        }
+
+        .btn-primary-upload {
+            display: block;
+            border-radius: 0px;
+            box-shadow: 0px 4px 6px 2px rgba(0, 0, 0, 0.2);
+            margin-top: -5px;
+        }
+
+        .imgUp {
+            margin-bottom: 15px;
+        }
+
+    </style>
+{% endblock %}
+        {% block title %}Nouveau Guide{% endblock %}
+        {% block body %}
+
+            <div class="container">
+                <div class="step-app mt-3 " id="inscription_steps">
+                    <ul class="step-steps pagination">
+                        <li data-step-target="step1" class="page-item">Informations personnelles</li>
+                        <li data-step-target="step2" class="page-item">Informations d'Authentification</li>
+                        <li data-step-target="step3" class="page-item">Conditions d'utilisation</li>
+                    </ul>
+
+                    <div class="step-content bg-light">
+
+
+                        {% include "/guide/form-info.html.twig"  with {'foo': 'bar'} %}
+
+
+                    </div>
+
+
+                    <div class="step-footer">
+                        <button data-step-action="prev" class="btn btn-outline-dark">Retour</button>
+                        <button data-step-action="next" class="btn btn-outline-success float-right">Suivant</button>
+                        <button data-step-action="finish" class="btn btn-outline-primary float-right">Sauvegarder
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        {% endblock %}
+
+{% block javascripts %}
+
+    {{ parent() }}
+
+    <script src="{{ asset('js/jquery-steps.js') }}"></script>
+
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+
+    <script>
+        var frmInfo = $('#formInfo');
+        //
+        var frmLogin = $('#formLogin');
+        var frm = $('#frm');
+        //
+        // var frmAcceptAgrmt = $('#frmAcceptAgrmt');
+
+
+        var validatorfrm = $("#frm").validate({
+            onsubmit: false,
+            ignore: ".auth-form"
+        });
+
+
+        function appendForm2() {
+            var form = $("<form id='frm2'></form>");
+            var form2 = $("#frm2");
+            if (form2.length) {
+                // alert("exist");
+                $('#divLogin').appendTo(form2);
+                form2.appendTo(('#formLogin'));
+            } else {
+                // alert("exist pas");
+                $('#divLogin').appendTo(form);
+                form.appendTo(('#formLogin'));
+            }
+        }
+
+        $('#inscription_steps').steps({
+            onChange: function (currentIndex, newIndex, stepDirection) {
+                if (currentIndex === 0) {
+                    if (stepDirection === 'forward') {
+
+                        if ($("#frm").valid()) {
+                            appendForm2();
+                            return true;
+                        }
+                        else
+                            return false;
+                    }
+                }
+                if (currentIndex === 1) {
+                    if (stepDirection === 'forward') {
+
+                        if ($("#frm2").valid()) {
+                            $('#divLogin').appendTo($("#frm"));
+                            $('#alert_agreement').hide();
+                            return true;
+                        }
+                        return false;
+                    }
+                    if (stepDirection === 'backward') {
+                        $('#divLogin').appendTo($("#frm2"));
+                        return true;
+                    }
+                }
+                // step3
+                if (currentIndex === 2) {
+                    if (stepDirection === 'forward') {
+                        return true;
+                    }
+                    if (stepDirection === 'backward') {
+                        appendForm2();
+                        return true;
+                    }
+                }
+                return true;
+            },
+            onFinish: function () {
+                if ($('#inscription_agreeTerms').is(':checked')) {
+                    // alert('Wizard Completed');
+                    frm.submit();
+                } else {
+                    $('#alert_agreement').show();
+                }
+                // frmLogin.submit();
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var date_input = $('input[name="date"]'); //our date input has the name "date"
+            var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+            date_input.datepicker({
+                format: 'mm/dd/yyyy',
+                container: container,
+                todayHighlight: true,
+                autoclose: true,
+            })
+        })
+    </script>
+    <script>
+        var cw = $('.imagePreview').width();
+        $('.imagePreview').css({
+            'height': cw + 'px'
+        });
+        $('.custom-file').css("display", "none");
+
+        $(function () {
+            $(document).on("change", "#inscription_guide_imageFile_file", function () {
+                var uploadFile = $(this);
+                var files = !!this.files ? this.files : [];
+                if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+                if (/^image/.test(files[0].type)) { // only image file
+                    var reader = new FileReader(); // instance of the FileReader
+                    reader.readAsDataURL(files[0]); // read the local file
+
+                    reader.onloadend = function () { // set image data as background of div
+                        // alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                        uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url(" + this.result + ")");
+                    }
+                }
+
+            });
+        });
+    </script>
+{% endblock %}
