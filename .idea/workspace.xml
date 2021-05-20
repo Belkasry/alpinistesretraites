@@ -58,8 +58,8 @@
       <file leaf-file-name="ExperienceCrudController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Controller/Account/ExperienceCrudController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8">
-              <caret line="80" selection-start-line="80" selection-end-line="80" />
+            <state relative-caret-position="297">
+              <caret line="70" column="68" selection-start-line="70" selection-start-column="68" selection-end-line="70" selection-end-column="68" />
               <folding>
                 <element signature="e#50#77#0#PHP" expanded="true" />
               </folding>
@@ -707,12 +707,12 @@
       <workItem from="1619055387524" duration="3227000" />
       <workItem from="1619131402181" duration="102000" />
       <workItem from="1619229605713" duration="35000" />
-      <workItem from="1621536915885" duration="1345000" />
+      <workItem from="1621536915885" duration="1887000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="455260000" />
+    <option name="totallyTimeSpent" value="455802000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -725,6 +725,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="33" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49911505" visible="true" weight="0.24858299" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32920355" />
@@ -735,7 +736,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32920355" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="right" id="Structure" order="4" sideWeight="0.50088495" side_tool="true" weight="0.1854251" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="1.0" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.17522123" />
       <window_info id="Favorites" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1050,8 +1051,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/Account/ExperienceCrudController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        <state relative-caret-position="297">
+          <caret line="70" column="68" selection-start-line="70" selection-start-column="68" selection-end-line="70" selection-end-column="68" />
           <folding>
             <element signature="e#50#77#0#PHP" expanded="true" />
           </folding>

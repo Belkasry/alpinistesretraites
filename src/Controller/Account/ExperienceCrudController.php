@@ -68,7 +68,7 @@
             $builder = [
                 TextField::new('title','Titre'),
                 IntegerField::new('dificulte',"Difficulté"),
-                IntegerField::new('nbr_participant',"Nombre de places"),
+                IntegerField::new('nbr_participant',"Nombre de place"),
                 IntegerField::new('nbr_participant_restant',"Nombre de places restantes")
                     ->setFormTypeOptions(
                         ['constraints' =>
