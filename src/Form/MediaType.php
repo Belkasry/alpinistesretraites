@@ -16,8 +16,7 @@
 
             $arrayoption = array_merge(
                 $this->getConfForm("", "+", "uploadFile img", ["accept", "image/*"])
-            , [
-                'required' => true,
+            , [ 'required' => true,
                 'allow_delete' => true,
                 'delete_label' => '...',
                 'download_label' => '...',
