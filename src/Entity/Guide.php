@@ -10,9 +10,11 @@
     use Symfony\Component\HttpFoundation\File\File;
     use Vich\UploaderBundle\Entity\File as EmbeddedFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
+    use ApiPlatform\Core\Annotation\ApiResource;
 
 
     /**
+     * @ApiResource
      * @ORM\Entity(repositoryClass=GuideRepository::class)
      * @ORM\HasLifecycleCallbacks()
      * @Vich\Uploadable
