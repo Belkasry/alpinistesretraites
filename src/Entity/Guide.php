@@ -10,11 +10,18 @@
     use Symfony\Component\HttpFoundation\File\File;
     use Vich\UploaderBundle\Entity\File as EmbeddedFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
-    use ApiPlatform\Core\Annotation\ApiResource;
-
+    use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+    use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+    use Symfony\Component\Serializer\Annotation\Groups;
+    use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+    use App\ApiPlatform\GuideFilter;
 
     /**
-     * @ApiResource
+     *@ApiResource(
+     *     normalizationContext={"groups"={"read"}},
+     *     paginationItemsPerPage=8
+     * )
+     *  @ApiFilter(GuideFilter::class)
      * @ORM\Entity(repositoryClass=GuideRepository::class)
      * @ORM\HasLifecycleCallbacks()
      * @Vich\Uploadable
@@ -26,16 +33,19 @@
          * @ORM\Id
          * @ORM\GeneratedValue
          * @ORM\Column(type="integer")
+         * @Groups({"read"})
          */
         private $id;
 
         /**
          * @ORM\Column(type="string", length=255)
+         * @Groups({"read"})
          */
         private $nom;
 
         /**
          * @ORM\Column(type="string", length=255)
+         * @Groups({"read"})
          */
         private $prenom;
 
@@ -51,11 +61,13 @@
 
         /**
          * @ORM\Column(type="text")
+         * @Groups({"read"})
          */
         private $description;
 
         /**
          * @ORM\Column(type="string", length=255)
+         * @Groups({"read"})
          */
         private $location;
 
@@ -90,7 +102,6 @@
 
         /**
          * @ORM\Column(type="datetime")
-         *
          * @var \DateTimeInterface|null
          */
         private $updatedAt;
@@ -265,6 +276,10 @@
             return $this;
         }
 
+        /**
+         * @return null|string
+         * @Groups({"read"})
+         */
         public function getFullName(): ?string
         {
             return $this->nom . " " . $this->prenom;

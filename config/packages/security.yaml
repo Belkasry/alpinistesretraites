@@ -29,6 +29,9 @@ security:
                 path: logout_user
                 target: login_user
 
+            json_login:
+                check_path: api_login
+
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
