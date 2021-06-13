@@ -16,15 +16,21 @@
 
             if ($property == 'all') {
                 $alias = $queryBuilder->getRootAliases()[0];
-                $valueParameter = $queryNameGenerator->generateParameterName('search');
-                $queryBuilder->andWhere(sprintf('%s.nom LIKE :%s OR %s.prenom LIKE :%s OR %s.description LIKE :%s', $alias, $valueParameter, $alias, $valueParameter, $alias, $valueParameter))
-                    ->setParameter($valueParameter, '%' . $value . '%');
+                $valueParameter = $queryNameGenerator->generateParameterName('all');
+                $searchValues = explode(" ", $value);
+                foreach ($searchValues as $key=>$val){
+                $queryBuilder->andWhere(sprintf('%s.nom LIKE :%s OR %s.prenom LIKE :%s OR %s.description LIKE :%s', $alias, $valueParameter.$key, $alias, $valueParameter.$key, $alias, $valueParameter.$key))
+                    ->setParameter($valueParameter.$key, '%' . $val . '%');
+                }
+
             } elseif ($property == 'fullName') {
                 $alias = $queryBuilder->getRootAliases()[0];
-                $valueParameter = $queryNameGenerator->generateParameterName('search');
-                $queryBuilder->andWhere(sprintf('%s.nom LIKE :%s OR %s.prenom LIKE :%s ', $alias, $valueParameter, $alias, $valueParameter))
-                    ->setParameter($valueParameter, '%' . $value . '%');
-
+                $valueParameter = $queryNameGenerator->generateParameterName('fullName');
+                $searchValues = explode(" ", $value);
+                foreach ($searchValues as $key=>$val){
+                    $queryBuilder->andWhere(sprintf('%s.nom LIKE :%s OR %s.prenom LIKE :%s', $alias, $valueParameter.$key, $alias, $valueParameter.$key))
+                        ->setParameter($valueParameter.$key, '%' . $val . '%');
+                }
             } else
                 return;
 

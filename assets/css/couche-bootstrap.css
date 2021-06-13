@@ -1,0 +1,154 @@
+.bg-cute {
+    background-color: #fff;
+}
+.border-cute{
+    border-style: solid;
+    border-color: #f3969a;
+}
+.badge-small{
+    padding:4px;
+    margin-bottom: 2px;
+}
+
+.tag {
+    float: left;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1000;
+    font-weight: bold;
+    font-size: small;
+    border-style: solid;
+    border-color: #577482;
+    color: #f3969a;;
+
+}
+.underline{
+    border-radius: 255px 255px 225px 25px/255px 225px 25px 255px !important;
+    border-color: #333 !important;
+    border-style: solid;
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+    padding-bottom: 0px;
+}
+
+.grid-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-gap: 1rem;
+    grid-auto-rows: minmax(100px, auto)
+}
+
+/* Screen larger than 600px? 2 column */
+@media (min-width: 600px) {
+    .grid-container { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Screen larger than 900px? 3 columns */
+@media (min-width: 900px) {
+    .grid-container { grid-template-columns: repeat(4, 1fr); }
+}
+
+
+/*.grid-container {*/
+    /*grid-row-gap: 30px;*/
+    /*grid-column-gap: 15px;*/
+    /*display: grid;*/
+    /*grid-template-columns: repeat(4, 1fr);*/
+    /*grid-auto-rows: minmax(100px, auto);*/
+
+
+/*}*/
+.grid-item .thecard{
+    height: 100%;
+    background-color: rgba(246, 239, 240, 0.5);
+
+}
+
+.thecard .card-header{
+    height: 20%;
+    display:flex;
+    align-items: center;
+    justify-content: center
+
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #577482;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.border-alpiniste{
+    border: 2px solid #577482 !important;
+}
+.text-alpiniste{
+    color: #577482 !important;
+}
+
+.HolyGrail {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.HolyGrail-body {
+    display: flex;
+    flex: 1;
+}
+
+.HolyGrail-content {
+    flex: 1;
+}
+
+.HolyGrail-nav, .HolyGrail-ads {
+    /* 12em is the width of the columns */
+    flex: 0 0 12em;
+    margin-right: 0.3em;
+}
+
+.HolyGrail-nav {
+    /* put the nav on the left */
+    order: -1;
+}
+
+.HolyGrail,
+.HolyGrail-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.HolyGrail-nav {
+    order: -1;
+}
+
+@media (min-width: 768px) {
+    .HolyGrail-body {
+        flex-direction: row;
+        flex: 1;
+    }
+    .HolyGrail-content {
+        flex: 1;
+    }
+    .HolyGrail-nav, .HolyGrail-ads {
+        /* 12em is the width of the columns */
+        flex: 0 0 12em;
+    }
+}
+

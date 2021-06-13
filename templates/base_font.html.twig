@@ -1,0 +1,21 @@
+{# templates/default/base_font.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {{ encore_entry_link_tags('app') }}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+
+    <!-- Renders app.js & a webpack runtime.js file
+        <script src="/build/runtime.js" defer></script>
+        <script src="/build/app.js" defer></script>
+        See note below about the "defer" attribute -->
+{% endblock %}
+</body>
+</html>
