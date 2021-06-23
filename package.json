@@ -30,6 +30,7 @@
         "@fortawesome/react-fontawesome": "^0.1.14",
         "css-loader": "^5.2.6",
         "flickity": "^2.2.2",
+        "js-cookie": "^2.2.1",
         "react-bootstrap": "^1.6.1",
         "react-flickity-component": "^3.6.1",
         "react-grid-gallery": "^0.5.5",

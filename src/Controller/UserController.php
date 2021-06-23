@@ -40,6 +40,32 @@
             ]);
         }
 
+        /**
+         * @Route("api/login_check", name="api_login_check", methods={"POST"})
+         */
+
+        public function login_check(AuthenticationUtils $authenticationUtils,Request $request): Response
+        {
+            $user = $this->getUser();
+
+            $error = $authenticationUtils->getLastAuthenticationError();
+            $lastUsername = $authenticationUtils->getLastUsername();
+
+            $errorMessage = "";
+
+            if ($error !== null) {
+                $errorMessage = $error->getMessage();
+            }
+
+            return $this->json([
+                'username' => $user?$user->getUsername():"",
+                'hasError' => $error !== null,
+                'errors' => $errorMessage,
+                'lastUsername' => $lastUsername,
+//                'roles' => $user->getRoles(),
+            ]);
+        }
+
 
 
         /**
