@@ -9,7 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/test")
+     * @Route("/accompagnateur")
+     * @Route("/accompagnateur/{type}")
+     * @Route("/accompagnateur/profil/{id}")
      */
     public function index(): Response
     {

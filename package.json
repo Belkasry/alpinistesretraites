@@ -25,10 +25,15 @@
         "@babel/plugin-proposal-class-properties": "^7.14.5",
         "@babel/plugin-transform-runtime": "^7.14.5",
         "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-brands-svg-icons": "^5.15.3",
         "@fortawesome/free-solid-svg-icons": "^5.15.3",
         "@fortawesome/react-fontawesome": "^0.1.14",
         "css-loader": "^5.2.6",
+        "flickity": "^2.2.2",
         "react-bootstrap": "^1.6.1",
-        "react-router-dom": "^5.2.0"
+        "react-flickity-component": "^3.6.1",
+        "react-grid-gallery": "^0.5.5",
+        "react-router-dom": "^5.2.0",
+        "react-stars": "^2.2.5"
     }
 }

@@ -126,8 +126,7 @@ export class Guides extends Component {
 
         const { guides, isLoading, max, progressLoading} = this.state;
         return <React.Fragment>
-            <div className="grid-container">
-
+            <div className="grid-container ">
                 {guides.map(v_guide => {
                     return <div className="grid-item"><Guide guide={v_guide}/></div>
                 })
@@ -137,8 +136,8 @@ export class Guides extends Component {
                 <React.Fragment>
                     {isLoading ?
                         <ProgressBar striped animated now={progressLoading} className="col-md-2 m-auto mt-3 mb-4"
-                                     variant="success"/> :
-                        <a id="button1" className="btn btn-outline-success mt-3 mb-4 pl-2 pr-2" onClick={this.loadMore}>
+                                     variant="info"/> :
+                        <a id="button1" className="btn btn-outline-success mt-3 mb-4 pl-2 pr-2 btn-alpiniste" onClick={this.loadMore}>
                             <FontAwesomeIcon icon={faAngleDoubleDown} size="2x"/>
                         </a>
                     }

@@ -7,6 +7,7 @@
     use App\Entity\Guide;
     use App\Form\ExperienceType;
     use App\Form\MediaType;
+    use App\Form\StepsType;
     use Doctrine\ORM\QueryBuilder;
     use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
     use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
@@ -99,7 +100,11 @@
 
                 CollectionField::new('medias')
                     ->setEntryType(MediaType::class),
-                AssociationField::new('destination')
+                AssociationField::new('destination'),
+                CollectionField::new('steps')
+                    ->setEntryType(StepsType::class),
+
+
 
 
 

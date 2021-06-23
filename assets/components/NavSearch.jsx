@@ -29,10 +29,10 @@ function NavSearch(props) {
 
 
     return (
-        <form className="p-2 card" id="searchForm">
-            <input className="form-control my-2" type="text" placeholder="Search" defaultValue={search.value}
+        <form className="p-2 card border-alpiniste-1" id="searchForm">
+            <input className="form-control my-2 border-alpiniste-1" type="text" placeholder="Search" defaultValue={search.value}
                    onChange={throttled} data-field="all" name="all"/>
-            <input className="form-control my-2" type="text" placeholder="par Nom"
+            <input className="form-control my-2 border-alpiniste-1" type="text" placeholder="par Nom"
                    onChange={throttled} data-field="fullName" name="fullName"/>
         </form>
     );

@@ -11,6 +11,7 @@
     use Vich\UploaderBundle\Entity\File as EmbeddedFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
     use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+    use ApiPlatform\Core\Annotation\ApiProperty as ApiProperty;
     use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
     use Symfony\Component\Serializer\Annotation\Groups;
     use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
@@ -56,6 +57,7 @@
 
         /**
          * @ORM\Column(type="string", length=255)
+         * @Groups({"read"})
          */
         private $phone;
 
@@ -83,12 +85,13 @@
          * @Vich\UploadableField(mapping="guide_image", fileNameProperty="imageName", size="imageSize")
          *
          * @var File|null
+         *
          */
         private $imageFile;
 
         /**
          * @ORM\Column(type="string")
-         *
+         *@Groups({"list":"read"})
          * @var string|null
          */
         private $imageName;
@@ -109,7 +112,7 @@
 
         /**
          * @var array
-         *
+         * @Groups({"read"})
          * @ORM\Column(name="links", type="json_array", nullable=true)
          */
         private $links = [
@@ -128,6 +131,7 @@
         private $medias;
 
         /**
+         * @Groups({"read"})
          * @ORM\OneToMany(targetEntity=Experience::class, mappedBy="guide" , cascade={"persist"})
          */
         private $experiences;

@@ -6,8 +6,18 @@ use App\Repository\ExperienceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
+ *@ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ *     paginationItemsPerPage=8
+ * )
+ *@ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
  * @ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
 class Experience
@@ -21,11 +31,18 @@ class Experience
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"list":"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 5,
+     *      notInRangeMessage = "Difficulte entre 0 et 5",
+     * )
+     *  @Groups({"list":"read"})
      */
     private $dificulte;
 
@@ -40,6 +57,7 @@ class Experience
     private $nbr_participant_restant;
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
     private $prix;
@@ -61,11 +79,13 @@ class Experience
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"list":"read"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Groups({"list":"read"})
      */
     private $finish;
 
@@ -76,6 +96,7 @@ class Experience
 
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
      */
     private $activites;
@@ -86,10 +107,16 @@ class Experience
     private $medias;
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      * @ORM\JoinColumn(nullable=false)
      */
     private $destination;
+
+    /**
+     * @ORM\OneToMany(targetEntity=StepExperience::class, mappedBy="experience",cascade={"persist", "remove"})
+     */
+    private $steps;
 
 
 
@@ -100,6 +127,7 @@ class Experience
     {
         $this->activites = new ArrayCollection();
         $this->medias = new ArrayCollection();
+        $this->steps = new ArrayCollection();
     }
 
     /**
@@ -259,6 +287,8 @@ class Experience
 
     public function getStart(): ?\DateTimeInterface
     {
+//        $timestamp = strtotime($this->start);
+//        $date= date('d/m/Y', $timestamp);
         return $this->start;
     }
 
@@ -306,6 +336,36 @@ class Experience
     public function setDestination(?Destination $destination): self
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|StepExperience[]
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(StepExperience $step): self
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps[] = $step;
+            $step->setExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(StepExperience $step): self
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getExperience() === $this) {
+                $step->setExperience(null);
+            }
+        }
 
         return $this;
     }

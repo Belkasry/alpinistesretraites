@@ -4,8 +4,15 @@ namespace App\Entity;
 
 use App\Repository\ValeurReferentielRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ * )
  * @ORM\Entity(repositoryClass=ValeurReferentielRepository::class)
  */
 class ValeurReferentiel
@@ -25,6 +32,7 @@ class ValeurReferentiel
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"list":"read"})
      */
     private $libelle;
 

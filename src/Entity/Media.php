@@ -9,8 +9,18 @@
     use Symfony\Component\HttpFoundation\File\File;
     use Vich\UploaderBundle\Entity\File as EmbeddedFile;
     use Vich\UploaderBundle\Mapping\Annotation as Vich;
+    use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+    use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+    use Symfony\Component\Serializer\Annotation\Groups;
+    use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+    use App\ApiPlatform\GuideFilter;
 
     /**
+     *@ApiResource(
+     * normalizationContext={"groups"={"read"}},
+     * paginationItemsPerPage=8
+     * )
+     * @ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
      * @ORM\Entity(repositoryClass=MediaRepository::class)
      * @ORM\HasLifecycleCallbacks()
      * @Vich\Uploadable
@@ -21,6 +31,7 @@
          * @ORM\Id
          * @ORM\GeneratedValue
          * @ORM\Column(type="integer")
+         *  @Groups({"read"})
          */
         private $id;
 
@@ -40,14 +51,13 @@
          * NOTE: This is not a mapped field of entity metadata, just a simple property.
          *
          * @Vich\UploadableField(mapping="photo_medias", fileNameProperty="imageName", size="imageSize")
-         *
          * @var File|null
          */
         private $imageFile;
 
         /**
          * @ORM\Column(type="string")
-         *
+         * @Groups({"read"})
          * @var string|null
          */
         private $imageName;

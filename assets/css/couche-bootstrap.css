@@ -1,9 +1,52 @@
 .bg-cute {
     background-color: #fff;
 }
+.border-alpiniste{
+    border: 2px solid #547484 !important;
+}
+
+.border-sketchy{
+    border: 2px solid #547484 !important;
+    border-radius: 5px 5px 5px 5px/25px 25px 25px 5px !important;
+}
+
+.border-sketchy-2{
+    border: 2px solid #547484 !important;
+    border-radius: 255px 255px 225px 25px/255px 225px 25px 255px !important;
+}
+.text-alpiniste{
+    color: #547484 !important;
+}
+.border-alpiniste-1{
+    border: 2px solid #84acc4 !important;
+}
+.text-alpiniste-1{
+    color: #84acc4 !important;
+}
+.bg-alpiniste, .nav-pills .nav-link.active{
+    background-color: #547484 !important;
+}
+.bg-alpiniste-1{
+    background-color: #84acc4 !important;
+}
+.btn-alpiniste{
+    border: 2px solid #84acc4 !important;
+    background-color: #fff;
+    color: #547484 !important;
+
+}
+.btn-alpiniste:hover {
+    background-color: #84acc4 !important;
+    border: 0px solid white;
+    color: white !important;
+}
 .border-cute{
     border-style: solid;
-    border-color: #f3969a;
+    border-color: #829da7;
+}
+.border-circle-alpiniste{
+    border: 3px solid white;
+    box-shadow: 0px 0px 0px 3px #547484;
 }
 .badge-small{
     padding:4px;
@@ -11,7 +54,7 @@
 }
 
 .tag {
-    float: left;
+    float: right;
     position: absolute;
     bottom: 0px;
     right: 0px;
@@ -20,18 +63,30 @@
     font-size: small;
     border-style: solid;
     border-color: #577482;
-    color: #f3969a;;
-
+    color: #829da7;;
 }
-.underline{
+.tag2 {
+    float: right;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 1000;
+    font-weight: bold;
+    font-size: small;
+    border-style: solid;
+    border-color: #577482;
+    color: #829da7;;
+}
+.underline,.navbar-nav.nav-link.active{
     border-radius: 255px 255px 225px 25px/255px 225px 25px 255px !important;
-    border-color: #333 !important;
+    border-color: #829da7 !important;
     border-style: solid;
     border-top-color: transparent !important;
     border-left-color: transparent !important;
     border-right-color: transparent !important;
     padding-bottom: 0px;
 }
+
 
 .grid-container {
     max-width: 1200px;
@@ -52,15 +107,13 @@
 }
 
 
-/*.grid-container {*/
-    /*grid-row-gap: 30px;*/
-    /*grid-column-gap: 15px;*/
-    /*display: grid;*/
-    /*grid-template-columns: repeat(4, 1fr);*/
-    /*grid-auto-rows: minmax(100px, auto);*/
-
-
-/*}*/
+.grid-container-3 {
+    grid-row-gap: 30px;
+    grid-column-gap: 15px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(100px, auto);
+}
 .grid-item .thecard{
     height: 100%;
     background-color: rgba(246, 239, 240, 0.5);
@@ -95,18 +148,18 @@
     background: #555;
 }
 
-.border-alpiniste{
-    border: 2px solid #577482 !important;
-}
-.text-alpiniste{
-    color: #577482 !important;
-}
+
 
 .HolyGrail {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background-size: 50px ;
+    background: url(../img/alpinistesretraites_bg_small.png);
+    background-repeat: repeat;
+    background-size: 300px ;
 }
+
 
 .HolyGrail-body {
     display: flex;
@@ -152,3 +205,26 @@
     }
 }
 
+.border-transparent{
+    border-color: transparent !important;
+}
+
+.card-profile::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgba(255,255,255,0.85);
+}
+
+.dropdown-menu-login {
+    padding: 1.5rem 3rem !important;
+    text-align: center !important;
+    margin-left: -65vh;
+}
+.form-login{
+    min-width: 200px !important;
+
+}
