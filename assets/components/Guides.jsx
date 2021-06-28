@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {ProgressBar} from 'react-bootstrap';
 import Guide from "./Guide";
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 
 export class Guides extends Component {
@@ -24,6 +25,7 @@ export class Guides extends Component {
     }
 
     componentDidMount() {
+
         this.loadGuides();
     }
 
@@ -55,8 +57,14 @@ export class Guides extends Component {
             const {page} = this.state;
             this.setState({isLoading: true});
             this.interval = setInterval(() => this.tick(), 100);
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/guides?page=${page}`, {}
+            const cookies = new Cookies();
+            let token= cookies.get('token');
+            const instance = axios.create({
+                baseURL: `http://127.0.0.1:8000/`,
+                headers: {'Authorization': 'Bearer '+token}
+            });
+            const response = await instance.get(
+                `api/guides?page=${page}`, {}
             );
             if (response.data["hydra:member"].length < 1) {
                 this.setState({max: true});
@@ -96,8 +104,14 @@ export class Guides extends Component {
             };
             parametre["params"][field] = val;
 
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/guides?page=${page}`, parametre
+            const cookies = new Cookies();
+            let token= cookies.get('token');
+            const instance = axios.create({
+                baseURL: `http://127.0.0.1:8000/`,
+                headers: {'Authorization': 'Bearer '+token}
+            });
+            const response = await instance.get(
+                `api/guides?page=${page}`, parametre
             );
             if (!more) {
                 this.setState((prevState) => ({

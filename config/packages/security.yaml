@@ -44,4 +44,3 @@ security:
          - { path: ^/account, roles: ROLE_GUIDE }
          - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing API documentations and Swagger UI
          - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

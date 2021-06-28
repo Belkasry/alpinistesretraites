@@ -3,7 +3,7 @@ import Flickity from "react-flickity-component";
 
 class Carousel extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
     }
@@ -14,16 +14,22 @@ class Carousel extends Component {
             pageDots: false,
 
         }
+        const medias = this.props.medias;
         return (
+
             <Flickity
                 disableImagesLoaded
                 options={flickityOptions}
 
-            >
-                <img src="https://picsum.photos/id/1/200/300" height="100%" width="100%" style={{objectFit: "cover"}}/>
-                <img src="https://picsum.photos/id/1/200/400" height="100%" width="100%" style={{objectFit: "cover"}}/>
-                <img src="https://picsum.photos/id/1/600/300" height="100%" width="100%" style={{objectFit: "cover"}}/>
+            > {medias.length > 0 ?
+                medias.map(srcMedia => {
+                        return <img src={"/images/medias/" + srcMedia.imageName} height="100%" width="100%"
+                                    style={{objectFit: "cover"}}/>
 
+                    }
+                ) :
+                <img src="https://picsum.photos/id/1/600/300" height="100%" width="100%" style={{objectFit: "cover"}}/>
+            }
             </Flickity>
         )
     }

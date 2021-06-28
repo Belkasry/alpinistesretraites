@@ -19,7 +19,7 @@ import Gallerie from "./Gallerie";
 import CardGuideProfil from "./CardGuideProfil";
 import {withRouter} from "react-router";
 import axios from "axios/index";
-
+import Cookies from 'universal-cookie';
 
 export class GuideProfil extends Component {
     constructor(props) {
@@ -44,6 +44,8 @@ export class GuideProfil extends Component {
 
 
     componentDidMount() {
+        const cookies = new Cookies();
+        console.log(cookies.get('myCat')); // Pacman
         this.loadGuide();
     }
 
@@ -56,8 +58,14 @@ export class GuideProfil extends Component {
     loadGuide = async () => {
         try {
             const id = this.props.match.params.id;
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/guides/${id}`
+            const cookies = new Cookies();
+            let token= cookies.get('token');
+            const instance = axios.create({
+                baseURL: `http://127.0.0.1:8000/`,
+                headers: {'Authorization': 'Bearer '+token}
+            });
+            const response = await instance.get(
+                `/api/guides/${id}`
             );
             this.setState(
                 {
@@ -124,7 +132,7 @@ export class GuideProfil extends Component {
             <div className="tab-content tab-space card border-alpiniste">
                 <div className="tab-pane text-center  " id="medias">
                     {this.state.renderView ===2 ?
-                    <Gallerie/> : <p>?????????</p>
+                    <Gallerie guide={this.props.match.params.id}/> : <p>?????????</p>
                 }
                 </div>
                 <div className="tab-pane text-center gallery active p-3 pt-1 pb-1" id="activites">

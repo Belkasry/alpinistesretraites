@@ -9,9 +9,7 @@ import {throttle} from "lodash";
 function NavSearch(props) {
 
     const {search, updateSearch} = useContext(SearchContext);
-
     const changeValue = (value, field) => {
-
         return {
             'value': value,
             'field': field

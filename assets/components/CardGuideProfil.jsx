@@ -3,7 +3,8 @@ import {
     faMapMarkerAlt,
     faPhone,
     faRss,
-    faSms
+    faSms,
+    faCheckDouble
 } from "@fortawesome/free-solid-svg-icons";
 import {faFacebook, faInstagram, faMailchimp} from "@fortawesome/free-brands-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -12,7 +13,14 @@ import background_card from '../img/alpinistesretraites_card_bg.png'
 class CardGuideProfil extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            follow: true
+        }
+        this.follow_ = this.follow_.bind(this);
+    }
+
+    follow_() {
+        this.setState({follow: !this.state.follow});
     }
 
     render() {
@@ -20,8 +28,10 @@ class CardGuideProfil extends Component {
         return (
             <div className="row">
                 <div className="" style={{zIndex: 3}}>
-                    <img src={"/images/guides/"+this.props.guide.imageName} alt="Circle Image" height="100px" width="100px" style={{objectFit: "cover"}}
-                         className="img-raised rounded-circle img-fluid border-circle-alpiniste "/>
+                    <img
+                        src={this.props.guide.imageName ? "/images/guides/" + this.props.guide.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"}
+                        alt="Circle Image" height="100px" width="100px" style={{objectFit: "cover"}}
+                        className="img-raised rounded-circle img-fluid border-circle-alpiniste "/>
                 </div>
                 <div className="col-md-12 ml-auto mr-auto ">
                     <div className="profile justify-content-center ">
@@ -40,9 +50,12 @@ class CardGuideProfil extends Component {
                                 </div>
                                 <div></div>
                                 <div className="">
-                                    <button type="button" className="btn btn-outline-success btn-alpiniste">
+                                    <button type="button"
+                                            className={"btn btn-outline-success " + (this.state.follow ? " clicked" : " btn-alpiniste")}
+                                            onClick={this.follow_}>
                                         <b><FontAwesomeIcon
-                                            icon={faRss}/> Follow</b>
+                                            icon={(this.state.follow ? faCheckDouble : faRss)}/> {(this.state.follow ? "" : "Follow")}
+                                        </b>
                                     </button>
                                 </div>
                                 <div></div>
@@ -84,7 +97,8 @@ class CardGuideProfil extends Component {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-alpiniste">Copier</button>
-                                <button type="button" className="btn btn-success"><FontAwesomeIcon icon={faPhone}/>Appeler</button>
+                                <button type="button" className="btn btn-success"><FontAwesomeIcon icon={faPhone}/>Appeler
+                                </button>
                             </div>
                         </div>
                     </div>

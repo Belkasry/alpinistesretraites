@@ -4,128 +4,13 @@ import axios from "axios/index";
 import {faAngleDoubleDown} from "@fortawesome/free-solid-svg-icons/index";
 import {ProgressBar} from 'react-bootstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
+import Cookies from "universal-cookie";
 class Gallerie extends Component {
 
     constructor(props) {
         super(props);
-        const IMAGES =
-            [
-                {
-                    src: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg",
-                    thumbnail: "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212,
-                    caption: "After Rain (Jeshu John - designerspics.com)",
-                    isSelected: false,
-                },
-                {
-                    src: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_b.jpg",
-                    thumbnail: "https://c2.staticflickr.com/9/8356/28897120681_3b2c0f43e0_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212,
-                    tags: [{value: "Ocean", title: "Ocean"}, {value: "People", title: "People"}],
-                    caption: "Boats (Jeshu John - designerspics.com)"
-                },
 
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212,
-                    tags: [{value: "Ocean", title: "Ocean"}, {value: "People", title: "People"}],
-                    caption: "Boats (Jeshu John - designerspics.com)"
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212,
-                    tags: [{value: "Ocean", title: "Ocean"}, {value: "People", title: "People"}],
-                    caption: "Boats (Jeshu John - designerspics.com)"
-                },
-
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                },
-
-                {
-                    src: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_b.jpg",
-                    thumbnail: "https://c4.staticflickr.com/9/8887/28897124891_98c4fdd82b_n.jpg",
-                    thumbnailWidth: 200,
-                    thumbnailHeight: 212
-                }
-            ];
         this.state = {
-            images: IMAGES,
             page: 1,
             isLoading: false,
             progressLoading: 10,
@@ -161,8 +46,14 @@ class Gallerie extends Component {
             const {page} = this.state;
             this.setState({isLoading: true});
             this.interval = setInterval(() => this.tick(), 100);
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/media?guide=23&page=${page}`
+            const cookies = new Cookies();
+            let token= cookies.get('token');
+            const instance = axios.create({
+                baseURL: `http://127.0.0.1:8000/`,
+                headers: {'Authorization': 'Bearer '+token}
+            });
+            const response = await instance.get(
+                `api/media?guide=${this.props.guide}&page=${page}`
             );
             if (response.data["hydra:member"].length < 1) {
                 this.setState({max: true});

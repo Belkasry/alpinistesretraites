@@ -94,7 +94,6 @@ class Experience
      */
     private $guide;
 
-
     /**
      * @Groups({"list":"read"})
      * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
@@ -102,6 +101,7 @@ class Experience
     private $activites;
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\OneToMany(targetEntity=Media::class, mappedBy="experience", cascade={"persist"})
      */
     private $medias;

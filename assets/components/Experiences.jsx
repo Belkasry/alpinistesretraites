@@ -16,7 +16,7 @@ import {faAngleDoubleDown} from "@fortawesome/free-solid-svg-icons/index";
 import axios from "axios/index";
 import {ProgressBar} from 'react-bootstrap';
 import ReactStars from 'react-stars'
-
+import Cookies from 'universal-cookie';
 
 export class Experiences extends Component {
 
@@ -61,8 +61,14 @@ export class Experiences extends Component {
             const {page} = this.state;
             this.setState({isLoading: true});
             this.interval = setInterval(() => this.tick(), 100);
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/experiences?guide=${this.props.guide}&page=${page}`
+            const cookies = new Cookies();
+            let token= cookies.get('token');
+            const instance = axios.create({
+                baseURL: `http://127.0.0.1:8000/`,
+                headers: {'Authorization': 'Bearer '+token}
+            });
+            const response = await instance.get(
+                `api/experiences?guide=${this.props.guide}&page=${page}`
             );
             if (response.data["hydra:member"].length < 1) {
                 this.setState({max: true});
@@ -112,7 +118,7 @@ export class Experiences extends Component {
                                              color="#829da7"/>{' '} {experience.destination.name ? experience.destination.name : ""}</span>
                                         <span className="m-1 badge rounded-pill bg-cute tag2 ">
                             <FontAwesomeIcon icon={faMoneyBill} color="black"/>{' '} {experience.prix}</span>
-                                        <Carousel/>
+                                        <Carousel medias={experience.medias.slice(0, 3)}/>
                                     </div>
                                 </div>
                                 <div className="card m-1 p-0 mt-0 text-start bg-light border-alpiniste-1">
