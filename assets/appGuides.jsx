@@ -10,19 +10,22 @@ import NavSearch from "./components/NavSearch";
 import React, {useState, useContext} from "react";
 import SearchContext from "./SearchContext";
 import GuideProfil from "./components/GuideProfil";
+import Cookies from 'universal-cookie';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link
 } from "react-router-dom";
+import Auth from "./components/Auth";
 
 
 function AppGuides() {
 
+    const cookies = new Cookies();
+    cookies.set('myCat', 'Pacman', { path: '/' });
     const [search, setSearch] = useState("");
     const [count, setCount] = useState(0); //test
-
     const contextValue = {
         search,
         updateSearch: setSearch,
@@ -40,6 +43,13 @@ function AppGuides() {
                     </header>
                     <div className="HolyGrail-body">
                             <Switch>
+                                <Route path="/accompagnateur/auth">
+                                    <div className="m-auto">
+                                    <main className="bg-light p-3 border-alpiniste border-sketchy " style={{marginLeft:"20vh"}}>
+                                    <Auth/>
+                                    </main>
+                                    </div>
+                                </Route>
                                 <Route path="/accompagnateur/list">
                                     <main className="HolyGrail-content bg-light p-3 border-alpiniste border-sketchy ">
                                     <Guides searchValue={search} count={count} onChangeCount={(newCount) => {
@@ -78,4 +88,4 @@ function AppGuides() {
     );
 }
 
-export default AppGuides
+export default AppGuides 
