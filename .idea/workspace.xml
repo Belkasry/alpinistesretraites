@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e23590-0980-40d1-9119-e701f68d483c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/appGuides.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/appGuides.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -45,35 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Carousel.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/components/Carousel.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="26" column="58" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CardGuideProfil.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/components/CardGuideProfil.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NavBar.jsx" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NavBar.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/components/partials/NavBar.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+            <state relative-caret-position="102">
+              <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -81,32 +57,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="appGuides.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/appGuides.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="lexik_jwt_authentication.yaml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="lexik_jwt_authentication.yaml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="68">
               <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="couche-bootstrap.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/css/couche-bootstrap.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2159">
-              <caret line="127" selection-start-line="127" selection-end-line="127" />
             </state>
           </provider>
         </entry>
@@ -122,8 +77,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>axios</find>
-      <find>ait insta</find>
       <find>api/login_check</find>
       <find>cookies</find>
       <find>medias</find>
@@ -152,9 +105,10 @@
       <find>tick</find>
       <find>setinte</find>
       <find>countdown</find>
+      <find>class=</find>
+      <find>className&quot;</find>
     </findStrings>
     <replaceStrings>
-      <replace>col-sm col-md-4 mt-3</replace>
       <replace>&quot;,&quot;</replace>
       <replace>col-md</replace>
       <replace>activite</replace>
@@ -183,6 +137,8 @@
       <replace>.data.[&quot;hydra:member&quot;]</replace>
       <replace>.data[&quot;hydra:member&quot;]</replace>
       <replace>eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjQ0ODIzNjAsImV4cCI6MTYyNDQ4NTk2MCwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9HVUlERSIsIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJndWlkZTAwNyJ9.Pt-lH1ohYGmGnhg5mxOpu2-mgkPClvAvu2lVyCF0lkNLZAQlP6gy0ZjLUwkfbuR5eCohXfZddLKlmqzbJcZU8M-QH2zDjg0QYRMGawPVk1aGww1NY4eNLq82552Mx4ZXUo9Ufn72P9AM_KymcsxAFhm4hozjwJcMPIZrPu9EWXCJXxR16Udikf4q1CFnpgZkc493VpuWnTu2xhtctbNJJaVd-88onavE4euShQti_7JPRPlGC95yNKnj9sZbg59o0GyxVVRdDH4qMw3s8MJJ3V6h4tBiE73VUJG5vAK1z1PzGCD065ZmongmIbgh_DVA9ZrgUSMpnFKaTLpovoz3hqKjLeimr2t-ehgbvUFRkTJa0acOPdQKKlse2ORtkMZI8hUWUNkuc_khYgkyxrX64rXgPBJyl0OpBqco-gRWDCbxIrS1KxSYD9Pge3rIjTRlupawSX_chIfVp5niS1FbTwkqjGzFJdRxDneVXJGHtocYRDQklpt_O0jCFV0GfgcIpWx_K1tyzM-wg8CdB0yHvUbbOPxdT0DM54r6MajwCeKwss6bAvtC29yU5N1bjx54te9yTywKvKfPTYIuvXUwX_7UsTT4rQcnUVSgkEPn1bvGdoIGsEBcECk0-l_kMP6w7JfRyBZDxsL0i_du3eUP6kLsZIXZdOqI7v_Re6CcyfU</replace>
+      <replace>className</replace>
+      <replace>className=&quot;</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\wamp64\www\alpinistesretraites\src\Controller</dir>
@@ -313,10 +269,10 @@
         <option value="$PROJECT_DIR$/assets/components/Carousel.jsx" />
         <option value="$PROJECT_DIR$/assets/css/couche-bootstrap.css" />
         <option value="$PROJECT_DIR$/assets/components/CardGuideProfil.jsx" />
-        <option value="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/assets/appGuides.jsx" />
         <option value="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" />
+        <option value="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" />
       </list>
     </option>
   </component>
@@ -726,7 +682,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="666886000" />
+    <option name="totallyTimeSpent" value="668015000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -746,9 +702,9 @@
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32920355" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32920355" />
-      <window_info anchor="bottom" id="Terminal" order="7" visible="true" weight="0.31327432" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="7" visible="true" weight="0.31327432" />
       <window_info anchor="bottom" id="TypeScript" order="8" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49911505" visible="true" weight="0.2631579" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49911505" visible="true" weight="0.2631579" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32955465" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
@@ -1092,9 +1048,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="425">
           <caret line="26" column="58" selection-start-line="26" selection-start-column="58" selection-end-line="26" selection-end-column="58" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1105,27 +1058,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/Auth.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/jwt-decode/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="24" selection-start-line="21" selection-start-column="24" selection-end-line="21" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -1156,13 +1092,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/partials/NavBar.jsx">
+    <entry file="file://$PROJECT_DIR$/assets/components/Auth.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="96" lean-forward="true" selection-start-line="96" selection-end-line="96" />
+        <state relative-caret-position="510">
+          <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/partials/NavBar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="28" lean-forward="true" selection-start-line="28" selection-end-line="28" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="24" selection-start-line="4" selection-start-column="24" selection-end-line="4" selection-end-column="24" />
         </state>
       </provider>
     </entry>

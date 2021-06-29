@@ -17,7 +17,7 @@ export class NavBar extends Component {
     constructor(props) {
         super(props)
         const cookies = new Cookies();
-        let token = cookies.get('token');
+        let token = cookies.get('token') ? cookies.get('token') : "";
         let decoded = jwt_decode(token);
         this.state = {
             token: token,
@@ -28,7 +28,7 @@ export class NavBar extends Component {
 
 
     componentDidMount() {
-        this.interval = setInterval(() => this.testToken(), 1000);
+        this.interval = setInterval(() => this.testToken(), 100);
     }
 
     componentWillUnmount() {
@@ -79,7 +79,9 @@ export class NavBar extends Component {
                             {!this.state.valid ? <Link to={`/accompagnateur/auth`}>
                                 <a href="#" className="nav-item nav-link text-alpiniste">Login</a>
                             </Link> : <Link to={`/accompagnateur/logout`}>
-                                <a href="#" className="nav-item nav-link text-alpiniste">Logout</a>
+                                <a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle user-action">
+                                    <img src={logo} className="avatar" alt="Avatar" height="40px"/> Paula Wilson </a>
+                                        <a href="#" className="nav-item nav-link text-alpiniste">Logout</a>
                             </Link>}
                         </div>
                     </div>
