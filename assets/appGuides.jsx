@@ -36,7 +36,8 @@ function AppGuides() {
         <Router>
             <SearchContext.Provider value={contextValue}>
                 <div className="App HolyGrail">
-                    <header className=""><NavBar page="guide"/>
+                    <header className="header_">
+                        <NavBar page="guide" />
                         <Route path="/accompagnateur/list">
                             <h1 className="mt-2 mb-2 text-alpiniste border-sketchy-2 bg-light">Liste des Guides</h1>
                         </Route>
