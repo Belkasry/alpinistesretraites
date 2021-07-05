@@ -20,7 +20,7 @@
      * normalizationContext={"groups"={"read"}},
      * paginationItemsPerPage=8
      * )
-     * @ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
+     * @ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact","experience":"exact"})
      * @ORM\Entity(repositoryClass=MediaRepository::class)
      * @ORM\HasLifecycleCallbacks()
      * @Vich\Uploadable

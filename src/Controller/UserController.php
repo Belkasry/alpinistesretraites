@@ -49,7 +49,10 @@
             $user = $this->getUser();
 
 
-            return $this->json();
+            return $this->json([
+                'username' => $user?$user->getUsername():"",
+//                'roles' => $user->getRoles(),
+            ]);
         }
 
 

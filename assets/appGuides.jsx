@@ -1,9 +1,7 @@
 import './App.css';
 import './css/bootstrap.min.css';
 import './css/couche-bootstrap.css';
-import Guide from "./components/Guide";
 import NavBar from "./components/partials/NavBar";
-import axios from 'axios';
 import {Guides} from "./components/Guides";
 import Footer from "./components/partials/Footer";
 import NavSearch from "./components/NavSearch";
@@ -18,6 +16,7 @@ import {
     Link
 } from "react-router-dom";
 import Auth from "./components/Auth";
+import {ExperienceProfil} from "./components/ExperienceProfil";
 
 
 function AppGuides() {
@@ -38,13 +37,13 @@ function AppGuides() {
                 <div className="App HolyGrail">
                     <header className=""><NavBar page="guide"/>
                         <Route path="/accompagnateur/list">
-                            <h1 className="mt-2 mb-2 text-alpiniste border-sketchy-2 bg-light">Liste des Guides</h1>
+                            <h1 className="mt-2 mb-2 m-auto text-alpiniste border-sketchy-2 bg-light col-8 d-flex justify-content-center">Liste des Accompagnateurs</h1>
                         </Route>
                     </header>
                     <div className="HolyGrail-body">
                             <Switch>
-                                <Route path="/accompagnateur/auth">
-                                    <div className="m-auto">
+                                <Route path={['/accompagnateur/auth', '/accompagnateur/logout']}>
+                                    <div className="m-auto pt-5">
                                     <main className="bg-light p-3 border-alpiniste border-sketchy " style={{marginLeft:"20vh"}}>
                                     <Auth/>
                                     </main>
@@ -62,13 +61,16 @@ function AppGuides() {
                                     <GuideProfil/>
                                     </main>
                                 </Route>
+                                <Route path="/accompagnateur/experience/:id" component={ExperienceProfil} >
+
+                                </Route>
                             </Switch>
 
                         <Switch>
                             <Route path="/accompagnateur/list">
                                 <nav className="HolyGrail-nav "><NavSearch/></nav>
                             </Route>
-                            <Route path="/accompagnateur/profil">
+                            <Route path={["/accompagnateur/profil","/accompagnateur/experience"]}>
                                 <div className=" border-light bg-transparent border-transparent HolyGrail-nav">
 
                                 </div>

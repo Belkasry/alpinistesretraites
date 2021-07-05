@@ -21,6 +21,7 @@
     use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
     use EasyCorp\Bundle\EasyAdminBundle\Dto\FilterDataDto;
     use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
+    use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
     use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
     use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
     use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -33,6 +34,7 @@
     use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
     use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
     use Symfony\Component\Asset\Packages;
+    use Symfony\Component\DomCrawler\Field\FormField;
     use Symfony\Component\Security\Core\Security;
     use Symfony\Component\Validator\Constraints\GreaterThan;
     use Symfony\Component\Validator\Constraints\LessThanOrEqual;
@@ -67,10 +69,11 @@
         public function configureFields(string $pageName): iterable
         {
             $builder = [
-                TextField::new('title','Titre'),
-                IntegerField::new('dificulte',"Difficulté"),
-                IntegerField::new('nbr_participant',"Nombre de place"),
-                IntegerField::new('nbr_participant_restant',"Nombre de places restantes")
+                TextField::new('title', 'Titre'),
+                IntegerField::new('dificulte', "Difficulté"),
+                IntegerField::new('duree', "Durée"),
+                IntegerField::new('nbr_participant', "Nombre de place"),
+                IntegerField::new('nbr_participant_restant', "Nombre de places restantes")
                     ->setFormTypeOptions(
                         ['constraints' =>
                             [
@@ -89,23 +92,20 @@
                 ])->setCssClass("d-none")->onlyOnForms(),
                 Field::new('etat'),
                 Field::new('fixe')->setFormTypeOptions([
-                   "data"=> false,
+                    "data" => false,
                 ]),
                 DateField::new('start')->setFormTypeOptions([
-                    'disabled' => true,
                 ]),
                 DateField::new('finish')->setFormTypeOptions([
-                    'disabled' => true,
                 ]),
-
-                CollectionField::new('medias')
-                    ->setEntryType(MediaType::class),
                 AssociationField::new('destination'),
                 CollectionField::new('steps')
                     ->setEntryType(StepsType::class),
-
-
-
+                ArrayField::new('requirement'),
+                ArrayField::new('notice'),
+                CollectionField::new('medias')
+                    ->setLabel("Medias")
+                    ->setEntryType(MediaType::class),
 
 
             ];
@@ -144,20 +144,28 @@
 
         public function configureAssets(Assets $assets): Assets
         {
+            $button = "<a class=\"btn btn-primary btn-block mb-3\" data-toggle=\"collapse\" href=\".Experience_medias_collapse\" role=\"button\" aria-expanded=\"true\" aria-controls=\"Experience_medias_collapse\"> <i class=\"action-icon fa fa-angle-double-down pr-2\" ></i>Medias</a>";
             return $assets
-                ->addHtmlContentToBody('<script>
+                ->addHtmlContentToBody("
+                <style>.form-widget-compound{width: 80% !important;}</style>    
+                <script>
                 $(document).ready(function () {
-                    $("#Experience_fixe").change(function() {
+                      var exp_me = $('#Experience_medias').closest('.form-widget-compound');
+                       $('$button').insertBefore(exp_me);
+                      exp_me.addClass(' collapse Experience_medias_collapse')
+                      $('#Experience_medias').addClass(' d-flex flex-wrap align-items-baseline');
+                      $('#Experience_medias .form-group').addClass(' w-25 p-2');
+                    $('#Experience_fixe').change(function() {
                     if(this.checked) {
-                       $("#Experience_start").prop( "disabled", false );
-                       $("#Experience_finish").prop( "disabled", false );
+                       $('#Experience_start').prop( 'disabled', false );
+                       $('#Experience_finish').prop( 'disabled', false );
                     }else{
-                         $("#Experience_start").prop( "disabled", true );
-                       $("#Experience_finish").prop( "disabled", true );
+                         $('#Experience_start').prop( 'disabled', true );
+                       $('#Experience_finish').prop( 'disabled', true );
                     }
                     });
                     
                  });
-                </script>');
+                </script>");
         }
     }

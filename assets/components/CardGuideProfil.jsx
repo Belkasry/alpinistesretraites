@@ -24,7 +24,7 @@ class CardGuideProfil extends Component {
     }
 
     render() {
-        var descript = this.props.guide.description ? this.props.guide.description : "";
+        var descript = this.props.guide.description ? this.props.guide.description : "<hr/>";
         return (
             <div className="row">
                 <div className="" style={{zIndex: 3}}>
@@ -84,7 +84,9 @@ class CardGuideProfil extends Component {
                                    className="btn btn-just-icon btn-link btn-pinterest text-alpiniste"><FontAwesomeIcon
                                     icon={faMailchimp}/></a>
 
-                                <p className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2"> {descript}</p>
+                                <p className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2">
+                                    <div dangerouslySetInnerHTML={{__html: descript}}/>
+                                </p>
                             </div>
                         </div>
                     </div>

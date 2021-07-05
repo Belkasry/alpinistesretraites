@@ -2,16 +2,23 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\StepExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ * )
  * @ORM\Entity(repositoryClass=StepExperienceRepository::class)
  */
 class StepExperience
 {
     /**
+     * @Groups({"list":"read"})
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -19,25 +26,35 @@ class StepExperience
     private $id;
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\Column(type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @Groups({"list":"read"})
+     * @ORM\Column(type="string", length=4000,)
      */
     private $resume;
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\Column(type="integer")
      */
     private $duree;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Experience::class, inversedBy="steps")
      * @ORM\JoinColumn(nullable=false)
      */
     private $experience;
+
+    /**
+     * @Groups({"list":"read"})
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lieu;
 
     public function getId(): ?int
     {
@@ -88,6 +105,18 @@ class StepExperience
     public function setExperience(?Experience $experience): self
     {
         $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getLieu(): ?string
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?string $lieu): self
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }

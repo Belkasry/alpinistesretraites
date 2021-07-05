@@ -6,9 +6,19 @@
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+    use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+    use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+    use Symfony\Component\Serializer\Annotation\Groups;
+    use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
     /**
+     * @ApiResource(
+     *     normalizationContext={"groups"={"read"}},
+     * )
      * @ORM\Entity(repositoryClass=UserRepository::class)
+     * @UniqueEntity("login")
+     * @ApiFilter(SearchFilter::class, properties={"id": "exact","login":"exact"})
      * @ORM\HasLifecycleCallbacks()
      */
     class User implements UserInterface
@@ -18,16 +28,20 @@
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
+         * @Groups({"list":"read"})
          * @ORM\Column(type="integer")
          */
         private $id;
 
 
-        /** @ORM\Column(type="json") */
+        /** @ORM\Column(type="json")
+         * @Groups({"list":"read"})
+         */
         private $roles = [];
 
         /**
          * @ORM\Column(type="string", length=255)
+         * @Groups({"list":"read"})
          */
         private $login;
 
@@ -50,6 +64,7 @@
 
         /**
          * @ORM\OneToOne(targetEntity=Guide::class, cascade={"persist", "remove"})
+         * @Groups({"list":"read"})
          */
         private $guide;
 

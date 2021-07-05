@@ -107,10 +107,10 @@ export class Experiences extends Component {
                     {experiences.map(experience => {
                         return <div className="grid-item pl-2">
                             <div className="card mb-2 thecard border-alpiniste ">
-                                <h4 className="card-header bg-light ">
-                                    <Link to={`/accompagnateur/experience`}>
+                                <h6 className="card-header bg-light ">
+                                    <Link to={`/accompagnateur/experience/13`}>
                                         <a href="#" className="text-info">{experience.title}</a></Link>
-                                </h4>
+                                </h6>
                                 <div className="card-body m-1 p-1">
                                     <div className="card m-0 p-0 border-alpiniste-1">
                             <span className="m-1 badge rounded-pill bg-cute tag text-sm-center">

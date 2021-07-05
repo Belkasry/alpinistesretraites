@@ -12,6 +12,7 @@ class DefaultController extends AbstractController
      * @Route("/accompagnateur")
      * @Route("/accompagnateur/{type}")
      * @Route("/accompagnateur/profil/{id}")
+     * @Route("/accompagnateur/experience/{id}")
      */
     public function index(): Response
     {

@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import logo from '../../img/alpinistesretraites.png'
-import {faBars} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import FormLogin from "../FormLogin";
+import {faBars, faBell, faComment, faCommentAlt, faUserAlt, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
 import Cookies from 'universal-cookie';
 import {
     BrowserRouter as Router,
@@ -18,24 +17,53 @@ export class NavBar extends Component {
         super(props)
         const cookies = new Cookies();
         let token = cookies.get('token') ? cookies.get('token') : "";
-        let decoded = jwt_decode(token);
+        let decoded = "";
+        if (token !== "")
+            decoded = jwt_decode(token);
+
+        let user = cookies.get('user') ? cookies.get('user') : {};
+        let profil = user[0];
+
         this.state = {
             token: token,
             valid: true,
-        };
+            decoded: decoded,
+            user: profil
+        }
         this.testToken = this.testToken.bind(this);
     }
 
 
     componentDidMount() {
-        this.interval = setInterval(() => this.testToken(), 100);
+        const cookies = new Cookies();
+        if (cookies.get("token") != "")
+            this.interval = setInterval(() => this.testToken(), 100);
+        else {
+            this.setState({
+                valid: false
+            });
+        }
+
+
     }
 
     componentWillUnmount() {
     }
 
+    logout = async () => {
+
+        const cookies = new Cookies();
+        cookies.set('token', "");
+        this.setState({
+            valid: false
+        });
+    }
+
     testToken() {
-        let decoded = jwt_decode(this.state.token);
+        let decoded = "";
+        if (this.state.token !== "")
+            decoded = jwt_decode(this.state.token);
+
         if (decoded != null) {
             this.setState({
                 valid: ((Date.now() - decoded.exp * 1000) < 0)
@@ -77,12 +105,34 @@ export class NavBar extends Component {
                     <div className="d-flex">
                         <div className="navbar-nav ml-auto action-buttons">
                             {!this.state.valid ? <Link to={`/accompagnateur/auth`}>
-                                <a href="#" className="nav-item nav-link text-alpiniste">Login</a>
-                            </Link> : <Link to={`/accompagnateur/logout`}>
-                                <a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle user-action">
-                                    <img src={logo} className="avatar" alt="Avatar" height="40px"/> Paula Wilson </a>
-                                        <a href="#" className="nav-item nav-link text-alpiniste">Logout</a>
-                            </Link>}
+                                    <a href="#" className="nav-item nav-link text-alpiniste">Login</a>
+                                </Link> :
+                                <div className="navbar-nav ml-auto mr-3">
+                                    <a href="#" className="nav-item nav-link notifications">
+                                        <FontAwesomeIcon icon={faBell} color="#637b86"/>
+                                        <span className="badge">1</span></a>
+                                    <a href="#" className="nav-item nav-link messages">
+                                        <FontAwesomeIcon icon={faCommentAlt} color="#637b86"/>
+                                        <span className="badge">10</span></a>
+                                    <div className="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown"
+                                           className="nav-link dropdown-toggle user-action">
+                                            <img src={this.state.user.guide.imageName ? "/images/guides/" + this.state.user.guide.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"} height="50px" className="avatar"
+                                                 alt="Avatar"/> {this.state.user ? this.state.user.guide.fullName : ""} </a>
+                                        <div className="dropdown-menu">
+
+                                            <a href="/account" className="dropdown-item">
+                                                <FontAwesomeIcon icon={faUserAlt} color="grey" className="mr-3"/>
+                                                {"  "}Profile</a>
+                                            <div className="dropdown-divider"></div>
+                                            <a className="dropdown-item ml-2" onClick={this.logout}>
+                                                <FontAwesomeIcon icon={faSignOutAlt} color="grey" className="mr-3"/>
+                                                {"  "}Logout</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
                         </div>
                     </div>
                 </div>

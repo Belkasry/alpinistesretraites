@@ -261,4 +261,11 @@
     background-color: #fff !important;
     color: #547484 !important;
 }
+.avatar {
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    height: 30px;
+    width: 30px;
+}
 

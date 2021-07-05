@@ -5,6 +5,7 @@ import {faAngleDoubleDown} from "@fortawesome/free-solid-svg-icons/index";
 import {ProgressBar} from 'react-bootstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Cookies from "universal-cookie";
+
 class Gallerie extends Component {
 
     constructor(props) {
@@ -47,14 +48,22 @@ class Gallerie extends Component {
             this.setState({isLoading: true});
             this.interval = setInterval(() => this.tick(), 100);
             const cookies = new Cookies();
-            let token= cookies.get('token');
+            let token = cookies.get('token');
             const instance = axios.create({
                 baseURL: `http://127.0.0.1:8000/`,
-                headers: {'Authorization': 'Bearer '+token}
+                headers: {'Authorization': 'Bearer ' + token}
             });
-            const response = await instance.get(
-                `api/media?guide=${this.props.guide}&page=${page}`
-            );
+            let response=null;
+            if (this.props.guide ) {
+                 response = await instance.get(
+                    `api/media?guide=${this.props.guide}&page=${page}`
+                );
+            }
+            if (this.props.experience ) {
+                 response = await instance.get(
+                    `api/media?experience=${this.props.experience}&page=${page}`
+                );
+            }
             if (response.data["hydra:member"].length < 1) {
                 this.setState({max: true});
             }
@@ -64,7 +73,7 @@ class Gallerie extends Component {
                         thumbnail: "/images/medias/" + obj.imageName,
                         thumbnailWidth: 200,
                         thumbnailHeight: 212,
-                        rowHeight:200
+                        rowHeight: 200
 
                     }
                 }
@@ -83,9 +92,7 @@ class Gallerie extends Component {
     };
 
     styleThumbnail() {
-        return ({
-
-        });
+        return ({});
     }
 
     render() {
@@ -93,21 +100,22 @@ class Gallerie extends Component {
         return (
             <React.Fragment>
                 <div className="row">
-               <div > <Gallery images={this.state.medias} enableImageSelection={false}
-                          margin={"10px"} />
-               </div>
-                <br/>
-                {!max ?
-                    <div>
-                        {isLoading ?
-                            <ProgressBar striped animated now={progressLoading} className="col-md-2 m-auto mt-3 mb-4"
-                                         variant="info"/> :
-                            <a id="button1" className="btn btn-outline-success mt-3 mb-4 pl-2 pr-2 btn-alpiniste"
-                               onClick={this.loadMore}>
-                                <FontAwesomeIcon icon={faAngleDoubleDown} size="2x"/>
-                            </a>
-                        }
-                    </div> : <hr/>}
+                    <div><Gallery images={this.state.medias} enableImageSelection={false}
+                                  margin={"10px"}/>
+                    </div>
+                    <br/>
+                    {!max ?
+                        <div>
+                            {isLoading ?
+                                <ProgressBar striped animated now={progressLoading}
+                                             className="col-md-2 m-auto mt-3 mb-4"
+                                             variant="info"/> :
+                                <a id="button1" className="btn btn-outline-success mt-3 mb-4 pl-2 pr-2 btn-alpiniste"
+                                   onClick={this.loadMore}>
+                                    <FontAwesomeIcon icon={faAngleDoubleDown} size="2x"/>
+                                </a>
+                            }
+                        </div> : <hr/>}
                 </div>
             </React.Fragment>);
     }

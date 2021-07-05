@@ -45,7 +45,6 @@ export class GuideProfil extends Component {
 
     componentDidMount() {
         const cookies = new Cookies();
-        console.log(cookies.get('myCat')); // Pacman
         this.loadGuide();
     }
 

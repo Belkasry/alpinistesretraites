@@ -24,9 +24,12 @@
                 'download_uri' => true,
                 'image_uri' => true,
                 'asset_helper' => true,
+
             ]);
 
-            $builder->add('imageFile', VichImageType::class, $arrayoption);
+            $builder->add('imageFile', VichImageType::class, [
+                'delete_label' => 'Remove Image',
+            ]);
 
         }
 

@@ -59,6 +59,7 @@ export class Guides extends Component {
             this.interval = setInterval(() => this.tick(), 100);
             const cookies = new Cookies();
             let token= cookies.get('token');
+            console.log("----"+token+"----");
             const instance = axios.create({
                 baseURL: `http://127.0.0.1:8000/`,
                 headers: {'Authorization': 'Bearer '+token}
@@ -142,7 +143,7 @@ export class Guides extends Component {
         return <React.Fragment>
             <div className="grid-container ">
                 {guides.map(v_guide => {
-                    return <div className="grid-item"><Guide guide={v_guide}/></div>
+                    return <div className="grid-item"  key={Math.random().toString()}><Guide guide={v_guide}/></div>
                 })
                 }
             </div>

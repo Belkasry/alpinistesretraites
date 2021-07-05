@@ -18,13 +18,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     paginationItemsPerPage=8
  * )
  *@ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
- * @ORM\Entity(repositoryClass=ExperienceRepository::class)
+ *@ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
 class Experience
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"list":"read"})
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -63,6 +64,7 @@ class Experience
     private $prix;
 
     /**
+     * @Groups({"list":"read"})
      * @ORM\Column(type="text")
      */
     private $description;
@@ -108,17 +110,88 @@ class Experience
 
     /**
      * @Groups({"list":"read"})
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      * @ORM\JoinColumn(nullable=false)
      */
     private $destination;
 
     /**
+     * @Groups({"read"})
      * @ORM\OneToMany(targetEntity=StepExperience::class, mappedBy="experience",cascade={"persist", "remove"})
      */
     private $steps;
 
+    /**
+     * @var array
+     * @Groups({"read"})
+     * @ORM\Column(name="requirement", type="json_array", nullable=true)
+     */
+    private $requirement = [];
 
+
+
+    /**
+     * @var array
+     * @Groups({"read"})
+     * @ORM\Column(name="notice", type="json_array", nullable=true)
+     */
+    private $notice = [];
+
+
+    /**
+     * @Groups({"read"})
+     * @ORM\Column(name="duree",type="integer", nullable=true)
+     */
+    private $duree;
+
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getNotice(): array
+    {
+        return $this->notice;
+    }
+
+
+
+    /**
+     * @param array $notice
+     */
+    public function setNotice(array $notice): void
+    {
+        $this->notice = $notice;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequirement(): array
+    {
+        return $this->requirement;
+    }
+
+    /**
+     * @param array $requirement
+     */
+    public function setRequirement(array $requirement): void
+    {
+        $this->requirement = $requirement;
+    }
 
 
 
