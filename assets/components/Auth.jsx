@@ -23,35 +23,79 @@ class Auth extends Component {
             items: [],
             errorMessage: '',
             isSignedUp: false,
-            isLoading:false,
+            isLoading: false,
             progressLoading: 10,
-            user:{},
+            user: {},
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.authentificate = this.authentificate.bind(this);
+        this.getInfo = this.getInfo.bind(this);
 
     }
 
-    getInfo = async () => {
+    async getInfo() {
         try {
-            const login = "guide20";
-            const cookies = new Cookies();
-            let token= cookies.get('token');
-            const instance = axios.create({
-                baseURL: `http://127.0.0.1:8000/`,
-                headers: {'Authorization': 'Bearer '+token}
-            });
-            const response = await instance.get(
-                `api/users?login=${login}`
-            );
+
+            if (this.state.isSignedUp) {
+                console.log("in");
+                const login = this.state.username;
+                const cookies = new Cookies();
+                let token = cookies.get('token');
+                const instance = axios.create({
+                    baseURL: `http://127.0.0.1:8000/`,
+                    headers: {'Authorization': 'Bearer ' + token}
+                });
+                const response = await instance.get(
+                    `api/users?login=${login}`
+                );
+
+                let res = response.data["hydra:member"][0];
+                let Leuser = {
+                    id: res.id,
+                    email: res.email,
+                    login: res.login,
+
+                };
+                let LeUserComplement = {};
+                if (res.guide) {
+                    LeUserComplement = {
+                        nom: res.guide.nom,
+                        prenom: res.guide.prenom,
+                        fullName: res.guide.fullName,
+                        location: res.guide.location,
+                        phone: res.guide.phone,
+                        imageName: res.guide.imageName,
+                        guide: res.guide.id
+                    };
+                }
+                if(res.utilisateur){
+                    LeUserComplement = {
+                        nom: res.utilisateur.nom,
+                        prenom: res.utilisateur.prenom,
+                        fullName: res.utilisateur.fullName,
+                        location: res.utilisateur.location,
+                        phone: res.utilisateur.phone,
+                        imageName: res.utilisateur.imageName,
+                    };
+                }
+
+                for (var k in LeUserComplement) Leuser[k] = LeUserComplement[k];
 
                 this.setState(
                     {
-                        user: response.data["hydra:member"]
+                        user: Leuser,
+                        progressLoading: 10,
+                        isLoading: false
                     });
-            cookies.set('user', JSON.stringify(this.state.user));
+
+                cookies.set('user', JSON.stringify(this.state.user));
+                clearInterval(this.interval);
+            }
             window.location.replace("/accompagnateur/list");
         } finally {
-        }}
+            clearInterval(this.interval);
+        }
+    }
 
     componentDidMount() {
         // const location = useLocation();
@@ -64,8 +108,12 @@ class Auth extends Component {
     }
 
 
-    authentificate = async () => {
+    async authentificate() {
         try {
+
+            this.setState({isLoading: true});
+            this.interval = setInterval(() => this.tick(), 500);
+
             var data = JSON.stringify({
                 "username": this.state.username,
                 "password": this.state.password
@@ -80,34 +128,55 @@ class Auth extends Component {
                 data: data
             };
             axios(config)
-                .then(function (response) {
+                .then((response) => {
 
                     const cookies = new Cookies();
                     const token = response.data.token;
                     cookies.set('token', token);
-                })
+                    this.setState({isSignedUp: true});
+
+                }).then(response => {
+                    this.getInfo();
+                }
+            )
                 .catch(err => {
-                    this.setState({errorMessage: err.response.data.message});
+                    this.setState({
+                        errorMessage: err.response ? err.response.data.message : err.toString(),
+                        isSignedUp: false,
+                        isLoading:false,
+
+                    });
+
                 });
+
         } finally {
+            console.log('----------------->>>>>>>>');
+
         }
     }
 
+    tick() {
+        if (this.state.isLoading) {
+            this.setState(state => ({
+                progressLoading: state.progressLoading + 10
+            }));
+        } else {
+            this.setState(state => ({
+                progressLoading: 10
+            }));
+
+            clearInterval(this.interval);
+        }
+    }
+
+
     handleSubmit(event) {
         this.authentificate();
-        this.getInfo();
         event.preventDefault();
     }
 
     render() {
-        // if (this.state.isSignedUp) {
-        //     return <Redirect to={{pathname: "/home"}}/>
-        // }else
-       const {progressLoading,isLoading}=this.state;
-        // if(this.props.location.include("logout")){
-        //     const cookies = new Cookies();
-        //     cookies.set('token', "");
-        // }
+        const {progressLoading, isLoading} = this.state;
         return (
             <React.Fragment>
                 <form method="post" onSubmit={this.handleSubmit}>
@@ -132,6 +201,11 @@ class Auth extends Component {
                     </div>
 
 
+                    {isLoading ?
+                        <ProgressBar striped animated now={progressLoading}
+                                     className="col-md-2 m-auto mt-3 mb-4"
+                                     variant="info"/> : ""}
+
                     {this.state.errorMessage &&
                     <div className="alert alert-dismissible alert-danger">
                         <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
@@ -141,6 +215,7 @@ class Auth extends Component {
                     <div className="text-center mt-2">
                         <a href="#">Forgot Your password?</a>
                     </div>
+                    <a href="/accompagnateur/signup" className="text-success">Sign up ?</a>
                 </form>
             </React.Fragment>
         )

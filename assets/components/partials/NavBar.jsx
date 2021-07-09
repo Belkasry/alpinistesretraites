@@ -22,15 +22,16 @@ export class NavBar extends Component {
             decoded = jwt_decode(token);
 
         let user = cookies.get('user') ? cookies.get('user') : {};
-        let profil = user[0];
+        let profil = user;
 
         this.state = {
             token: token,
             valid: true,
             decoded: decoded,
-            user: profil
+            user: {}
         }
         this.testToken = this.testToken.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
 
@@ -43,20 +44,29 @@ export class NavBar extends Component {
                 valid: false
             });
         }
+        if (cookies.get("user") != "") {
+            let user = cookies.get('user') ? cookies.get('user') : {};
+            let profil = user;
+            this.setState({
+                user: profil
+            });
+        }
 
 
     }
+
 
     componentWillUnmount() {
     }
 
-    logout = async () => {
-
+    logout() {
         const cookies = new Cookies();
         cookies.set('token', "");
+        cookies.set('user', {});
         this.setState({
             valid: false
         });
+        window.location.replace("/accompagnateur/logout");
     }
 
     testToken() {
@@ -96,7 +106,7 @@ export class NavBar extends Component {
                             <div className="dropdown-menu">
                                 <a className="dropdown-item text-alpiniste" href="/guide/nouveau">Nouveau Guide</a>
                                 <a className="dropdown-item text-alpiniste" href="#">Nouvelle Agence</a>
-                                <a className="dropdown-item text-alpiniste" href="#">Nouveau Utilisateur</a>
+                                <a className="dropdown-item text-alpiniste" href="/accompagnateur/signup">Nouveau Utilisateur</a>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-alpiniste" href="#">Separated link</a>
                             </div>
@@ -108,24 +118,28 @@ export class NavBar extends Component {
                                     <a href="#" className="nav-item nav-link text-alpiniste">Login</a>
                                 </Link> :
                                 <div className="navbar-nav ml-auto mr-3">
-                                    <a href="#" className="nav-item nav-link notifications">
+                                    <a href="#" className="nav-item nav-link notifications mt-1">
                                         <FontAwesomeIcon icon={faBell} color="#637b86"/>
                                         <span className="badge">1</span></a>
-                                    <a href="#" className="nav-item nav-link messages">
+                                    <a href="#" className="nav-item nav-link messages mt-1">
                                         <FontAwesomeIcon icon={faCommentAlt} color="#637b86"/>
                                         <span className="badge">10</span></a>
                                     <div className="nav-item dropdown">
                                         <a href="#" data-toggle="dropdown"
                                            className="nav-link dropdown-toggle user-action">
-                                            <img src={this.state.user.guide.imageName ? "/images/guides/" + this.state.user.guide.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"} height="50px" className="avatar"
-                                                 alt="Avatar"/> {this.state.user ? this.state.user.guide.fullName : ""} </a>
+                                            <img
+                                                src={this.state.user && this.state.user.imageName ? "/images/guides/" + this.state.user.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"}
+                                                height="50px" className="avatar"
+                                                style={{marginRight: "1rem"}}
+                                                alt="Avatar"/>{this.state.user && this.state.user.fullName ? this.state.user.fullName : "???"}
+                                        </a>
                                         <div className="dropdown-menu">
 
                                             <a href="/account" className="dropdown-item">
                                                 <FontAwesomeIcon icon={faUserAlt} color="grey" className="mr-3"/>
                                                 {"  "}Profile</a>
                                             <div className="dropdown-divider"></div>
-                                            <a className="dropdown-item ml-2" onClick={this.logout}>
+                                            <a className="dropdown-item ml-2" onClick={this.logout} href="#">
                                                 <FontAwesomeIcon icon={faSignOutAlt} color="grey" className="mr-3"/>
                                                 {"  "}Logout</a>
                                         </div>

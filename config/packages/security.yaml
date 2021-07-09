@@ -16,6 +16,7 @@ security:
     api:
       stateless: true
       anonymous: true
+      user_checker: App\Security\UserChecker
       pattern: ^/api/login_check
       provider: in_database
       json_login:

@@ -25,6 +25,7 @@ class CardGuideProfil extends Component {
 
     render() {
         var descript = this.props.guide.description ? this.props.guide.description : "<hr/>";
+        var links = this.props.guide.links ? this.props.guide.links : {};
         return (
             <div className="row">
                 <div className="" style={{zIndex: 3}}>
@@ -73,11 +74,12 @@ class CardGuideProfil extends Component {
                                     </button>
                                 </div>
                             </div>
+
                             <div className="description text-center">
-                                <a href="#pablo"
+                                <a href={`https://fb.com/${links && links.fb_link ? links.fb_link : "zuck"}`}
                                    className="btn btn-just-icon btn-link btn-dribbble text-alpiniste"><FontAwesomeIcon
                                     icon={faFacebook}/></a>
-                                <a href="#pablo"
+                                <a href={`https://instagram.com/${links && links.ig_link ? links.ig_link : "zuck"}`}
                                    className="btn btn-just-icon btn-link btn-twitter text-alpiniste"><FontAwesomeIcon
                                     icon={faInstagram}/></a>
                                 <a href="#pablo"

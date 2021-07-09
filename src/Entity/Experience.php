@@ -96,6 +96,11 @@ class Experience
      */
     private $guide;
 
+
+    /**
+     * @Groups({"list":"read"})
+     */
+    private $guide_eager;
     /**
      * @Groups({"list":"read"})
      * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
@@ -383,6 +388,21 @@ class Experience
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getGuideEager()
+    {
+        $g=[];
+        $g["id"]=$this->guide->getId();
+        $g["fullName"]=$this->guide->getFullName();
+        $g["imageName"]=$this->guide->getImageName();
+        return $g;
+    }
+
+
+
 
     public function getGuide(): ?Guide
     {

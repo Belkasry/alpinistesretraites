@@ -108,7 +108,7 @@ export class Experiences extends Component {
                         return <div className="grid-item pl-2">
                             <div className="card mb-2 thecard border-alpiniste ">
                                 <h6 className="card-header bg-light ">
-                                    <Link to={`/accompagnateur/experience/13`}>
+                                    <Link to={`/accompagnateur/experience/${experience.id}`}>
                                         <a href="#" className="text-info">{experience.title}</a></Link>
                                 </h6>
                                 <div className="card-body m-1 p-1">

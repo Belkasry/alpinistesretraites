@@ -11,13 +11,22 @@
     use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
     use Symfony\Component\Serializer\Annotation\Groups;
     use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+    use Symfony\Component\Serializer\Annotation\SerializedName;
 
     /**
      * @ApiResource(
-     *     normalizationContext={"groups"={"read"}},
+     *  normalizationContext={"groups"={"read"}},
+     *  denormalizationContext={"groups"={"write"}},
      * )
      * @ORM\Entity(repositoryClass=UserRepository::class)
-     * @UniqueEntity("login")
+ *  * @UniqueEntity(
+     *     fields={"email"},
+     *     message="Email déja utilisé"
+     * )
+     * @UniqueEntity(
+     *     fields={"login"},
+     *     message="Login déja utilisé"
+     * )
      * @ApiFilter(SearchFilter::class, properties={"id": "exact","login":"exact"})
      * @ORM\HasLifecycleCallbacks()
      */
@@ -28,35 +37,43 @@
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
-         * @Groups({"list":"read"})
+         * @Groups({"read"})
          * @ORM\Column(type="integer")
          */
         private $id;
 
 
         /** @ORM\Column(type="json")
-         * @Groups({"list":"read"})
+         * @Groups({"read"})
          */
         private $roles = [];
 
         /**
+         * @Groups({"read","write"})
          * @ORM\Column(type="string", length=255)
-         * @Groups({"list":"read"})
          */
         private $login;
 
         /**
+         * @Groups({"write"})
          * @ORM\Column(type="string", length=255)
          */
         private $password_hash;
 
         /**
+         * @Groups({"read","write"})
          * @Assert\EqualTo(propertyPath="password_hash" , message="Mot de pass non identique")
          */
         public $password_confirm;
 
+        /**
+         * @Groups({"read","write"})
+         */
+        public $plain_password;
+
 
         /**
+         * @Groups({"read","write"})
          * @ORM\Column(type="string", length=255)
          */
         private $email;
@@ -64,16 +81,24 @@
 
         /**
          * @ORM\OneToOne(targetEntity=Guide::class, cascade={"persist", "remove"})
-         * @Groups({"list":"read"})
+         * @Groups({"read"})
          */
         private $guide;
 
         /**
+         * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+         * @Groups({"read","write"})
+         */
+        private $utilisateur;
+
+        /**
+         * @Groups({"read","write"})
          * @ORM\Column(type="datetime")
          */
         private $birthday;
 
         /**
+         * @Groups({"write","read"})
          * @ORM\Column(type="string", length=255)
          */
         private $token;
@@ -169,14 +194,29 @@
 
             return $this;
         }
+        
+        public function getUtilisateur(): ?Utilisateur
+        {
+            return $this->utilisateur;
+        }
+
+        public function setUtilisateur(?Utilisateur $utilisateur): self
+        {
+            $this->utilisateur = $utilisateur;
+
+            return $this;
+        }
 
         /** @ORM\PrePersist */
         public function doStuffOnPostPersist()
         {
-            $guide = $this->guide;
             $from = $this->getBirthday();
             $to = new \DateTime('today');
-            $this->guide->setAge($from->diff($to)->y);
+            if ($this->guide != null)
+                $this->guide->setAge($from->diff($to)->y);
+
+            if ($this->utilisateur != null)
+                $this->utilisateur->setAge($from->diff($to)->y);
         }
 
         public function getBirthday(): ?\DateTimeInterface

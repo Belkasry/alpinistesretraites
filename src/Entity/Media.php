@@ -16,7 +16,7 @@
     use App\ApiPlatform\GuideFilter;
 
     /**
-     *@ApiResource(
+     * @ApiResource(
      * normalizationContext={"groups"={"read"}},
      * paginationItemsPerPage=8
      * )
@@ -31,7 +31,7 @@
          * @ORM\Id
          * @ORM\GeneratedValue
          * @ORM\Column(type="integer")
-         *  @Groups({"read"})
+         * @Groups({"read"})
          */
         private $id;
 
@@ -40,6 +40,12 @@
          * @ORM\JoinColumn(nullable=false)
          */
         private $guide;
+
+        /**
+         * @ORM\ManyToOne(targetEntity=Utilisateur::class, inversedBy="medias")
+         * @ORM\JoinColumn(nullable=false)
+         */
+        private $utilisateur;
 
         /**
          * @ORM\ManyToOne(targetEntity=Experience::class, inversedBy="medias")
@@ -139,11 +145,25 @@
             return $this;
         }
 
+        public function getUtilisateur(): ?Utilisateur
+        {
+            return $this->utilisateur;
+        }
+
+        public function setUtilisateur(?Utilisateur $utilisateur): self
+        {
+            $this->utilisateur = $utilisateur;
+
+            return $this;
+        }
+        
         /** @ORM\PrePersist */
         public function doStuffOnPostPersist()
         {
-            $guide = $this->experience->getGuide();
-            $this->setGuide($guide);
+            if ($this->experience != null) {
+                $guide = $this->experience->getGuide();
+                $this->setGuide($guide);
+            }
 
         }
 
@@ -162,12 +182,12 @@
 
         public function serialize()
         {
-            $this->imageFile=base64_encode($this->imageFile);
+            $this->imageFile = base64_encode($this->imageFile);
         }
 
 
         public function unserialize($serialized)
         {
-            $this->imageFile=base64_decode($this->imageFile);
+            $this->imageFile = base64_decode($this->imageFile);
         }
     }

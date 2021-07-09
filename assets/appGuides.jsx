@@ -17,12 +17,12 @@ import {
 } from "react-router-dom";
 import Auth from "./components/Auth";
 import {ExperienceProfil} from "./components/ExperienceProfil";
+import Signup from "./components/SignUp";
 
 
 function AppGuides() {
 
     const cookies = new Cookies();
-    cookies.set('myCat', 'Pacman', { path: '/' });
     const [search, setSearch] = useState("");
     const [count, setCount] = useState(0); //test
     const contextValue = {
@@ -47,6 +47,15 @@ function AppGuides() {
                                     <main className="bg-light p-3 border-alpiniste border-sketchy " style={{marginLeft:"20vh"}}>
                                     <Auth/>
                                     </main>
+                                    </div>
+                                </Route>
+                                <Route path={['/accompagnateur/signup']}>
+                                    <div className="m-auto pt-5">
+                                        <h1 className="text-success border-sketchy-2 bg-light " style={{marginLeft:"20vh" , minWidth:"80vh"}}>Inscription</h1>
+                                        <main className="bg-light p-3 border-alpiniste border-sketchy " style={{marginLeft:"20vh" , minWidth:"80vh"}}>
+
+                                            <Signup/>
+                                        </main>
                                     </div>
                                 </Route>
                                 <Route path="/accompagnateur/list">
