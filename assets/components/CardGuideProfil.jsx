@@ -9,19 +9,105 @@ import {
 import {faFacebook, faInstagram, faMailchimp} from "@fortawesome/free-brands-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import background_card from '../img/alpinistesretraites_card_bg.png'
+import axios from "axios/index";
+import Cookies from "universal-cookie";
 
 class CardGuideProfil extends Component {
     constructor(props) {
         super(props);
+        const cookies = new Cookies();
+        let user = cookies.get('user') ? cookies.get('user') : {};
         this.state = {
-            follow: true
+            follow: false,
+            subscription:user.subscription
         }
         this.follow_ = this.follow_.bind(this);
+        this.following = this.following.bind(this);
+        this.followed = this.followed.bind(this);
     }
 
     follow_() {
-        this.setState({follow: !this.state.follow});
+        this.following();
+
     }
+
+
+
+    componentDidMount(){
+        this.followed();
+    }
+
+
+    following = async () => {
+        try {
+
+            var data = JSON.stringify({
+                "guides": [
+                    "/api/guides/" + this.props.guide_id,
+                ]
+            });
+
+            var base_url = "http://127.0.0.1:8000/api/subscriptions/"+this.state.subscription;
+            var config = {
+                method: this.state.follow ? 'delete' : 'patch',
+                url: base_url + (this.state.follow ? '/patch' : ''),
+                headers: {
+                    'Content-Type': !this.state.follow ? 'application/merge-patch+json' : 'application/json'
+                },
+                data: data
+            };
+
+            axios(config)
+                .then((response) => {
+                    this.setState({follow: !this.state.follow});
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        } finally {
+        }
+
+
+    };
+    followed = () => {
+        try {
+            var baseUrl='http://127.0.0.1:8000/api/subscriptions?id='+this.state.subscription+'&guides.id='+this.props.guide_id;
+            var config = {
+                method: 'get',
+                url: baseUrl,
+                headers: {}
+            };
+
+            axios(config)
+                .then((response) => {
+                    console.log(JSON.stringify(response.data));
+                    if (response.data["hydra:totalItems"] > 0) {
+                        this.setState(
+                            {follow: true}
+                        )
+                    } else {
+                        this.setState(
+                            {follow: false}
+                        )
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+        } finally {
+        }
+
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.experience !== this.props.experience) {
+
+        }
+    }
+
 
     render() {
         var descript = this.props.guide.description ? this.props.guide.description : "<hr/>";

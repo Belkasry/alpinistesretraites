@@ -136,6 +136,15 @@
          */
         private $experiences;
 
+        /**
+         * @Groups({"read"})
+         * @ApiProperty(
+         *    readableLink=false,
+         * )
+         * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="guides")
+         */
+        private $subscriptions;
+
 
 
 
@@ -144,6 +153,7 @@
             $this->activites = new ArrayCollection();
             $this->medias = new ArrayCollection();
             $this->experiences = new ArrayCollection();
+            $this->subscriptions = new ArrayCollection();
         }
 
         /**
@@ -416,6 +426,33 @@
         public function __toString()
         {
             return $this->getFullName();
+        }
+
+        /**
+         * @return Collection|Subscription[]
+         */
+        public function getSubscriptions(): Collection
+        {
+            return $this->subscriptions;
+        }
+
+        public function addSubscription(Subscription $subscription): self
+        {
+            if (!$this->subscriptions->contains($subscription)) {
+                $this->subscriptions[] = $subscription;
+                $subscription->addGuide($this);
+            }
+
+            return $this;
+        }
+
+        public function removeSubscription(Subscription $subscription): self
+        {
+            if ($this->subscriptions->removeElement($subscription)) {
+                $subscription->removeGuide($this);
+            }
+
+            return $this;
         }
 
 

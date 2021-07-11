@@ -50,10 +50,13 @@ class Auth extends Component {
                 );
 
                 let res = response.data["hydra:member"][0];
+                let subs=res.subscription.split('/');
+
                 let Leuser = {
                     id: res.id,
                     email: res.email,
                     login: res.login,
+                    subscription:subs[subs.length-1],
 
                 };
                 let LeUserComplement = {};

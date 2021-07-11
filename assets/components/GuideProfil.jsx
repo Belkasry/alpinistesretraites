@@ -26,6 +26,7 @@ export class GuideProfil extends Component {
         super(props)
         const text = "Et necessitatibus mo Quisque velit nisi, pretium ut lacinia in,elementum id enim." + "Et necessitatibus mo Quisque velit nisi, pretium ut lacinia in,elementum id enim.";
         const unguide = {
+            id:0,
             description: text,
             location: "XXXX",
             fullName: "XXXXXXX"
@@ -87,7 +88,7 @@ export class GuideProfil extends Component {
 
 
         return <div className="container">
-            <CardGuideProfil guide={this.state.guide}/>
+            <CardGuideProfil guide={this.state.guide} guide_id={this.props.match.params.id}/>
             <div className="row ">
                 <div className="col-md-12 ml-auto mr-auto">
                     <div className="profile-tabs pl-5">

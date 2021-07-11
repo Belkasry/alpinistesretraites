@@ -2,6 +2,7 @@
 
     namespace App\Controller;
 
+    use App\Entity\Subscription;
     use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
     use App\Entity\User;
@@ -63,7 +64,7 @@
         /**
          * @Route("/activate_user/{token}", name="activate_user")
          */
-        public function activateUserGuide(Request $request, $token, EntityManagerInterface $manager): Response
+        public function activateUser(Request $request, $token, EntityManagerInterface $manager): Response
         {
             $serializer = $this->get('serializer');
             $data = json_decode($request->getContent(), true);
@@ -74,6 +75,9 @@
             $repo = $manager->getRepository(User::class);
             $user = $repo->findOneByEmailToken($email,$token);
             if ($user && $user->getStatut() != 1) {
+                $subscription=new Subscription();
+                $manager->persist($subscription);
+                $user->setSubscription($subscription);
                 $user->setStatut(1);
                 $user->addRole("ROLE_UTILISATEUR");
                 $manager->persist($user);

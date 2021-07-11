@@ -12,6 +12,7 @@
     use Symfony\Component\Serializer\Annotation\Groups;
     use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
     use Symfony\Component\Serializer\Annotation\SerializedName;
+    use ApiPlatform\Core\Annotation\ApiProperty;
 
     /**
      * @ApiResource(
@@ -61,7 +62,6 @@
         private $password_hash;
 
         /**
-         * @Groups({"read","write"})
          * @Assert\EqualTo(propertyPath="password_hash" , message="Mot de pass non identique")
          */
         public $password_confirm;
@@ -108,6 +108,16 @@
          * @ORM\Column(name="statut", type="boolean", nullable=true)
          */
         private $statut;
+
+        /**
+         * @ApiProperty(
+         *    readableLink=false,
+         *    writableLink=true
+         * )
+         * @Groups({"write","read"})
+         * @ORM\OneToOne(targetEntity=Subscription::class, inversedBy="user", cascade={"persist", "remove"})
+         */
+        private $subscription;
 
         /**
          * @return mixed
@@ -300,6 +310,18 @@
             if (empty($this->roles) || !in_array($role, $this->roles, true)) {
                 $this->roles[] = $role;
             }
+
+            return $this;
+        }
+
+        public function getSubscription(): ?Subscription
+        {
+            return $this->subscription;
+        }
+
+        public function setSubscription(?Subscription $subscription): self
+        {
+            $this->subscription = $subscription;
 
             return $this;
         }

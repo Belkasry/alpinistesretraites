@@ -28,7 +28,8 @@ export class NavBar extends Component {
             token: token,
             valid: true,
             decoded: decoded,
-            user: {}
+            user: {},
+            comptearebour:0,
         }
         this.testToken = this.testToken.bind(this);
         this.logout = this.logout.bind(this);
@@ -37,7 +38,7 @@ export class NavBar extends Component {
 
     componentDidMount() {
         const cookies = new Cookies();
-        if (cookies.get("token") != "")
+        if (cookies.get("token") != ""&&cookies.get("user") != "")
             this.interval = setInterval(() => this.testToken(), 100);
         else {
             this.setState({
@@ -76,7 +77,8 @@ export class NavBar extends Component {
 
         if (decoded != null) {
             this.setState({
-                valid: ((Date.now() - decoded.exp * 1000) < 0)
+                valid: ((Date.now() - decoded.exp * 1000) < 0),
+                // comptearebour:(Date.now() - decoded.exp * 1000)
             });
         }
     }

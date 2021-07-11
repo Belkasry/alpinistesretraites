@@ -11,6 +11,8 @@ use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  *@ApiResource(
@@ -25,14 +27,14 @@ class Experience
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $title;
 
@@ -43,7 +45,7 @@ class Experience
      *      max = 5,
      *      notInRangeMessage = "Difficulte entre 0 et 5",
      * )
-     *  @Groups({"list":"read"})
+     *  @Groups({"read"})
      */
     private $dificulte;
 
@@ -58,13 +60,13 @@ class Experience
     private $nbr_participant_restant;
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
     private $prix;
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="text")
      */
     private $description;
@@ -81,13 +83,13 @@ class Experience
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $finish;
 
@@ -98,23 +100,23 @@ class Experience
 
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $guide_eager;
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
      */
     private $activites;
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @ORM\OneToMany(targetEntity=Media::class, mappedBy="experience", cascade={"persist"})
      */
     private $medias;
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      * @ORM\JoinColumn(nullable=false)
@@ -149,6 +151,11 @@ class Experience
      * @ORM\Column(name="duree",type="integer", nullable=true)
      */
     private $duree;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experiences")
+     */
+    private $subscriptions;
 
 
     public function getDuree(): ?int
@@ -206,6 +213,7 @@ class Experience
         $this->activites = new ArrayCollection();
         $this->medias = new ArrayCollection();
         $this->steps = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     /**
@@ -462,6 +470,35 @@ class Experience
 
         return $this;
     }
+
+    /**
+     * @return Collection|Subscription[]
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscription $subscription): self
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions[] = $subscription;
+            $subscription->addExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): self
+    {
+        if ($this->subscriptions->removeElement($subscription)) {
+            $subscription->removeExperience($this);
+        }
+
+        return $this;
+    }
+
+
 
 
 }
