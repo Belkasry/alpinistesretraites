@@ -145,6 +145,11 @@
          */
         private $subscriptions;
 
+        /**
+         * @ORM\OneToMany(targetEntity=Review::class, mappedBy="guide")
+         */
+        private $reviews;
+
 
 
 
@@ -154,6 +159,7 @@
             $this->medias = new ArrayCollection();
             $this->experiences = new ArrayCollection();
             $this->subscriptions = new ArrayCollection();
+            $this->reviews = new ArrayCollection();
         }
 
         /**
@@ -450,6 +456,36 @@
         {
             if ($this->subscriptions->removeElement($subscription)) {
                 $subscription->removeGuide($this);
+            }
+
+            return $this;
+        }
+
+        /**
+         * @return Collection|Review[]
+         */
+        public function getReviews(): Collection
+        {
+            return $this->reviews;
+        }
+
+        public function addReview(Review $review): self
+        {
+            if (!$this->reviews->contains($review)) {
+                $this->reviews[] = $review;
+                $review->setGuide($this);
+            }
+
+            return $this;
+        }
+
+        public function removeReview(Review $review): self
+        {
+            if ($this->reviews->removeElement($review)) {
+                // set the owning side to null (unless already changed)
+                if ($review->getGuide() === $this) {
+                    $review->setGuide(null);
+                }
             }
 
             return $this;

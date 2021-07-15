@@ -38,9 +38,13 @@ class CardGuideProfil extends Component {
     }
 
 
-    following = async () => {
+    following(){
         try {
 
+            let abonne=this.state.follow;
+            console.log(">>>>>>>>>>>> abonne >>>>"+abonne);
+            this.setState({follow: false});
+            console.log(">>>>>>>>>>>> this.state.follow >>>>"+this.state.follow)
             var data = JSON.stringify({
                 "guides": [
                     "/api/guides/" + this.props.guide_id,
@@ -49,20 +53,22 @@ class CardGuideProfil extends Component {
 
             var base_url = "http://127.0.0.1:8000/api/subscriptions/"+this.state.subscription;
             var config = {
-                method: this.state.follow ? 'delete' : 'patch',
-                url: base_url + (this.state.follow ? '/patch' : ''),
+                method: abonne ? 'delete' : 'patch',
+                url: base_url + (abonne ? '/patch' : ''),
                 headers: {
-                    'Content-Type': !this.state.follow ? 'application/merge-patch+json' : 'application/json'
+                    'Content-Type': !abonne ? 'application/merge-patch+json' : 'application/json'
                 },
                 data: data
             };
 
+            console.log(data);
+
             axios(config)
                 .then((response) => {
-                    this.setState({follow: !this.state.follow});
                     console.log(JSON.stringify(response.data));
                 })
                 .catch((error) => {
+                    this.setState({follow: !abonne});
                     console.log(error);
                 });
 
@@ -73,7 +79,7 @@ class CardGuideProfil extends Component {
     };
     followed = () => {
         try {
-            var baseUrl='http://127.0.0.1:8000/api/subscriptions?id='+this.state.subscription+'&guides.id='+this.props.guide_id;
+            var baseUrl='http://127.0.0.1:8000/api/subscriptions?page=1&id='+this.state.subscription+'&guides.id='+this.props.guide_id;
             var config = {
                 method: 'get',
                 url: baseUrl,

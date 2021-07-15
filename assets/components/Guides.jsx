@@ -8,6 +8,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 
 
+
 export class Guides extends Component {
 
 
@@ -59,7 +60,6 @@ export class Guides extends Component {
             this.interval = setInterval(() => this.tick(), 100);
             const cookies = new Cookies();
             let token= cookies.get('token');
-            console.log("----"+token+"----");
             const instance = axios.create({
                 baseURL: `http://127.0.0.1:8000/`,
                 headers: {'Authorization': 'Bearer '+token}

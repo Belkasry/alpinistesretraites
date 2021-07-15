@@ -269,3 +269,27 @@
     width: 30px;
 }
 
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+.folowers-description {
+    width: 50%
+}
+.container3grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.half {
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    flex-basis: 50% !important;
+}
+.quart {
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    flex-basis: 25% !important;
+}

@@ -5,11 +5,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/components/Auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/Auth.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/components/CardGuideProfil.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/CardGuideProfil.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/components/Experiences.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/Experiences.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/components/GuideProfil.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/GuideProfil.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/components/Guides.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/Guides.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/DefaultController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/DefaultController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/css/couche-bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/css/couche-bootstrap.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Experience.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Experience.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Guide.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Guide.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
@@ -41,11 +41,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="CardGuideProfil.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/assets/components/CardGuideProfil.jsx">
+      <file leaf-file-name="Review.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/Review.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="106">
-              <caret line="83" column="24" lean-forward="true" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
+            <state relative-caret-position="1411">
+              <caret line="91" column="11" selection-start-line="91" selection-start-column="11" selection-end-line="91" selection-end-column="11" />
+              <folding>
+                <element signature="e#38#82#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Reviews.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/components/Reviews.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4420">
+              <caret line="268" column="36" selection-start-line="268" selection-start-column="36" selection-end-line="268" selection-end-column="36" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
@@ -56,8 +68,8 @@
       <file leaf-file-name="Followers.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/components/Followers.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="26" column="42" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="42" />
+            <state relative-caret-position="1275">
+              <caret line="79" column="26" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -65,11 +77,8 @@
       <file leaf-file-name="GuideProfil.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/components/GuideProfil.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="306">
+              <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -77,23 +86,17 @@
       <file leaf-file-name="CardExperienceProfil.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/components/CardExperienceProfil.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="43" selection-start-line="43" selection-end-line="43" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="578">
+              <caret line="50" selection-start-line="50" selection-end-line="50" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Guide.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Guide.php">
+      <file leaf-file-name="CardGuideProfil.jsx" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/components/CardGuideProfil.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="142" column="12" lean-forward="true" selection-start-line="142" selection-start-column="12" selection-end-line="142" selection-end-column="12" />
-              <folding>
-                <element signature="e#38#73#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="187">
+              <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -101,11 +104,17 @@
       <file leaf-file-name="Experience.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Experience.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="21" column="39" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="39" />
-              <folding>
-                <element signature="e#30#70#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="273">
+              <caret line="506" column="9" lean-forward="true" selection-start-line="506" selection-start-column="9" selection-end-line="506" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Experiences.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/components/Experiences.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2108">
+              <caret line="142" column="148" selection-start-line="142" selection-start-column="133" selection-end-line="142" selection-end-column="148" />
             </state>
           </provider>
         </entry>
@@ -113,22 +122,10 @@
       <file leaf-file-name="Subscription.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Subscription.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="45" column="8" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="48" selection-end-column="12" />
+            <state relative-caret-position="1088">
+              <caret line="74" selection-start-line="74" selection-end-line="74" />
               <folding>
                 <element signature="e#38#82#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SubscriptionController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/SubscriptionController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="41">
-              <caret line="34" column="18" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-              <folding>
-                <element signature="e#42#70#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -145,44 +142,38 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>prevPr</find>
-      <find>experience:</find>
-      <find>card</find>
-      <find>map</find>
-      <find>console</find>
-      <find>following</find>
-      <find>subs</find>
-      <find>cookies.get('use</find>
-      <find>user</find>
-      <find>props.experience.id</find>
-      <find>cookies</find>
-      <find>2&quot;</find>
-      <find>2</find>
+      <find>profil</find>
+      <find>subscript</find>
       <find>subscription</find>
-      <find>'user</find>
-      <find>logout</find>
-      <find>testToken</find>
-      <find>comptearebour</find>
-      <find>props.guid</find>
-      <find>experience_id</find>
-      <find>experienceRepository</find>
-      <find>/subscriptions/</find>
-      <find>experiences</find>
-      <find>&lt;card</find>
-      <find>experience</find>
-      <find>followed</find>
-      <find>componentWillReceiveProps</find>
-      <find>guide.id</find>
+      <find>loadReviews</find>
+      <find>.comment</find>
+      <find>myComment</find>
+      <find>data</find>
+      <find>response.da</find>
+      <find>getm</find>
+      <find>response.dat</find>
+      <find>response.data</find>
+      <find>myComm</find>
+      <find>myReview</find>
+      <find>errorMessage</find>
+      <find>commenter</find>
+      <find>rating</find>
+      <find>date</find>
+      <find>myRe</find>
+      <find>dateFormat</find>
+      <find>crea</find>
       <find>guide</find>
-      <find>prope</find>
+      <find>&lt;Follow</find>
+      <find>subsc</find>
+      <find>followers</find>
+      <find>react</find>
+      <find>card</find>
+      <find>follow</find>
+      <find>conso</find>
+      <find>componentWillUnmount</find>
+      <find>removeSub</find>
     </findStrings>
     <replaceStrings>
-      <replace>Media</replace>
-      <replace>.data.[&quot;hydra:member&quot;]</replace>
-      <replace>.data[&quot;hydra:member&quot;]</replace>
-      <replace>eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2MjQ0ODIzNjAsImV4cCI6MTYyNDQ4NTk2MCwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9HVUlERSIsIlJPTEVfQURNSU4iXSwidXNlcm5hbWUiOiJndWlkZTAwNyJ9.Pt-lH1ohYGmGnhg5mxOpu2-mgkPClvAvu2lVyCF0lkNLZAQlP6gy0ZjLUwkfbuR5eCohXfZddLKlmqzbJcZU8M-QH2zDjg0QYRMGawPVk1aGww1NY4eNLq82552Mx4ZXUo9Ufn72P9AM_KymcsxAFhm4hozjwJcMPIZrPu9EWXCJXxR16Udikf4q1CFnpgZkc493VpuWnTu2xhtctbNJJaVd-88onavE4euShQti_7JPRPlGC95yNKnj9sZbg59o0GyxVVRdDH4qMw3s8MJJ3V6h4tBiE73VUJG5vAK1z1PzGCD065ZmongmIbgh_DVA9ZrgUSMpnFKaTLpovoz3hqKjLeimr2t-ehgbvUFRkTJa0acOPdQKKlse2ORtkMZI8hUWUNkuc_khYgkyxrX64rXgPBJyl0OpBqco-gRWDCbxIrS1KxSYD9Pge3rIjTRlupawSX_chIfVp5niS1FbTwkqjGzFJdRxDneVXJGHtocYRDQklpt_O0jCFV0GfgcIpWx_K1tyzM-wg8CdB0yHvUbbOPxdT0DM54r6MajwCeKwss6bAvtC29yU5N1bjx54te9yTywKvKfPTYIuvXUwX_7UsTT4rQcnUVSgkEPn1bvGdoIGsEBcECk0-l_kMP6w7JfRyBZDxsL0i_du3eUP6kLsZIXZdOqI7v_Re6CcyfU</replace>
-      <replace>className</replace>
-      <replace>className=&quot;</replace>
       <replace>&lt;FontAwesomeIcon icon={faBars} color=&quot;grey&quot;/&gt;</replace>
       <replace>detail</replace>
       <replace>\</replace>
@@ -207,6 +198,12 @@
       <replace>&quot;read&quot;</replace>
       <replace>guides</replace>
       <replace>guide</replace>
+      <replace>subscriptions</replace>
+      <replace>Follower</replace>
+      <replace>User</replace>
+      <replace>loadFollowers</replace>
+      <replace>d-none</replace>
+      <replace>review</replace>
     </replaceStrings>
     <dirStrings>
       <dir>C:\wamp64\www\alpinistesretraites\src\Controller</dir>
@@ -216,6 +213,7 @@
       <dir>C:\wamp64\www\alpinistesretraites\src\</dir>
       <dir>C:\wamp64\www\alpinistesretraites\src\Entity</dir>
       <dir>D:\projects\alpinistesretraites\assets</dir>
+      <dir>D:\projects\alpinistesretraites\src\Entity</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -290,14 +288,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/assets/components/FormLogin.jsx" />
-        <option value="$PROJECT_DIR$/assets/components/NavSearch.jsx" />
-        <option value="$PROJECT_DIR$/assets/app.jsx" />
         <option value="$PROJECT_DIR$/assets/components/Carousel.jsx" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/assets/app.js" />
-        <option value="$PROJECT_DIR$/assets/css/couche-bootstrap.css" />
-        <option value="$PROJECT_DIR$/assets/components/Guides.jsx" />
         <option value="$PROJECT_DIR$/src/Security/UserChecker.php" />
         <option value="$PROJECT_DIR$/config/routes.yaml" />
         <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
@@ -315,7 +308,6 @@
         <option value="$PROJECT_DIR$/assets/components/RequirementExperience.js" />
         <option value="$PROJECT_DIR$/assets/components/RequirementExperience.jsx" />
         <option value="$PROJECT_DIR$/assets/css/couche-react-vertical-timeline-component.css" />
-        <option value="$PROJECT_DIR$/assets/components/Experiences.jsx" />
         <option value="$PROJECT_DIR$/assets/components/Guide.jsx" />
         <option value="$PROJECT_DIR$/assets/appGuides.jsx" />
         <option value="$PROJECT_DIR$/src/Entity/Media.php" />
@@ -328,19 +320,25 @@
         <option value="$PROJECT_DIR$/src/Controller/DefaultController.php" />
         <option value="$PROJECT_DIR$/config/packages/api_platform.yaml" />
         <option value="$PROJECT_DIR$/src/Repository/SubscriptionRepository.php" />
-        <option value="$PROJECT_DIR$/src/Entity/Experience.php" />
-        <option value="$PROJECT_DIR$/assets/components/ExperienceProfil.jsx" />
         <option value="$PROJECT_DIR$/assets/components/DetailExperience.jsx" />
+        <option value="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" />
+        <option value="$PROJECT_DIR$/src/Controller/SubscriptionController.php" />
+        <option value="$PROJECT_DIR$/src/Entity/Guide.php" />
+        <option value="$PROJECT_DIR$/src/Entity/Experience.php" />
+        <option value="$PROJECT_DIR$/assets/components/Experiences.jsx" />
+        <option value="$PROJECT_DIR$/assets/components/Guides.jsx" />
+        <option value="$PROJECT_DIR$/assets/components/ExperienceProfil.jsx" />
+        <option value="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" />
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
         <option value="$PROJECT_DIR$/assets/components/Auth.jsx" />
-        <option value="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" />
-        <option value="$PROJECT_DIR$/assets/components/partials/NavBar.jsx" />
-        <option value="$PROJECT_DIR$/src/Controller/SubscriptionController.php" />
         <option value="$PROJECT_DIR$/src/Entity/Subscription.php" />
-        <option value="$PROJECT_DIR$/assets/components/CardExperienceProfil.jsx" />
+        <option value="$PROJECT_DIR$/assets/css/couche-bootstrap.css" />
+        <option value="$PROJECT_DIR$/src/Entity/Review.php" />
+        <option value="$PROJECT_DIR$/assets/components/Followers.jsx" />
         <option value="$PROJECT_DIR$/assets/components/GuideProfil.jsx" />
+        <option value="$PROJECT_DIR$/assets/components/Reviews.jsx" />
+        <option value="$PROJECT_DIR$/assets/components/CardExperienceProfil.jsx" />
         <option value="$PROJECT_DIR$/assets/components/CardGuideProfil.jsx" />
-        <option value="$PROJECT_DIR$/src/Entity/Guide.php" />
       </list>
     </option>
   </component>
@@ -501,7 +499,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -532,17 +529,6 @@
               <item name="alpinistesretraites" type="462c0819:PsiDirectoryNode" />
               <item name="assets" type="462c0819:PsiDirectoryNode" />
               <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="alpinistesretraites" type="b2602c69:ProjectViewProjectNode" />
-              <item name="alpinistesretraites" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="alpinistesretraites" type="b2602c69:ProjectViewProjectNode" />
-              <item name="alpinistesretraites" type="462c0819:PsiDirectoryNode" />
-              <item name="config" type="462c0819:PsiDirectoryNode" />
-              <item name="packages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="alpinistesretraites" type="b2602c69:ProjectViewProjectNode" />
@@ -617,6 +603,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -630,19 +617,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\projects\alpinistesretraites\assets\components" />
-      <recent name="D:\projects\alpinistesretraites\src\Entity" />
-      <recent name="D:\projects\alpinistesretraites\assets\css" />
-      <recent name="D:\projects\alpinistesretraites\assets\components\partials" />
-      <recent name="D:\projects\alpinistesretraites\assets" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\projects\alpinistesretraites\assets\components" />
       <recent name="D:\projects\alpinistesretraites\assets\components\partials" />
       <recent name="D:\projects\alpinistesretraites\assets" />
       <recent name="D:\projects\alpinistesretraites\assets\js" />
       <recent name="C:\wamp64\www\alpinistesretraites\templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\projects\alpinistesretraites\assets\components" />
+      <recent name="D:\projects\alpinistesretraites\src\Entity" />
+      <recent name="D:\projects\alpinistesretraites\assets\css" />
+      <recent name="D:\projects\alpinistesretraites\assets\components\partials" />
+      <recent name="D:\projects\alpinistesretraites\assets" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -814,11 +801,20 @@
       <workItem from="1625734191082" duration="26100000" />
       <workItem from="1625824477504" duration="14323000" />
       <workItem from="1625900914126" duration="35099000" />
+      <workItem from="1625992048991" duration="18194000" />
+      <workItem from="1626019492827" duration="4364000" />
+      <workItem from="1626084034194" duration="2311000" />
+      <workItem from="1626101621327" duration="22532000" />
+      <workItem from="1626177505366" duration="517000" />
+      <workItem from="1626187482768" duration="6137000" />
+      <workItem from="1626198252428" duration="1589000" />
+      <workItem from="1626349711419" duration="2222000" />
+      <workItem from="1626368283122" duration="798000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="873632000" />
+    <option name="totallyTimeSpent" value="932296000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -834,12 +830,12 @@
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32920355" />
-      <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50040483" side_tool="true" weight="0.28672567" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32920355" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32920355" />
-      <window_info anchor="bottom" id="Terminal" order="7" weight="0.28672567" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49911505" visible="true" weight="0.26477733" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49959514" weight="0.28672567" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49911505" visible="true" weight="0.30850202" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32955465" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
@@ -855,10 +851,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32920355" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49911505" visible="true" weight="0.25587043" />
       <window_info anchor="right" id="Structure" order="4" sideWeight="0.50088495" side_tool="true" weight="0.1854251" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -866,14 +862,14 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32920355" />
       <window_info anchor="bottom" id="TypeScript" order="12" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32920355" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" id="Database" order="3" weight="0.32955465" />
       <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.4637168" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.32920355" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="1" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -889,30 +885,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/assets/appGuides.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="56" column="47" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708122238.php" />
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708122949.php" />
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708123813.php" />
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708123052.php" />
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708124119.php" />
-    <entry file="file://$PROJECT_DIR$/src/Entity/Media.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="165" column="13" lean-forward="true" selection-start-line="165" selection-start-column="13" selection-end-line="165" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708124516.php" />
-    <entry file="file://$PROJECT_DIR$/migrations/Version20210708124557.php" />
     <entry file="file://$PROJECT_DIR$/migrations/Version20210708124816.php" />
     <entry file="file://$PROJECT_DIR$/migrations/Version20210708125120.php" />
     <entry file="file://$PROJECT_DIR$/migrations/Version20210708125546.php" />
@@ -929,9 +901,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="20">
           <caret line="100" column="11" lean-forward="true" selection-start-line="100" selection-start-column="11" selection-end-line="100" selection-end-column="11" />
-          <folding>
-            <element signature="e#37#91#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -967,13 +936,6 @@
         <state relative-caret-position="-102" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/SignUp.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1989">
-          <caret line="120" column="57" selection-start-line="120" selection-start-column="44" selection-end-line="120" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/GuideController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="503">
@@ -991,9 +953,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="111">
           <caret line="72" column="29" lean-forward="true" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
-          <folding>
-            <element signature="e#42#70#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1022,9 +981,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="361">
           <caret line="56" column="9" lean-forward="true" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
-          <folding>
-            <element signature="e#42#68#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1049,57 +1005,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/Experiences.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="58" column="4" selection-start-line="58" selection-start-column="4" selection-end-line="58" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/Guide.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="51" selection-start-line="51" selection-end-line="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/ExperienceProfil.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="89" lean-forward="true" selection-start-line="89" selection-end-line="89" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/DetailExperience.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/Auth.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="53" selection-start-line="53" selection-end-line="53" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/assets/components/NavSearch.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#63#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1110,97 +1019,187 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/partials/NavBar.jsx">
+    <entry file="file://$PROJECT_DIR$/src/Entity/Guide.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+        <state relative-caret-position="2193">
+          <caret line="142" column="12" selection-start-line="140" selection-start-column="9" selection-end-line="142" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/api-platform/core/src/Annotation/ApiResource.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="26" column="47" lean-forward="true" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/SubscriptionController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="34" column="18" selection-start-line="34" selection-start-column="18" selection-end-line="34" selection-end-column="18" />
-          <folding>
-            <element signature="e#42#70#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="374">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/Guides.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="179">
+          <caret line="613" column="4" selection-start-line="613" selection-start-column="4" selection-end-line="613" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/DetailExperience.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="21" column="5" lean-forward="true" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/Guide.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="50" column="33" selection-start-line="50" selection-start-column="33" selection-end-line="50" selection-end-column="74" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1394">
-          <caret line="14" column="48" selection-start-line="14" selection-start-column="48" selection-end-line="14" selection-end-column="48" />
-          <folding>
-            <element signature="e#38#72#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="17" column="20" selection-start-line="17" selection-start-column="20" selection-end-line="17" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/CardExperienceProfil.jsx">
+    <entry file="file://$PROJECT_DIR$/assets/components/ExperienceProfil.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="1717">
+          <caret line="128" column="45" selection-start-line="128" selection-start-column="45" selection-end-line="128" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/CardGuideProfil.jsx">
+    <entry file="file://$PROJECT_DIR$/assets/components/FormLogin.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="106">
-          <caret line="83" column="24" lean-forward="true" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="119">
+          <caret line="13" column="14" lean-forward="true" selection-start-line="13" selection-start-column="14" selection-end-line="13" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/Followers.jsx">
+    <entry file="file://$PROJECT_DIR$/assets/components/SignUp.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="26" column="42" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="42" />
+        <state relative-caret-position="99">
+          <caret line="205" column="55" selection-start-line="205" selection-start-column="39" selection-end-line="205" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/components/GuideProfil.jsx">
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="85" lean-forward="true" selection-start-line="85" selection-end-line="85" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="117">
+          <caret line="15910" column="17" selection-start-line="15910" selection-start-column="17" selection-end-line="15910" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Subscription.php">
+    <entry file="file://$PROJECT_DIR$/assets/components/Auth.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="45" column="8" lean-forward="true" selection-start-line="45" selection-start-column="8" selection-end-line="48" selection-end-column="12" />
+        <state relative-caret-position="2465">
+          <caret line="222" column="19" selection-start-line="222" selection-start-column="19" selection-end-line="226" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/RequirementExperience.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="58" column="33" lean-forward="true" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/couche-bootstrap.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4930">
+          <caret line="290" column="6" selection-start-line="290" selection-start-column="1" selection-end-line="290" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/partials/NavBar.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="680">
+          <caret line="51" column="28" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Review.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1411">
+          <caret line="91" column="11" selection-start-line="91" selection-start-column="11" selection-end-line="91" selection-end-column="11" />
           <folding>
             <element signature="e#38#82#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Experience.php">
+    <entry file="file://$PROJECT_DIR$/assets/components/Experiences.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="21" column="39" selection-start-line="21" selection-start-column="34" selection-end-line="21" selection-end-column="39" />
+        <state relative-caret-position="2108">
+          <caret line="142" column="148" selection-start-line="142" selection-start-column="133" selection-end-line="142" selection-end-column="148" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/Followers.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1275">
+          <caret line="79" column="26" selection-start-line="79" selection-start-column="17" selection-end-line="79" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/Reviews.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4420">
+          <caret line="268" column="36" selection-start-line="268" selection-start-column="36" selection-end-line="268" selection-end-column="36" />
           <folding>
-            <element signature="e#30#70#0#PHP" expanded="true" />
+            <element signature="e#0#39#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Guide.php">
+    <entry file="file://$PROJECT_DIR$/assets/components/GuideProfil.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="142" column="12" lean-forward="true" selection-start-line="142" selection-start-column="12" selection-end-line="142" selection-end-column="12" />
+        <state relative-caret-position="306">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1088">
+          <caret line="74" selection-start-line="74" selection-end-line="74" />
           <folding>
-            <element signature="e#38#73#0#PHP" expanded="true" />
+            <element signature="e#38#82#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/CardExperienceProfil.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Experience.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="273">
+          <caret line="506" column="9" lean-forward="true" selection-start-line="506" selection-start-column="9" selection-end-line="506" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/components/CardGuideProfil.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
         </state>
       </provider>
     </entry>

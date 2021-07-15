@@ -20,6 +20,8 @@ import CardGuideProfil from "./CardGuideProfil";
 import {withRouter} from "react-router";
 import axios from "axios/index";
 import Cookies from 'universal-cookie';
+import Followers from "./Followers";
+import Reviews from "./Reviews";
 
 export class GuideProfil extends Component {
     constructor(props) {
@@ -141,22 +143,20 @@ export class GuideProfil extends Component {
                     <Experiences guide={this.props.match.params.id}/> : <p>?????????</p>
                 }
                 </div>
-                <div className="tab-pane text-center " id="reviews">
-                    <div className="row">
-                        <div className="col-md-6 mr-auto">
-                            {this.state.renderView}{this.state.renderView ===3 ? <p>yaaaaaaaay</p> :
+                <div className="tab-pane  " id="reviews">
+                    <div className="m-5 mt-1">
+                            {this.state.renderView ===4 ? <Reviews  guide_id={this.props.match.params.id}/> :
                             <p>naaaaaaaaaaay</p>
                         }
-                        </div>
                     </div>
                 </div>
                 <div className="tab-pane text-center " id="followers">
-                    <div className="row">
-                        <div className="col-md-3 mr-auto">
-                            {this.state.renderView}{this.state.renderView === 4 ? <p>yaaaaaaaay</p> :
-                            <p>naaaaaaaaaaay</p>
+                    <div className="tab-pane text-center m-5 mt-2" id="followers">
+
+                        {this.state.renderView === 3 ?
+                                <Followers subscriptions={this.state.guide.subscriptions}/>
+                            : <p>naaaaaaaay</p>
                         }
-                        </div>
                     </div>
                 </div>
             </div>

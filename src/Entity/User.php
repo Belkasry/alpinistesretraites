@@ -18,6 +18,7 @@
      * @ApiResource(
      *  normalizationContext={"groups"={"read"}},
      *  denormalizationContext={"groups"={"write"}},
+     *   paginationItemsPerPage=30
      * )
      * @ORM\Entity(repositoryClass=UserRepository::class)
  *  * @UniqueEntity(
@@ -28,7 +29,7 @@
      *     fields={"login"},
      *     message="Login déja utilisé"
      * )
-     * @ApiFilter(SearchFilter::class, properties={"id": "exact","login":"exact"})
+     * @ApiFilter(SearchFilter::class, properties={"id": "exact","login":"exact","subscription":"exact"})
      * @ORM\HasLifecycleCallbacks()
      */
     class User implements UserInterface

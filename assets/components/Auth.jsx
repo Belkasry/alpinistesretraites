@@ -33,6 +33,8 @@ class Auth extends Component {
 
     }
 
+
+
     async getInfo() {
         try {
 
@@ -101,6 +103,15 @@ class Auth extends Component {
     }
 
     componentDidMount() {
+        if(window.location.pathname.includes("/logout")){
+            const cookies = new Cookies();
+            cookies.set('token', "");
+            cookies.set('user', {});
+        }
+
+
+
+
         // const location = useLocation();
         // const { handle } = this.props.match.params
         // console.log(handle);

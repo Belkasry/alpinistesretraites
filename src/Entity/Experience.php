@@ -13,6 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
  *@ApiResource(
@@ -153,9 +154,18 @@ class Experience
     private $duree;
 
     /**
+     * @ApiProperty(
+     *    readableLink=false,
+     * )
+     * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experiences")
      */
     private $subscriptions;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
+     */
+    private $reviews;
 
 
     public function getDuree(): ?int
@@ -214,6 +224,7 @@ class Experience
         $this->medias = new ArrayCollection();
         $this->steps = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     /**
@@ -493,6 +504,36 @@ class Experience
     {
         if ($this->subscriptions->removeElement($subscription)) {
             $subscription->removeExperience($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getExperience() === $this) {
+                $review->setExperience(null);
+            }
         }
 
         return $this;

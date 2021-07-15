@@ -56,6 +56,7 @@ export class Experiences extends Component {
     loadMore = () => {
         this.setState({page: this.state.page + 1});
     };
+
     loadExperiences = async () => {
         try {
             const {page} = this.state;

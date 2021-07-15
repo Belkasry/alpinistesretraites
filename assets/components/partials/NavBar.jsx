@@ -39,7 +39,7 @@ export class NavBar extends Component {
     componentDidMount() {
         const cookies = new Cookies();
         if (cookies.get("token") != ""&&cookies.get("user") != "")
-            this.interval = setInterval(() => this.testToken(), 100);
+             this.testToken();
         else {
             this.setState({
                 valid: false
@@ -77,10 +77,11 @@ export class NavBar extends Component {
 
         if (decoded != null) {
             this.setState({
-                valid: ((Date.now() - decoded.exp * 1000) < 0),
+                valid: ((Date.now() - decoded.exp * 1000) <= 3),
                 // comptearebour:(Date.now() - decoded.exp * 1000)
             });
         }
+
     }
 
 
@@ -136,7 +137,6 @@ export class NavBar extends Component {
                                                 alt="Avatar"/>{this.state.user && this.state.user.fullName ? this.state.user.fullName : "???"}
                                         </a>
                                         <div className="dropdown-menu">
-
                                             <a href="/account" className="dropdown-item">
                                                 <FontAwesomeIcon icon={faUserAlt} color="grey" className="mr-3"/>
                                                 {"  "}Profile</a>
