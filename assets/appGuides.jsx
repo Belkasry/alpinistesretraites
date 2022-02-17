@@ -17,7 +17,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import Auth from "./components/Auth";
+// import Auth from "./components/Auth";
 
 
 function AppGuides() {
@@ -46,7 +46,7 @@ function AppGuides() {
                                 <Route path="/accompagnateur/auth">
                                     <div className="m-auto">
                                     <main className="bg-light p-3 border-alpiniste border-sketchy " style={{marginLeft:"20vh"}}>
-                                    <Auth/>
+                                    <div/>
                                     </main>
                                     </div>
                                 </Route>

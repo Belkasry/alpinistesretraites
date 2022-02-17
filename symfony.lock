@@ -49,6 +49,9 @@
     "doctrine/dbal": {
         "version": "2.11.1"
     },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.0",
         "recipe": {
@@ -131,8 +134,17 @@
     "fig/link-util": {
         "version": "1.1.2"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.5"
+    },
     "jms/metadata": {
         "version": "2.4.0"
+    },
+    "laminas/laminas-code": {
+        "version": "4.5.1"
+    },
+    "lcobucci/clock": {
+        "version": "2.0.0"
     },
     "lcobucci/jwt": {
         "version": "3.4.5"
@@ -396,9 +408,6 @@
     },
     "symfony/options-resolver": {
         "version": "v5.1.7"
-    },
-    "symfony/orm-pack": {
-        "version": "v2.0.0"
     },
     "symfony/phpunit-bridge": {
         "version": "4.3",
