@@ -1,5 +1,5 @@
 lexik_jwt_authentication:
-    secret_key:       '%kernel.project_dir%/var/jwt/private.pem' # required for token creation
-    public_key:       '%kernel.project_dir%/var/jwt/public.pem'  # required for token verification
-    pass_phrase:      'alpinistesretraites' # required for token creation, usage of an environment variable is recommended
-    token_ttl:        3600
+    secret_key:       'C:/Users/belka/projects/alpinistesretraites/config/jwt/private.pem' # required for token creation
+    public_key:       'C:/Users/belka/projects/alpinistesretraites/config/jwt/public.pem'  # required for token verification
+    pass_phrase:      '371ee2685126e90691f13a58cc916704' # required for token creation, usage of an environment variable is recommended
+    token_ttl:        36000

@@ -11,6 +11,9 @@ use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
+use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
  *@ApiResource(
@@ -18,20 +21,21 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     paginationItemsPerPage=8
  * )
  *@ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
- * @ORM\Entity(repositoryClass=ExperienceRepository::class)
+ *@ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
 class Experience
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @Groups({"read"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $title;
 
@@ -42,7 +46,7 @@ class Experience
      *      max = 5,
      *      notInRangeMessage = "Difficulte entre 0 et 5",
      * )
-     *  @Groups({"list":"read"})
+     *  @Groups({"read"})
      */
     private $dificulte;
 
@@ -57,12 +61,13 @@ class Experience
     private $nbr_participant_restant;
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
     private $prix;
 
     /**
+     * @Groups({"read"})
      * @ORM\Column(type="text")
      */
     private $description;
@@ -79,13 +84,13 @@ class Experience
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
      */
     private $finish;
 
@@ -96,30 +101,79 @@ class Experience
 
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
+     */
+    private $guide_eager;
+    /**
+     * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
      */
     private $activites;
 
     /**
+     * @Groups({"read"})
      * @ORM\OneToMany(targetEntity=Media::class, mappedBy="experience", cascade={"persist"})
      */
     private $medias;
 
     /**
-     * @Groups({"list":"read"})
+     * @Groups({"read"})
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $destination;
 
     /**
+     * @Groups({"read"})
      * @ORM\OneToMany(targetEntity=StepExperience::class, mappedBy="experience",cascade={"persist", "remove"})
      */
     private $steps;
 
+    /**
+     * @var array
+     * @Groups({"read"})
+     * @ORM\Column(name="requirement", type="json_array", nullable=true)
+     */
+    private $requirement = [];
 
 
+
+    /**
+     * @var array
+     * @Groups({"read"})
+     * @ORM\Column(name="notice", type="json_array", nullable=true)
+     */
+    private $notice = [];
+
+
+    /**
+     * @Groups({"read"})
+     * @ORM\Column(name="duree",type="integer", nullable=true)
+     */
+    private $duree;
+
+    /**
+     * @ApiProperty(
+     *      readableLink=false,
+     *  )
+     * @Groups({"read"})
+     * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experience")
+     */
+    private $subscriptions;
+
+    // /**
+    //  * @ApiProperty(
+    //  *    readableLink=false,
+    //  * )
+    //  * @Groups({"read"})
+    //  * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experiences")
+    //  */
+    // private $subscriptions;
+
+    // /**
+    //  * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
+    //  */
+    // private $reviews;
 
 
 
@@ -128,7 +182,62 @@ class Experience
         $this->activites = new ArrayCollection();
         $this->medias = new ArrayCollection();
         $this->steps = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
+        // $this->reviews = new ArrayCollection();
     }
+
+
+    public function getDuree(): ?int
+    {
+        return $this->duree;
+    }
+
+    public function setDuree(?int $duree): self
+    {
+        $this->duree = $duree;
+
+        return $this;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getNotice(): array
+    {
+        return $this->notice;
+    }
+
+
+
+    /**
+     * @param array $notice
+     */
+    public function setNotice(array $notice): void
+    {
+        $this->notice = $notice;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequirement(): array
+    {
+        return $this->requirement;
+    }
+
+    /**
+     * @param array $requirement
+     */
+    public function setRequirement(array $requirement): void
+    {
+        $this->requirement = $requirement;
+    }
+
+
+
+
+
 
     /**
      * @return Collection|ValeurReferentiel[]
@@ -287,8 +396,8 @@ class Experience
 
     public function getStart(): ?\DateTimeInterface
     {
-//        $timestamp = strtotime($this->start);
-//        $date= date('d/m/Y', $timestamp);
+        //        $timestamp = strtotime($this->start);
+        //        $date= date('d/m/Y', $timestamp);
         return $this->start;
     }
 
@@ -310,6 +419,21 @@ class Experience
 
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getGuideEager()
+    {
+        $g = [];
+        $g["id"] = $this->guide->getId();
+        $g["fullName"] = $this->guide->getFullName();
+        $g["imageName"] = $this->guide->getImageName();
+        return $g;
+    }
+
+
+
 
     public function getGuide(): ?Guide
     {
@@ -370,5 +494,87 @@ class Experience
         return $this;
     }
 
+    // /**
+    //  * @return Collection|Subscription[]
+    //  */
+    // public function getSubscriptions(): Collection
+    // {
+    //     return $this->subscriptions;
+    // }
 
+    // public function addSubscription(Subscription $subscription): self
+    // {
+    //     if (!$this->subscriptions->contains($subscription)) {
+    //         $this->subscriptions[] = $subscription;
+    //         $subscription->addExperience($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeSubscription(Subscription $subscription): self
+    // {
+    //     if ($this->subscriptions->removeElement($subscription)) {
+    //         $subscription->removeExperience($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // /**
+    //  * @return Collection|Review[]
+    //  */
+    // public function getReviews(): Collection
+    // {
+    //     return $this->reviews;
+    // }
+
+    // public function addReview(Review $review): self
+    // {
+    //     if (!$this->reviews->contains($review)) {
+    //         $this->reviews[] = $review;
+    //         $review->setExperience($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeReview(Review $review): self
+    // {
+    //     if ($this->reviews->removeElement($review)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($review->getExperience() === $this) {
+    //             $review->setExperience(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    /**
+     * @return Collection|Subscription[]
+     */
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function addSubscription(Subscription $subscription): self
+    {
+        if (!$this->subscriptions->contains($subscription)) {
+            $this->subscriptions[] = $subscription;
+            $subscription->addExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription): self
+    {
+        if ($this->subscriptions->removeElement($subscription)) {
+            $subscription->removeExperience($this);
+        }
+
+        return $this;
+    }
 }

@@ -20,17 +20,15 @@
 
             public function api_login(AuthenticationUtils $authenticationUtils,Request $request): Response
         {
-            $user = $this->getUser();
 
             $error = $authenticationUtils->getLastAuthenticationError();
             $lastUsername = $authenticationUtils->getLastUsername();
-
             $errorMessage = "";
 
             if ($error !== null) {
                 $errorMessage = $error->getMessage();
             }
-
+            
             return $this->json([
                 'username' => $user?$user->getUsername():"",
                 'hasError' => $error !== null,

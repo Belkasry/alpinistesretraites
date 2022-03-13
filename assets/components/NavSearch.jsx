@@ -1,7 +1,5 @@
 import React, {useState, useContext, useCallback} from "react";
 import logo from '../img/alpinistesretraites.png'
-import {faMapMarkerAlt, faSignature} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import SearchContext from "../SearchContext";
 import {throttle} from "lodash";
 
@@ -9,9 +7,7 @@ import {throttle} from "lodash";
 function NavSearch(props) {
 
     const {search, updateSearch} = useContext(SearchContext);
-
     const changeValue = (value, field) => {
-
         return {
             'value': value,
             'field': field

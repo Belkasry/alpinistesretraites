@@ -6,9 +6,30 @@
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+    use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
+    use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+    use Symfony\Component\Serializer\Annotation\Groups;
+    use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+    use Symfony\Component\Serializer\Annotation\SerializedName;
+    use ApiPlatform\Core\Annotation\ApiProperty;
 
     /**
+     * @ApiResource(
+     *  normalizationContext={"groups"={"read"}},
+     *  denormalizationContext={"groups"={"write"}},
+     *   paginationItemsPerPage=30
+     * )
      * @ORM\Entity(repositoryClass=UserRepository::class)
+ *  * @UniqueEntity(
+     *     fields={"email"},
+     *     message="Email déja utilisé"
+     * )
+     * @UniqueEntity(
+     *     fields={"login"},
+     *     message="Login déja utilisé"
+     * )
+     * @ApiFilter(SearchFilter::class, properties={"id": "exact","login":"exact","subscription":"exact"})
      * @ORM\HasLifecycleCallbacks()
      */
     class User implements UserInterface
@@ -18,20 +39,25 @@
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
+         * @Groups({"read"})
          * @ORM\Column(type="integer")
          */
         private $id;
 
 
-        /** @ORM\Column(type="json") */
+        /** @ORM\Column(type="json")
+         * @Groups({"read"})
+         */
         private $roles = [];
 
         /**
+         * @Groups({"read","write"})
          * @ORM\Column(type="string", length=255)
          */
         private $login;
 
         /**
+         * @Groups({"write"})
          * @ORM\Column(type="string", length=255)
          */
         private $password_hash;
@@ -41,8 +67,14 @@
          */
         public $password_confirm;
 
+        /**
+         * @Groups({"read","write"})
+         */
+        public $plain_password;
+
 
         /**
+         * @Groups({"read","write"})
          * @ORM\Column(type="string", length=255)
          */
         private $email;
@@ -50,15 +82,24 @@
 
         /**
          * @ORM\OneToOne(targetEntity=Guide::class, cascade={"persist", "remove"})
+         * @Groups({"read"})
          */
         private $guide;
 
+        // /**
+        //  * @ORM\OneToOne(targetEntity=Utilisateur::class, cascade={"persist", "remove"})
+        //  * @Groups({"read","write"})
+        //  */
+        // private $utilisateur;
+
         /**
+         * @Groups({"read","write"})
          * @ORM\Column(type="datetime")
          */
         private $birthday;
 
         /**
+         * @Groups({"write","read"})
          * @ORM\Column(type="string", length=255)
          */
         private $token;
@@ -68,6 +109,14 @@
          * @ORM\Column(name="statut", type="boolean", nullable=true)
          */
         private $statut;
+
+        /**
+         * @ORM\OneToOne(targetEntity=Subscription::class, mappedBy="user", cascade={"persist", "remove"})
+         */
+        private $subscription;
+
+
+        
 
         /**
          * @return mixed
@@ -154,14 +203,29 @@
 
             return $this;
         }
+        
+        // public function getUtilisateur(): ?Utilisateur
+        // {
+        //     return $this->utilisateur;
+        // }
+
+        // public function setUtilisateur(?Utilisateur $utilisateur): self
+        // {
+        //     $this->utilisateur = $utilisateur;
+
+        //     return $this;
+        // }
 
         /** @ORM\PrePersist */
         public function doStuffOnPostPersist()
         {
-            $guide = $this->guide;
             $from = $this->getBirthday();
             $to = new \DateTime('today');
-            $this->guide->setAge($from->diff($to)->y);
+            if ($this->guide != null)
+                $this->guide->setAge($from->diff($to)->y);
+
+            // if ($this->utilisateur != null)
+            //     $this->utilisateur->setAge($from->diff($to)->y);
         }
 
         public function getBirthday(): ?\DateTimeInterface
@@ -248,4 +312,28 @@
 
             return $this;
         }
+
+        public function getSubscription(): ?Subscription
+        {
+            return $this->subscription;
+        }
+
+        public function setSubscription(?Subscription $subscription): self
+        {
+            // unset the owning side of the relation if necessary
+            if ($subscription === null && $this->subscription !== null) {
+                $this->subscription->setUser(null);
+            }
+
+            // set the owning side of the relation if necessary
+            if ($subscription !== null && $subscription->getUser() !== $this) {
+                $subscription->setUser($this);
+            }
+
+            $this->subscription = $subscription;
+
+            return $this;
+        }
+
+
     }

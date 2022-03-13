@@ -24,6 +24,7 @@
 
         public function load(ObjectManager $manager)
         {
+          
 //            $arrayName = array("Abad", "Abdennasser", "Amghar", "Abbas",
 //                "Abdelmoula", "Amimar", "Abbou", "Allal",
 //                "Amine", "Abdelaalim", "Abdennour", "Amjad",
@@ -80,6 +81,8 @@
             $user->setEmail("test@gmail.com");
             $user->setBirthday(new \DateTime('2011-01-01'));
             $user->setPasswordHash($this->encoder->encodePassword($user,"test"));
+            $user->setRoles(["ROLE_ADMIN"]);
+            $user->setToken("123a");
             $manager->persist($user);
             $manager->flush();
         }

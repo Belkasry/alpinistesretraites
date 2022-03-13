@@ -1,24 +1,89 @@
 import React, {Component} from "react";
 import logo from '../../img/alpinistesretraites.png'
-import {faBars} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import FormLogin from "../FormLogin";
+import {faBars, faBell, faComment, faCommentAlt, faUserAlt, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
+import Cookies from 'universal-cookie';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+// import jwt_decode from "jwt-decode";
 
 export class NavBar extends Component {
 
     constructor(props) {
         super(props)
-        this.state = {}
+        const cookies = new Cookies();
+        let token = cookies.get('token') ? cookies.get('token') : "";
+        let decoded = "";
+        // if (token !== "")
+        //     decoded = jwt_decode(token);
+
+        let user = cookies.get('user') ? cookies.get('user') : {};
+        let profil = user;
+
+        this.state = {
+            token: token,
+            valid: true,
+            decoded: decoded,
+            user: {},
+            comptearebour:0,
+        }
+        this.testToken = this.testToken.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
+
     componentDidMount() {
+        const cookies = new Cookies();
+        if (cookies.get("token") != ""&&cookies.get("user") != "")
+             this.testToken();
+        else {
+            this.setState({
+                valid: false
+            });
+        }
+        if (cookies.get("user") != "") {
+            let user = cookies.get('user') ? cookies.get('user') : {};
+            let profil = user;
+            this.setState({
+                user: profil
+            });
+        }
+
+
     }
+
 
     componentWillUnmount() {
     }
 
-    tick() {
+    logout() {
+        const cookies = new Cookies();
+        cookies.set('token', "");
+        cookies.set('user', {});
+        this.setState({
+            valid: false
+        });
+        window.location.replace("/accompagnateur/logout");
     }
+
+    testToken() {
+        let decoded = "";
+        // if (this.state.token !== "")
+        //     decoded = jwt_decode(this.state.token);
+
+        if (decoded != null) {
+            this.setState({
+                valid: ((Date.now() - decoded.exp * 1000) <= 3),
+                // comptearebour:(Date.now() - decoded.exp * 1000)
+            });
+        }
+
+    }
+
 
     render() {
         return <nav className="navbar navbar-expand-lg bg-light m-2 border-alpiniste">
@@ -35,8 +100,8 @@ export class NavBar extends Component {
                         <a href="/"
                            className="nav-item nav-link text-alpiniste">Home</a>
                         <a href="/accompagnateur/list"
-                           className="nav-item nav-link active text-alpiniste">Guides</a>
-                        <a href="#" className="nav-item nav-link text-alpiniste">Agences</a>
+                           className="nav-item nav-link active text-alpiniste">Accompagnateurs</a>
+                        <a href="/experience/list" className="nav-item nav-link text-alpiniste">Experiences</a>
                         <a href="/destinations" className="nav-item nav-link text-alpiniste">Destinations</a>
                         <div className="nav-item dropdown">
                             <a href="#" data-toggle="dropdown"
@@ -44,7 +109,7 @@ export class NavBar extends Component {
                             <div className="dropdown-menu">
                                 <a className="dropdown-item text-alpiniste" href="/guide/nouveau">Nouveau Guide</a>
                                 <a className="dropdown-item text-alpiniste" href="#">Nouvelle Agence</a>
-                                <a className="dropdown-item text-alpiniste" href="#">Nouveau Utilisateur</a>
+                                <a className="dropdown-item text-alpiniste" href="/accompagnateur/signup">Nouveau Utilisateur</a>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item text-alpiniste" href="#">Separated link</a>
                             </div>
@@ -52,13 +117,38 @@ export class NavBar extends Component {
                     </ul>
                     <div className="d-flex">
                         <div className="navbar-nav ml-auto action-buttons">
-                            <div className="nav-item dropdown">
-                                <a href="#" data-toggle="dropdown" className="nav-link dropdown-toggle mr-4 text-alpiniste">Login</a>
-                                <div className="dropdown-menu  dropdown-menu-login action-form ">
-                                   <FormLogin/>
-
+                            {!this.state.valid ? <Link to={`/accompagnateur/auth`}>
+                                    <a href="#" className="nav-item nav-link text-alpiniste">Login</a>
+                                </Link> :
+                                <div className="navbar-nav ml-auto mr-3">
+                                    <a href="#" className="nav-item nav-link notifications mt-1">
+                                        <FontAwesomeIcon icon={faBell} color="#637b86"/>
+                                        <span className="badge">1</span></a>
+                                    <a href="#" className="nav-item nav-link messages mt-1">
+                                        <FontAwesomeIcon icon={faCommentAlt} color="#637b86"/>
+                                        <span className="badge">10</span></a>
+                                    <div className="nav-item dropdown">
+                                        <a href="#" data-toggle="dropdown"
+                                           className="nav-link dropdown-toggle user-action">
+                                            <img
+                                                src={this.state.user && this.state.user.imageName ? "/images/guides/" + this.state.user.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"}
+                                                height="50px" className="avatar"
+                                                style={{marginRight: "1rem"}}
+                                                alt="Avatar"/>{this.state.user && this.state.user.fullName ? this.state.user.fullName : "???"}
+                                        </a>
+                                        <div className="dropdown-menu">
+                                            <a href="/account" className="dropdown-item">
+                                                <FontAwesomeIcon icon={faUserAlt} color="grey" className="mr-3"/>
+                                                {"  "}Profile</a>
+                                            <div className="dropdown-divider"></div>
+                                            <a className="dropdown-item ml-2" onClick={this.logout} href="#">
+                                                <FontAwesomeIcon icon={faSignOutAlt} color="grey" className="mr-3"/>
+                                                {"  "}Logout</a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+
+                            }
                         </div>
                     </div>
                 </div>
@@ -69,5 +159,5 @@ export class NavBar extends Component {
     }
 }
 
-export default NavBar
 
+export default NavBar

@@ -19,13 +19,16 @@ import Gallerie from "./Gallerie";
 import CardGuideProfil from "./CardGuideProfil";
 import {withRouter} from "react-router";
 import axios from "axios/index";
-
+import Cookies from 'universal-cookie';
+// import Followers from "./Followers";
+// import Reviews from "./Reviews";
 
 export class GuideProfil extends Component {
     constructor(props) {
         super(props)
         const text = "Et necessitatibus mo Quisque velit nisi, pretium ut lacinia in,elementum id enim." + "Et necessitatibus mo Quisque velit nisi, pretium ut lacinia in,elementum id enim.";
         const unguide = {
+            id:0,
             description: text,
             location: "XXXX",
             fullName: "XXXXXXX"
@@ -44,6 +47,7 @@ export class GuideProfil extends Component {
 
 
     componentDidMount() {
+        const cookies = new Cookies();
         this.loadGuide();
     }
 
@@ -56,8 +60,14 @@ export class GuideProfil extends Component {
     loadGuide = async () => {
         try {
             const id = this.props.match.params.id;
-            const response = await axios.get(
-                `http://127.0.0.1:8000/api/guides/${id}`
+            const cookies = new Cookies();
+            let token= cookies.get('token');
+            const instance = axios.create({
+                baseURL: `https://127.0.0.1:8000/`,
+                headers: {'Authorization': 'Bearer '+token}
+            });
+            const response = await instance.get(
+                `/api/guides/${id}`
             );
             this.setState(
                 {
@@ -80,7 +90,7 @@ export class GuideProfil extends Component {
 
 
         return <div className="container">
-            <CardGuideProfil guide={this.state.guide}/>
+            <CardGuideProfil guide={this.state.guide} guide_id={this.props.match.params.id}/>
             <div className="row ">
                 <div className="col-md-12 ml-auto mr-auto">
                     <div className="profile-tabs pl-5">
@@ -124,7 +134,7 @@ export class GuideProfil extends Component {
             <div className="tab-content tab-space card border-alpiniste">
                 <div className="tab-pane text-center  " id="medias">
                     {this.state.renderView ===2 ?
-                    <Gallerie/> : <p>?????????</p>
+                    <Gallerie guide={this.props.match.params.id}/> : <p>?????????</p>
                 }
                 </div>
                 <div className="tab-pane text-center gallery active p-3 pt-1 pb-1" id="activites">
@@ -133,22 +143,20 @@ export class GuideProfil extends Component {
                     <Experiences guide={this.props.match.params.id}/> : <p>?????????</p>
                 }
                 </div>
-                <div className="tab-pane text-center " id="reviews">
-                    <div className="row">
-                        <div className="col-md-6 mr-auto">
-                            {this.state.renderView}{this.state.renderView ===3 ? <p>yaaaaaaaay</p> :
+                <div className="tab-pane  " id="reviews">
+                    <div className="m-5 mt-1">
+                            {this.state.renderView ===4 ? <Reviews  guide_id={this.props.match.params.id}/> :
                             <p>naaaaaaaaaaay</p>
                         }
-                        </div>
                     </div>
                 </div>
                 <div className="tab-pane text-center " id="followers">
-                    <div className="row">
-                        <div className="col-md-3 mr-auto">
-                            {this.state.renderView}{this.state.renderView === 4 ? <p>yaaaaaaaay</p> :
-                            <p>naaaaaaaaaaay</p>
+                    <div className="tab-pane text-center m-5 mt-2" id="followers">
+
+                        {this.state.renderView === 3 ?
+                                <Followers subscriptions={this.state.guide.subscriptions}/>
+                            : <p>naaaaaaaay</p>
                         }
-                        </div>
                     </div>
                 </div>
             </div>
