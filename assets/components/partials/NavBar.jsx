@@ -117,8 +117,7 @@ export class NavBar extends Component {
                     </ul>
                     <div className="d-flex">
                         <div className="navbar-nav ml-auto action-buttons">
-                            {!this.state.valid ? <Link to={`/accompagnateur/auth`}>
-                                    <a href="#" className="nav-item nav-link text-alpiniste">Login</a>
+                            {!this.state.valid ? <Link to={`/experience/auth`} className="nav-item nav-link text-alpiniste">Login
                                 </Link> :
                                 <div className="navbar-nav ml-auto mr-3">
                                     <a href="#" className="nav-item nav-link notifications mt-1">

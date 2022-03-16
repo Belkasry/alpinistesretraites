@@ -49,7 +49,7 @@
             $url = $routeBuilder
                 ->setController(UserCrudController::class)
                 ->setAction('detail')
-                ->setEntityId($this->security->getUser()->getId())
+                // ->setEntityId($this->security->getUser()->getId())
                 ->generateUrl();
 
             return $this->redirect($url);

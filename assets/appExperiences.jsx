@@ -18,6 +18,7 @@ import {
     Link
 } from "react-router-dom";
 import Auth from "./components/Auth";
+import ExperienceProfil from './components/ExperienceProfil';
 
 
 function AppExperiences() {
@@ -58,16 +59,9 @@ function AppExperiences() {
                                     </main>
                                 </Route>
 
-                                <Route path="/experience/list">
-                                    <main className="HolyGrail-content bg-light p-3 border-alpiniste border-sketchy ">
-                                    <Experiences searchValue={search} count={count} onChangeCount={(newCount) => {
-                                        setCount(newCount)
-                                    }}/>
-                                    </main>
-                                </Route>
                                 <Route path="/experience/profil/:id">
                                     <main className="HolyGrail-content  ">
-                                    {/* <ExperienceProfil/> */}
+                                     <ExperienceProfil/> 
                                     </main>
                                 </Route>
                             </Switch>

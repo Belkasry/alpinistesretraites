@@ -53,7 +53,7 @@
 ////                $manager->flush();
 //                $i++;
 //            }
-            $this->remplirUser($manager);
+            $this->remplirTypeActivite($manager);
 
         }
 
@@ -70,6 +70,7 @@
                     ->setIdRef($ref);
                 $manager->persist($valref);
             }
+            $manager->flush();
 
         }
 

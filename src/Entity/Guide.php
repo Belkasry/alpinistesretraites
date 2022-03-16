@@ -109,7 +109,6 @@
          */
         private $updatedAt;
 
-
         /**
          * @var array
          * @Groups({"read"})
@@ -120,6 +119,7 @@
             'ig_link'=>'',
         ];
 
+        
         /**
          * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
          */
@@ -140,7 +140,6 @@
          * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="guide")
          */
         private $subscriptions;
-
 
 
 

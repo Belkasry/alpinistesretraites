@@ -14,13 +14,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use ApiPlatform\Core\Annotation\ApiProperty;
+use App\ApiPlatform\ExperienceFilter;
 
 /**
  *@ApiResource(
  *     normalizationContext={"groups"={"read"}},
  *     paginationItemsPerPage=8
  * )
- *@ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
+*  @ApiFilter(ExperienceFilter::class)
  *@ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
 class Experience
