@@ -4,7 +4,7 @@ import './css/couche-bootstrap.css';
 // import Experience from "./components/Experience";
 import NavBar from "./components/partials/NavBar";
 import axios from 'axios';
-import {Experiences} from "./components/Experiences";
+import {Experiences} from "./components/Experience/Experiences";
 import Footer from "./components/partials/Footer";
 import NavSearch from "./components/NavSearch";
 import React, {useState, useContext} from "react";
@@ -18,7 +18,7 @@ import {
     Link
 } from "react-router-dom";
 import Auth from "./components/Auth";
-import ExperienceProfil from './components/ExperienceProfil';
+import ExperienceProfil from './components/Experience/ExperienceProfil';
 
 
 function AppExperiences() {

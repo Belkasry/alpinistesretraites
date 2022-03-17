@@ -1,5 +1,5 @@
 import React, {Component, useContext} from "react";
-import logo from '../img/alpinistesretraites.png'
+import logo from '../../img/alpinistesretraites.png'
 import {faMapMarkerAlt, faAngleDoubleDown} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {ProgressBar} from 'react-bootstrap';

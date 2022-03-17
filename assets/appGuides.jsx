@@ -1,15 +1,15 @@
 import './App.css';
 import './css/bootstrap.min.css';
 import './css/couche-bootstrap.css';
-import Guide from "./components/Guide";
+import Guide from "./components/accompagnateur/Guide";
 import NavBar from "./components/partials/NavBar";
 import axios from 'axios';
-import {Guides} from "./components/Guides";
+import {Guides} from "./components/accompagnateur/Guides";
 import Footer from "./components/partials/Footer";
 import NavSearch from "./components/NavSearch";
 import React, {useState, useContext} from "react";
 import SearchContext from "./SearchContext";
-import GuideProfil from "./components/GuideProfil";
+import GuideProfil from "./components/accompagnateur/GuideProfil";
 import Cookies from 'universal-cookie';
 import {
     BrowserRouter as Router,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import logo from '../img/alpinistesretraites.png'
+import logo from '../../img/alpinistesretraites.png'
 import { faMapMarkerAlt, faSignature, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +11,7 @@ import {
     useParams
 } from "react-router-dom";
 import Flickity from "react-flickity-component";
-import Carousel from "./Carousel";
+import Carousel from "../Carousel";
 import { faAngleDoubleDown } from "@fortawesome/free-solid-svg-icons/index";
 import axios from "axios/index";
 import { ProgressBar } from 'react-bootstrap';

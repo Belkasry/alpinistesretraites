@@ -13,9 +13,9 @@ import {
     faSms
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import Experiences from "./Experiences";
+import Experiences from "../Experience/Experiences";
 import Gallery from "react-grid-gallery";
-import Gallerie from "./Gallerie";
+import Gallerie from "../Gallerie";
 import CardGuideProfil from "./CardGuideProfil";
 import {withRouter} from "react-router";
 import axios from "axios/index";

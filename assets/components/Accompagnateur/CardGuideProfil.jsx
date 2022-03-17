@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {faFacebook, faInstagram, faMailchimp} from "@fortawesome/free-brands-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import background_card from '../img/alpinistesretraites_card_bg.png'
+import background_card from '../../img/alpinistesretraites_card_bg.png'
 import axios from "axios/index";
 import Cookies from "universal-cookie";
 

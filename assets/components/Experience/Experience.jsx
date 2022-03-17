@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import logo from '../img/alpinistesretraites.png'
+import logo from '../../img/alpinistesretraites.png'
 import {faMapMarkerAlt, faSignature} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
@@ -11,7 +11,7 @@ import {
     useParams
 } from "react-router-dom";
 
-export class Guide extends Component {
+export class Experience extends Component {
 
     constructor(props) {
         super(props)
@@ -31,18 +31,18 @@ export class Guide extends Component {
     }
 
     render() {
-        var descript = this.props.guide.description ? this.props.guide.description : "";
+        var descript = this.props.experience.description ? this.props.experience.description : "";
         return <div className="card mb-2 thecard border-alpiniste ">
             <h5 className="card-header bg-light ">
-                <Link to={`/accompagnateur/profil/${this.props.guide.id}`}>
-                    <a href="#" className="text-info">{this.props.guide.fullName}</a></Link>
+                <Link to={`/experience/profil/${this.props.experience.id}`}>
+                    <a href="#" className="text-info">{this.props.experience.title}</a></Link>
             </h5>
             <div className="card-body m-1 p-1">
                 <div className="card m-0 p-0 border-alpiniste-1">
                    <span className="m-1 badge rounded-pill bg-cute tag ">
-                            <FontAwesomeIcon icon={faMapMarkerAlt}/>{' '} {this.props.guide.location}</span>
+                            <FontAwesomeIcon icon={faMapMarkerAlt}/>{' '} {this.props.experience.location}</span>
                     <img
-                        src={this.props.guide.imageName !== "" ? "/images/guides/" + this.props.guide.imageName : "https://placeimg.com/640/480/animals/" + Math.random() * 30}
+                        src={this.props.experience.imageName !== "" ? "/images/experiences/" + this.props.experience.imageName : "https://placeimg.com/640/480/animals/" + Math.random() * 30}
                         className="d-block user-select-none m-0 p-0 " width="100%"
                         height="120vh" style={{objectFit: 'cover'}}/>
                 </div>
@@ -68,4 +68,4 @@ export class Guide extends Component {
     }
 }
 
-export default Guide
+export default Experience
