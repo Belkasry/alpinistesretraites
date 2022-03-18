@@ -34,8 +34,7 @@ export class Guide extends Component {
         var descript = this.props.guide.description ? this.props.guide.description : "";
         return <div className="card mb-2 thecard border-alpiniste ">
             <h5 className="card-header bg-light ">
-                <Link to={`/accompagnateur/profil/${this.props.guide.id}`}>
-                    <a href="#" className="text-info">{this.props.guide.fullName}</a></Link>
+                <Link to={`/accompagnateur/profil/${this.props.guide.id}`} className="text-info">{this.props.guide.fullName}</Link>
             </h5>
             <div className="card-body m-1 p-1">
                 <div className="card m-0 p-0 border-alpiniste-1">

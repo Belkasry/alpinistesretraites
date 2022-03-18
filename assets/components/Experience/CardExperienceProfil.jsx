@@ -4,13 +4,14 @@ import {
     faPhone,
     faRss,
     faSms,
-    faCheckDouble
+    faCheckDouble, faHourglassEmpty, faMoneyBillWave, faArrowAltCircleLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram, faMailchimp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import background_card from '../../img/alpinistesretraites_card_bg.png'
 import axios from "axios/index";
 import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
 
 class CardExperienceProfil extends Component {
     constructor(props) {
@@ -119,6 +120,7 @@ class CardExperienceProfil extends Component {
     render() {
         var descript = this.props.experience.description ? this.props.experience.description : "<hr/>";
         var destination = this.props.experience.destination ? this.props.experience.destination.name : "<hr/>";
+        var currency = " DHS"
         return (
             <div className="row">
                 <div className="" style={{ zIndex: 3 }}>
@@ -135,14 +137,42 @@ class CardExperienceProfil extends Component {
                             backgroundImage: `url(${background_card})`,
                             backgroundSize: "100%"
                         }}>
-                            <h3 className="pt-3 text-alpiniste"
-                                style={{ zIndex: 1, marginTop: "100px" }}>{this.props.experience.title}</h3>
+                            <div className="mt-2 d-flex justify-content-center ">
+                                <h2 className=" p-2 bg-light border-alpiniste-1 text-info"
+                                    style={{ zIndex: 1, marginTop: "100px" }}>{this.props.experience.title}</h2>
+                            </div>
                             <div className="d-flex justify-content-center ">
                                 <div className=" ">
                                     <span className="m-1 badge rounded-pill bg-cute tag ">
                                         <FontAwesomeIcon icon={faMapMarkerAlt} />{' '} {destination}</span>
                                 </div>
-                                <div></div>
+                                <div className="">
+                                    <Link to={`/accompagnateur/profil/${this.props.experience.guide_eager.id}`} >
+                                        <button type="button"
+                                            className={"btn btn-outline-danger "}>
+
+                                            <b><FontAwesomeIcon icon={faArrowAltCircleLeft} />{'  '}
+                                                {this.props.experience.guide_eager.fullName}
+                                            </b>
+                                        </button>
+                                    </Link>
+                                </div>
+                                <div className="">
+                                    <p className={"btn btn-warning disabled p-2 text-moyen border-alpiniste-1"} >
+                                        <b className="text-dark" >
+                                            <FontAwesomeIcon icon={faMoneyBillWave} />
+                                            {"  "}   {this.props.experience.prix}{currency}
+                                        </b>
+                                    </p>
+                                </div>
+                                <div className="">
+                                    <p className={"btn btn-info disabled p-2 text-moyen border-alpiniste-1"} >
+                                        <b className="text-white" >
+                                            <FontAwesomeIcon icon={faHourglassEmpty} />
+                                            {"  "}   {this.props.experience.duree}{' jours'}
+                                        </b>
+                                    </p>
+                                </div>
                                 <div className="">
                                     <button type="button"
                                         className={"btn btn-outline-success " + (this.state.follow ? " clicked" : " btn-alpiniste")}
@@ -155,20 +185,14 @@ class CardExperienceProfil extends Component {
                                 <div></div>
                                 <div className="">
                                 </div>
-                                <div className="">
-                                    <button type="button" className="btn btn-outline-success  btn-alpiniste"
-                                    ><FontAwesomeIcon
-                                            icon={faSms} /> <b>Chat</b>
-                                    </button>
-                                </div>
                             </div>
                             <div className="description text-center">
-                                <a 
-                                   className="btn btn-just-icon btn-link btn-dribbble text-alpiniste"><FontAwesomeIcon
-                                    icon={faFacebook}/></a>
+                                <a
+                                    className="btn btn-just-icon btn-link btn-dribbble text-alpiniste"><FontAwesomeIcon
+                                        icon={faFacebook} /></a>
 
-                                <p className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2">
-                                    <div dangerouslySetInnerHTML={{__html: descript}}/>
+                                <p className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2 text-moyen">
+                                    <div dangerouslySetInnerHTML={{ __html: descript }} />
                                 </p>
                             </div>
 

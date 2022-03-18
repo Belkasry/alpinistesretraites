@@ -293,3 +293,38 @@
     flex-shrink: 0 !important;
     flex-basis: 25% !important;
 }
+.text-moyen{
+    font-size: 1.2rem !important;
+}
+
+.listline {
+    text-align: left;
+    counter-reset: list;
+    border-left: 2px solid lightgrey;
+    margin: 1em;
+    padding: 0;
+  }
+  
+.listline li {
+    list-style: none;
+    margin: 3em 0 0.8em 0;
+    padding: 0;
+  }
+  
+.listline li:before {
+    display: inline-block;
+    width: 1.4em;
+    height: 1.4em;
+    margin: 0 0.5em 0 -0.65em;
+    border-radius: 50%;  
+    content: counter(list);
+    text-align: center;
+    background: lightgrey;
+    counter-increment: list;
+  }
+
+  .ScrollFix {
+    position: fixed !important;
+    top: 0px;
+    z-index: 1;
+}

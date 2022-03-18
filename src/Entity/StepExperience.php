@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\StepExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource(
+ *     normalizationContext={"groups"={"read"}},
+ * )
  * @ORM\Entity(repositoryClass=StepExperienceRepository::class)
  */
 class StepExperience
@@ -15,21 +19,25 @@ class StepExperience
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"list":"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"list":"read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+      * @Groups({"list":"read"})
      */
     private $resume;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"list":"read"})
      */
     private $duree;
 
