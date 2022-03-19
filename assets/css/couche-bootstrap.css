@@ -148,7 +148,14 @@
     background: #555;
 }
 
-
+.HolyTabContent{
+    background-size: 50px ;
+    background-color: #fff;
+    background-image: url(../img/alpinistesretraites_bg_small_hike_transparent.png);
+    background-repeat: repeat;
+    background-size: 300px ;
+    
+}
 
 .HolyGrail {
     display: flex;
@@ -300,7 +307,7 @@
 .listline {
     text-align: left;
     counter-reset: list;
-    border-left: 2px solid lightgrey;
+    border-left: 2px solid darkblue;
     margin: 1em;
     padding: 0;
   }
@@ -313,13 +320,14 @@
   
 .listline li:before {
     display: inline-block;
-    width: 1.4em;
-    height: 1.4em;
-    margin: 0 0.5em 0 -0.65em;
-    border-radius: 50%;  
+    width: 2em;
+    height: 2em;
+    margin: 0 1em 0 -1em;
+    border-radius: 50%; 
+    border:1px solid darkblue;  
     content: counter(list);
     text-align: center;
-    background: lightgrey;
+    background: #fff;
     counter-increment: list;
   }
 

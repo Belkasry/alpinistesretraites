@@ -111,6 +111,7 @@
         private $statut;
 
         /**
+         * @Groups({"read"})
          * @ORM\OneToOne(targetEntity=Subscription::class, mappedBy="user", cascade={"persist", "remove"})
          */
         private $subscription;

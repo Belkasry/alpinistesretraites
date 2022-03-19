@@ -16,7 +16,16 @@ class CardGuideProfil extends Component {
     constructor(props) {
         super(props);
         const cookies = new Cookies();
-        let user = cookies.get('user') ? cookies.get('user') : {};
+        // let user = cookies.get('user') ? cookies.get('user') : {};
+        let user = {
+            id: 4,
+            email: "test@gmail.com",
+            login: "test",
+            subscription:"/api/subscriptions/1",
+        };    
+
+
+
         this.state = {
             follow: false,
             subscription:user.subscription
@@ -51,10 +60,10 @@ class CardGuideProfil extends Component {
                 ]
             });
 
-            var base_url = "https://127.0.0.1:8000/api/subscriptions/"+this.state.subscription;
+            var base_url = "/api/subscriptions/"+this.state.subscription;
             var config = {
                 method: abonne ? 'delete' : 'patch',
-                url: base_url + (abonne ? '/patch' : ''),
+                url: base_url ,
                 headers: {
                     'Content-Type': !abonne ? 'application/merge-patch+json' : 'application/json'
                 },

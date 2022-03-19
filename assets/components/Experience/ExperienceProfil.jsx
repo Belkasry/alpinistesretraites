@@ -20,6 +20,8 @@ import CardExperienceProfil from "./CardExperienceProfil";
 import { withRouter } from "react-router";
 import axios from "axios/index";
 import Cookies from 'universal-cookie';
+import Planning from "../Planning";
+import { ProgressBar } from "react-bootstrap";
 // import Followers from "./Followers";
 // import Reviews from "./Reviews";
 
@@ -34,7 +36,9 @@ export class ExperienceProfil extends Component {
             title: "XXXXXXX",
             duree: 0,
             guide_eager: { "fullName": "guide" },
-            steps: []
+            steps: [],
+            requirement: [],
+            notice: [],
         }
 
 
@@ -44,7 +48,8 @@ export class ExperienceProfil extends Component {
             text: text,
             experience: unexperience,
             renderView: 1,
-            step_selected: 0
+            step_selected: 0,
+            progressLoading: 10,
         }
 
 
@@ -88,10 +93,7 @@ export class ExperienceProfil extends Component {
 
 
 
-    changeStep = e =>{
-        console.log(e.target.value);
-        this.setState({ step_selected: e.target.id });
-    };
+
 
     clickBtn = e => {
         console.log(e.target.value);
@@ -103,23 +105,10 @@ export class ExperienceProfil extends Component {
 
     render() {
 
-        const data = this.state.experience ? this.state.experience.steps : [{ 'id': 0 }];
-        var el = data[this.state.step_selected];
-        var resume_step = el ? el.resume : '404';
-        var titre_step = el ? el.title : '404';
-
-
-        var j = 0;
-        const ListLine = ({ items }) => (
-            <ul className="listline col-6">
-                {
-
-                    items.map((step, index) => (
-                        <li key={step.id} ><button id={index} onClick={this.changeStep} className="btn btn-outline-success  btn-alpiniste p-2 text-moyen text-dark  ">{step.title}</button></li>
-                    ))
-                }
-            </ul>
-        );
+        const steps = this.state.experience ? this.state.experience.steps : [{ 'id': 0 }];
+        const requirements = this.state.experience ? this.state.experience.requirement : ["---"];
+        const notices = this.state.experience ? this.state.experience.notice : ["---"];
+        const { progressLoading } = this.state;
 
         return <div className="container">
             <CardExperienceProfil experience={this.state.experience} experience_id={this.props.match.params.id} />
@@ -144,13 +133,6 @@ export class ExperienceProfil extends Component {
                                     Medias
                                 </button>
                             </li>
-                            <li className="nav-item">
-                                <button className="nav-link" href="#followers" role="tab" data-toggle="tab" value={3}
-                                    onClick={this.clickBtn}>
-                                    <FontAwesomeIcon icon={faUsers} color="white" />{' '}
-                                    Followers
-                                </button>
-                            </li>
 
                             <li className="nav-item">
                                 <button className="nav-link" href="#requirements" role="tab" data-toggle="tab" value={5}
@@ -173,26 +155,22 @@ export class ExperienceProfil extends Component {
                                     Reviews
                                 </button>
                             </li>
+                            <li className="nav-item">
+                                <button className="nav-link" href="#followers" role="tab" data-toggle="tab" value={3}
+                                    onClick={this.clickBtn}>
+                                    <FontAwesomeIcon icon={faUsers} color="white" />{' '}
+                                    Followers
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <div className="tab-content tab-space card border-alpiniste">
+            <div className="tab-content tab-space card border-alpiniste HolyTabContent">
                 <div className="tab-pane text-center gallery active p-3 pt-1 pb-1" id="planning">
 
                     {this.state.renderView === 1 ?
-                        <div className="row container">
-                            <ListLine items={data} />
-                            <div className=" col-5 mr-1" style={{ height: "fit-content", float: "right" }}>
-                                <div className="card border-primary mb-3 " id="ScrollThenFix" style={{ position: "absolute" }} >
-                                    <div className="card-header">{titre_step}</div>
-                                    <div className="card-body">
-                                        <p className="card-text text-moyen">{resume_step}</p>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <Planning listdata={steps} />
                         : <p>?????????</p>
                     }
                 </div>
@@ -223,7 +201,16 @@ export class ExperienceProfil extends Component {
                     <div className="tab-pane text-center m-5 mt-2" id="requirements">
 
                         {this.state.renderView === 5 ?
-                            <p>yaaaaaaaay</p>
+                            <div>
+                                <ol className="" style={{listStyle: "none"}}>
+                                    {
+                                        requirements.map((requirement, index) => (
+                                            <li key={"req"+index} ><button className={"btn btn-outline-warning  p-2 text-moyen text-dark bg-white" }>{requirement}</button></li>
+                                        ))
+                                    }
+                                </ol>
+
+                            </div>
                             : <p>naaaaaaaay</p>
                         }
                     </div>
@@ -232,8 +219,18 @@ export class ExperienceProfil extends Component {
                     <div className="tab-pane text-center m-5 mt-2" id="notices">
 
                         {this.state.renderView === 6 ?
-                            <p>yaaaaaaaay</p>
-                            : <p>naaaaaaaay</p>
+                            <div>
+                            <ol className="" style={{listStyle: "none"}}>
+                                {
+                                    notices.map((notice, index) => (
+                                        <li key={"not"+index} ><button className={"btn btn-outline-danger  p-2 text-moyen text-dark  bg-white" }>{notice}</button></li>
+                                    ))
+                                }
+                            </ol>
+
+                        </div>
+                            : <ProgressBar striped animated now={progressLoading} className="col-md-2 m-auto mt-3 mb-4"
+                            variant="info" />
                         }
                     </div>
                 </div>

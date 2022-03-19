@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram, faMailchimp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import background_card from '../../img/alpinistesretraites_card_bg.png'
+import background_card from '../../img/alpinistesretraites_bg_small_stars.png'
 import axios from "axios/index";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
@@ -135,7 +135,8 @@ class CardExperienceProfil extends Component {
                             zIndex: 1,
                             marginTop: "-100px",
                             backgroundImage: `url(${background_card})`,
-                            backgroundSize: "100%"
+                            backgroundRepeat: "repeat",
+                            backgroundSize: "300px",
                         }}>
                             <div className="mt-2 d-flex justify-content-center ">
                                 <h2 className=" p-2 bg-light border-alpiniste-1 text-info"
