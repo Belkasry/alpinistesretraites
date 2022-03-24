@@ -155,26 +155,22 @@ class Experience
 
     /**
      * @ApiProperty(
-     *      readableLink=false,
+     *      readableLink=true,
      *  )
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experience")
      */
     private $subscriptions;
 
-    // /**
-    //  * @ApiProperty(
-    //  *    readableLink=false,
-    //  * )
-    //  * @Groups({"read"})
-    //  * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experiences")
-    //  */
-    // private $subscriptions;
+    /**
+       * @ApiProperty(
+     *      readableLink=true,
+     *  )
+     * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
+     * @Groups({"read"})
+     */
+    private $reviews;
 
-    // /**
-    //  * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
-    //  */
-    // private $reviews;
 
 
 
@@ -184,7 +180,7 @@ class Experience
         $this->medias = new ArrayCollection();
         $this->steps = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
-        // $this->reviews = new ArrayCollection();
+         $this->reviews = new ArrayCollection();
     }
 
 
@@ -573,6 +569,36 @@ class Experience
     {
         if ($this->subscriptions->removeElement($subscription)) {
             $subscription->removeExperience($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Review[]
+     */
+    public function getReviews(): Collection
+    {
+        return $this->reviews;
+    }
+
+    public function addReview(Review $review): self
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews[] = $review;
+            $review->setExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): self
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getExperience() === $this) {
+                $review->setExperience(null);
+            }
         }
 
         return $this;

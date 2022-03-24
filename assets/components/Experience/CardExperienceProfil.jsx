@@ -12,6 +12,7 @@ import background_card from '../../img/alpinistesretraites_bg_small_stars.png'
 import axios from "axios/index";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
+import ReactStars from 'react-stars';
 
 class CardExperienceProfil extends Component {
     constructor(props) {
@@ -188,9 +189,17 @@ class CardExperienceProfil extends Component {
                                 </div>
                             </div>
                             <div className="description text-center">
-                                <a
-                                    className="btn btn-just-icon btn-link btn-dribbble text-alpiniste"><FontAwesomeIcon
-                                        icon={faFacebook} /></a>
+                                <div className="m-2 d-flex justify-content-center">
+                                    <div  className="p-2 bg-light border-alpiniste-1 ">
+                                        <ReactStars
+                                            className={"m-auto"}
+                                            count={5}
+                                            size={24}
+                                            value={this.props.experience.dificulte}
+                                            edit={false}
+                                            color2={'#ffd700'} />
+                                    </div>
+                                </div>
 
                                 <p className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2 text-moyen">
                                     <div dangerouslySetInnerHTML={{ __html: descript }} />

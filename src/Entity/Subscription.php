@@ -6,10 +6,17 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\SubscriptionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\JoinColumn;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use App\ApiPlatform\SubscriptionFilter;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ApiResource()
+ * @ApiFilter(SubscriptionFilter::class)
  * @ORM\Entity(repositoryClass=SubscriptionRepository::class)
  */
 class Subscription
@@ -37,7 +44,22 @@ class Subscription
     private $experience;
 
 
-  
+
+    /**
+     * @var string
+     */
+    private $login;
+
+    /**
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->user->getLogin();
+    }
+
+
+
     public function __construct()
     {
         $this->guide = new ArrayCollection();
@@ -53,6 +75,7 @@ class Subscription
     {
         return $this->user;
     }
+
 
     public function setUser(?User $user): self
     {
@@ -108,8 +131,4 @@ class Subscription
 
         return $this;
     }
-
-    
-
-   
 }

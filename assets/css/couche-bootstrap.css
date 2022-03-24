@@ -336,3 +336,17 @@
     top: 0px;
     z-index: 1;
 }
+
+.comment-section{padding:50px 0px;}
+
+.R-title{color: #00aeef; font-size: 22px;font-weight:700; margin-bottom: 10px; }
+.comment-section .media-review{padding:20px 0px;border-bottom:1px solid #ccc;}
+.comment-section .media-review:first-child{border-top:1px solid #ccc;}
+.comment-section .media .media-user{margin-right: 15px; border-radius: 50%;overflow: hidden; background: rgb(236, 236, 236); width: 77px;height: 77px;  }
+.comment-section .media .media-user img{width:100%; height:100%; object-fit: cover;}
+.comment-section .media .M-flex{display: flex;justify-content: space-between;}
+.comment-section .media .M-flex .title{font-size: 12px; color: #1c1d36;  margin-bottom: 10px;font-weight:400;}
+.comment-section .media .M-flex .title span{font-size: 20px;  display: block;font-weight:700;margin-bottom:5px;}
+.comment-section .media .description{font-size: 14px;  color: #5b5b5b;margin-bottom: 20px;}
+.rating-row ul{list-style:none;display:flex; padding:0 ; margin:0;}
+.rating-row ul li{color:#ffc107;font-size:20px;margin:0px 3px;}

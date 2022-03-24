@@ -22,7 +22,8 @@ import axios from "axios/index";
 import Cookies from 'universal-cookie';
 import Planning from "../Planning";
 import { ProgressBar } from "react-bootstrap";
-// import Followers from "./Followers";
+import Followers from "../Followers";
+import Reviews from "../Reviews";
 // import Reviews from "./Reviews";
 
 export class ExperienceProfil extends Component {
@@ -39,6 +40,7 @@ export class ExperienceProfil extends Component {
             steps: [],
             requirement: [],
             notice: [],
+            subscriptions:[]
         }
 
 
@@ -108,7 +110,7 @@ export class ExperienceProfil extends Component {
         const steps = this.state.experience ? this.state.experience.steps : [{ 'id': 0 }];
         const requirements = this.state.experience ? this.state.experience.requirement : ["---"];
         const notices = this.state.experience ? this.state.experience.notice : ["---"];
-        const { progressLoading } = this.state;
+        
 
         return <div className="container">
             <CardExperienceProfil experience={this.state.experience} experience_id={this.props.match.params.id} />
@@ -184,14 +186,18 @@ export class ExperienceProfil extends Component {
                     <div className="tab-pane text-center m-5 mt-2" id="followers">
 
                         {this.state.renderView === 3 ?
-                            <Followers subscriptions={this.state.guide.subscriptions} />
+
+                           <div>
+                               <Followers experience_id={this.props.match.params.id}/>
+                               </div>
                             : <p>naaaaaaaay</p>
+
                         }
                     </div>
                 </div>
                 <div className="tab-pane  " id="reviews">
                     <div className="m-5 mt-1">
-                        {this.state.renderView === 4 ? <Reviews guide_id={this.props.match.params.id} /> :
+                        {this.state.renderView === 4 ?  <Reviews experience_id={this.props.match.params.id}/>:
                             <p>naaaaaaaaaaay</p>
                         }
                     </div>
@@ -202,10 +208,10 @@ export class ExperienceProfil extends Component {
 
                         {this.state.renderView === 5 ?
                             <div>
-                                <ol className="" style={{listStyle: "none"}}>
+                                <ol className="" style={{ listStyle: "none" }}>
                                     {
                                         requirements.map((requirement, index) => (
-                                            <li key={"req"+index} ><button className={"btn btn-outline-warning  p-2 text-moyen text-dark bg-white" }>{requirement}</button></li>
+                                            <li key={"req" + index} ><button className={"btn btn-outline-warning  p-2 text-moyen text-dark bg-white"}>{requirement}</button></li>
                                         ))
                                     }
                                 </ol>
@@ -219,18 +225,18 @@ export class ExperienceProfil extends Component {
                     <div className="tab-pane text-center m-5 mt-2" id="notices">
 
                         {this.state.renderView === 6 ?
-                            <div>
-                            <ol className="" style={{listStyle: "none"}}>
-                                {
-                                    notices.map((notice, index) => (
-                                        <li key={"not"+index} ><button className={"btn btn-outline-danger  p-2 text-moyen text-dark  bg-white" }>{notice}</button></li>
-                                    ))
-                                }
-                            </ol>
 
-                        </div>
-                            : <ProgressBar striped animated now={progressLoading} className="col-md-2 m-auto mt-3 mb-4"
-                            variant="info" />
+                            <div>
+                                <ol className="" style={{ listStyle: "none" }}>
+                                    {
+                                        notices.map((notice, index) => (
+                                            <li key={"not" + index} ><button className={"btn btn-outline-danger  p-2 text-moyen text-dark  bg-white"}>{notice}</button></li>
+                                        ))
+                                    }
+                                </ol>
+
+                            </div> : <p>naaaaaaaay</p>
+
                         }
                     </div>
                 </div>
