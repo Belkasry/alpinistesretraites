@@ -50,10 +50,26 @@ class Review
      *      readableLink=false,
      *  )
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)*
+     * @ORM\JoinColumn(nullable=false)
      * @Groups({"read"})
      */
     private $user;
+
+
+    /**
+     * @var string
+     * @Groups({"read"})
+     */
+    private $login;
+
+
+    /**
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->user->getLogin();
+    }
 
     public function getId(): ?int
     {

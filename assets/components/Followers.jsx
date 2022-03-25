@@ -24,8 +24,9 @@ class Followers extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.page !== this.state.page ) {
+        if (prevState.page !== this.state.page) {
             this.loadSubscriptions();
+            ;
         }
     }
 
@@ -77,14 +78,16 @@ class Followers extends Component {
         const { subscriptions, isLoading, max, progressLoading } = this.state;
         return (
             <React.Fragment>
-                <ol className="" style={{ listStyle: "none" }}>
-                    {
-                        subscriptions.map((subscription, index) => (
-                            <li key={"not" + index} ><button className={"btn btn-outline-light  p-2 text-moyen text-dark  bg-white"}>
-                                {subscription.login}</button></li>
-                        ))
-                    }
-                </ol>
+                <div className="container">
+                    <div class="row justify-content-md-center">
+                        {
+                            subscriptions.map((subscription, index) => (
+                                <div key={"not" + index} className="col" ><button className={"btn btn-outline-secondary  p-2 text-moyen text-dark  bg-white"}>
+                                    {subscription.login}</button></div>
+                            ))
+                        }
+                    </div>
+                </div>
                 {!max ?
                     <div>
                         {isLoading ?

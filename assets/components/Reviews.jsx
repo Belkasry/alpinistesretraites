@@ -68,9 +68,7 @@ class Reviews extends Component {
                 this.setState({ max: true });
             }
             var resultat=response.data["hydra:member"];
-
             
-
             this.setState((prevState) => ({
                 reviews: [...prevState.reviews, ...resultat],
                 progressLoading: 10
@@ -98,8 +96,8 @@ class Reviews extends Component {
 
                                             <div className="media-body">
                                                 <div className="M-flex">
-                                                    <div className="media-user"><img src="https://i.imgur.com/nUNhspp.jpg" alt=""></img></div>
-                                                    <h2 className="title"><span> {axios.get(review.user)} </span>DD-MM-YYYY</h2>
+                                                    <div className="media-user"><img src="https://picsum.photos/id/1/600/300" alt=""></img></div>
+                                                    <h2 className="title"><span><a href={"/accompagnateur/profil/"+review.user.substring(review.user.lastIndexOf('/') + 1)}> {review.login}</a> </span>DD-MM-YYYY</h2>
                                                     <div className="rating-row">
                                                         <ReactStars
                                                             className={"m-auto"}

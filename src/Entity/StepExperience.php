@@ -47,6 +47,21 @@ class StepExperience
      */
     private $experience;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=ValeurReferentiel::class)
+     */
+    private $type_etape;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $jour;
+
+    /**
+     * @ORM\Column(type="time", nullable=true)
+     */
+    private $debut;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -96,6 +111,42 @@ class StepExperience
     public function setExperience(?Experience $experience): self
     {
         $this->experience = $experience;
+
+        return $this;
+    }
+
+    public function getTypeEtape(): ?ValeurReferentiel
+    {
+        return $this->type_etape;
+    }
+
+    public function setTypeEtape(?ValeurReferentiel $type_etape): self
+    {
+        $this->type_etape = $type_etape;
+
+        return $this;
+    }
+
+    public function getJour(): ?int
+    {
+        return $this->jour;
+    }
+
+    public function setJour(int $jour): self
+    {
+        $this->jour = $jour;
+
+        return $this;
+    }
+
+    public function getDebut(): ?\DateTimeInterface
+    {
+        return $this->debut;
+    }
+
+    public function setDebut(?\DateTimeInterface $debut): self
+    {
+        $this->debut = $debut;
 
         return $this;
     }
