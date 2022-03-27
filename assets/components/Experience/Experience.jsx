@@ -32,7 +32,8 @@ export class Experience extends Component {
 
     render() {
         var descript = this.props.experience.description ? this.props.experience.description : "";
-        return <div className="card mb-2 thecard border-alpiniste ">
+        return (
+        <div className="card mb-2 thecard border-alpiniste ">
             <h5 className="card-header bg-light ">
                 <Link to={`/experience/profil/${this.props.experience.id}`}>
                     <a href="#" className="text-info">{this.props.experience.title}</a></Link>
@@ -42,7 +43,8 @@ export class Experience extends Component {
                    <span className="m-1 badge rounded-pill bg-cute tag ">
                             <FontAwesomeIcon icon={faMapMarkerAlt}/>{' '} {this.props.experience.location}</span>
                     <img
-                        src={this.props.experience.imageName !== "" ? "/images/experiences/" + this.props.experience.imageName : "https://placeimg.com/640/480/animals/" + Math.random() * 30}
+                        src={this.props.experience.imageName !== "" ? "/images/experiences/" +
+                         this.props.experience.imageName : "https://placeimg.com/640/480/animals/" + Math.random() * 30}
                         className="d-block user-select-none m-0 p-0 " width="100%"
                         height="120vh" style={{objectFit: 'cover'}}/>
                 </div>
@@ -64,7 +66,7 @@ export class Experience extends Component {
                     })}
                 </div>
             </div>
-        </div>
+        </div>);
     }
 }
 

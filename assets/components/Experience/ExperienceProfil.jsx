@@ -40,7 +40,9 @@ export class ExperienceProfil extends Component {
             steps: [],
             requirement: [],
             notice: [],
-            subscriptions:[]
+            include: [],
+            subscriptions: [],
+            steps_list:{}
         }
 
 
@@ -107,10 +109,11 @@ export class ExperienceProfil extends Component {
 
     render() {
 
-        const steps = this.state.experience ? this.state.experience.steps : [{ 'id': 0 }];
+        const steps = this.state.experience ? this.state.experience.steps_list : { "1": [] };
         const requirements = this.state.experience ? this.state.experience.requirement : ["---"];
         const notices = this.state.experience ? this.state.experience.notice : ["---"];
-        
+        const includes = this.state.experience ? this.state.experience.include : ["---"];
+
 
         return <div className="container">
             <CardExperienceProfil experience={this.state.experience} experience_id={this.props.match.params.id} />
@@ -137,17 +140,10 @@ export class ExperienceProfil extends Component {
                             </li>
 
                             <li className="nav-item">
-                                <button className="nav-link" href="#requirements" role="tab" data-toggle="tab" value={5}
+                                <button className="nav-link" href="#info_pratique" role="tab" data-toggle="tab" value={5}
                                     onClick={this.clickBtn}>
                                     <FontAwesomeIcon icon={faPen} color="white" />{' '}
-                                    Requirements
-                                </button>
-                            </li>
-                            <li className="nav-item">
-                                <button className="nav-link" href="#notices" role="tab" data-toggle="tab" value={6}
-                                    onClick={this.clickBtn}>
-                                    <FontAwesomeIcon icon={faPen} color="white" />{' '}
-                                    Notices
+                                    Infos Pratiques
                                 </button>
                             </li>
                             <li className="nav-item">
@@ -187,9 +183,9 @@ export class ExperienceProfil extends Component {
 
                         {this.state.renderView === 3 ?
 
-                           <div>
-                               <Followers experience_id={this.props.match.params.id}/>
-                               </div>
+                            <div>
+                                <Followers experience_id={this.props.match.params.id} />
+                            </div>
                             : <p>naaaaaaaay</p>
 
                         }
@@ -197,45 +193,53 @@ export class ExperienceProfil extends Component {
                 </div>
                 <div className="tab-pane  " id="reviews">
                     <div className="m-5 mt-1">
-                        {this.state.renderView === 4 ?  <Reviews experience_id={this.props.match.params.id}/>:
+                        {this.state.renderView === 4 ? <Reviews experience_id={this.props.match.params.id} /> :
                             <p>naaaaaaaaaaay</p>
                         }
                     </div>
                 </div>
 
-                <div className="tab-pane text-center " id="requirements">
-                    <div className="tab-pane text-center m-5 mt-2" id="requirements">
+                <div className="tab-pane text-center " id="info_pratique">
+                    <div className="tab-pane text-center m-5 mt-2" id="info_pratique">
 
                         {this.state.renderView === 5 ?
                             <div>
-                                <ol className="" style={{ listStyle: "none" }}>
-                                    {
-                                        requirements.map((requirement, index) => (
-                                            <li key={"req" + index} ><button className={"btn btn-outline-warning  p-2 text-moyen text-dark bg-white"}>{requirement}</button></li>
-                                        ))
-                                    }
-                                </ol>
+                                <div className="card border-warning  mb-3">
 
+                                    <div class="card-header bg-light">Requirements</div>
+                                    <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 5px #ffc107", paddingLeft: "0.2rem" }}>
+                                        {
+                                            requirements.map((requirement, index) => (
+                                                <li key={"req" + index} >
+                                                    <button className={"btn btn-outline-light  p-2 text-moyen text-dark bg-white "}>
+                                                        {requirement}</button></li>
+                                            ))
+                                        }
+                                    </ol>
+                                </div>
+                                <div className="card border-danger mb-3">
+                                    <div class="card-header bg-light">Notices</div>
+                                    <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 5px #dc3545", paddingLeft: "0.2rem" }}>
+                                        {
+                                            notices.map((notice, index) => (
+                                                <li key={"not" + index} ><button className={"btn btn-outline-light  p-2 text-moyen text-dark  bg-white"}>{notice}</button></li>
+                                            ))
+                                        }
+                                    </ol>
+                                </div>
+                                <div className="card border-info  mb-3">
+                                    <div class="card-header bg-light">Including</div>
+                                    <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 5px #17a2b8", paddingLeft: "0.2rem" }}>
+                                        {
+                                            includes.map((include, index) => (
+                                                <li key={"inc" + index} ><button className={"btn btn-outline-light  p-2 text-moyen text-dark  bg-white"}>{include}</button></li>
+                                            ))
+                                        }
+                                    </ol>
+
+                                </div>
                             </div>
                             : <p>naaaaaaaay</p>
-                        }
-                    </div>
-                </div>
-                <div className="tab-pane text-center " id="notices">
-                    <div className="tab-pane text-center m-5 mt-2" id="notices">
-
-                        {this.state.renderView === 6 ?
-
-                            <div>
-                                <ol className="" style={{ listStyle: "none" }}>
-                                    {
-                                        notices.map((notice, index) => (
-                                            <li key={"not" + index} ><button className={"btn btn-outline-danger  p-2 text-moyen text-dark  bg-white"}>{notice}</button></li>
-                                        ))
-                                    }
-                                </ol>
-
-                            </div> : <p>naaaaaaaay</p>
 
                         }
                     </div>

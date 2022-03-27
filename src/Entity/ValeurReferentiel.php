@@ -46,6 +46,12 @@ class ValeurReferentiel
      */
     private $activites;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"list":"read"})
+     */
+    private $icon;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -102,6 +108,18 @@ class ValeurReferentiel
     public function __toString()
     {
         return $this->libelle;
+    }
+
+    public function getIcon(): ?string
+    {
+        return $this->icon;
+    }
+
+    public function setIcon(?string $icon): self
+    {
+        $this->icon = $icon;
+
+        return $this;
     }
 
 

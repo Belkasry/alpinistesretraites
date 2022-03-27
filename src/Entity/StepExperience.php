@@ -6,6 +6,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\StepExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -31,7 +32,7 @@ class StepExperience
 
     /**
      * @ORM\Column(type="string", length=255)
-      * @Groups({"list":"read"})
+     * @Groups({"list":"read"})
      */
     private $resume;
 
@@ -49,18 +50,30 @@ class StepExperience
 
     /**
      * @ORM\ManyToOne(targetEntity=ValeurReferentiel::class)
+     * @Groups({"list":"read"})
      */
     private $type_etape;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"list":"read"})
      */
     private $jour;
 
     /**
      * @ORM\Column(type="time", nullable=true)
+     * @Groups({"list":"read"})
      */
     private $debut;
+
+    /**
+     * @Assert\NotBlank
+     * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
+     * @Groups({"read"})
+     */
+    private $destination;
+
+
 
     public function getId(): ?int
     {
@@ -147,6 +160,19 @@ class StepExperience
     public function setDebut(?\DateTimeInterface $debut): self
     {
         $this->debut = $debut;
+
+        return $this;
+    }
+
+
+    public function getDestination(): ?Destination
+    {
+        return $this->destination;
+    }
+
+    public function setDestination(?Destination $destination): self
+    {
+        $this->destination = $destination;
 
         return $this;
     }

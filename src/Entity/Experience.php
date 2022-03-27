@@ -21,7 +21,7 @@ use App\ApiPlatform\ExperienceFilter;
  *     normalizationContext={"groups"={"read"}},
  *     paginationItemsPerPage=8
  * )
-*  @ApiFilter(ExperienceFilter::class)
+ *  @ApiFilter(ExperienceFilter::class)
  *@ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
 class Experience
@@ -127,8 +127,16 @@ class Experience
     /**
      * @Groups({"read"})
      * @ORM\OneToMany(targetEntity=StepExperience::class, mappedBy="experience",cascade={"persist", "remove"})
+     * @ApiProperty(readableLink=false)
      */
     private $steps;
+
+
+    /**
+     * @var array
+     * @Groups({"read"})
+     */
+    private $steps_list;
 
     /**
      * @var array
@@ -145,6 +153,12 @@ class Experience
      * @ORM\Column(name="notice", type="json_array", nullable=true)
      */
     private $notice = [];
+
+    /**
+     * @Groups({"read"})
+     * @ORM\Column(type="json", nullable=true)
+     */
+    private $include = [];
 
 
     /**
@@ -163,7 +177,7 @@ class Experience
     private $subscriptions;
 
     /**
-       * @ApiProperty(
+     * @ApiProperty(
      *      readableLink=true,
      *  )
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
@@ -172,15 +186,13 @@ class Experience
     private $reviews;
 
 
-
-
     public function __construct()
     {
         $this->activites = new ArrayCollection();
         $this->medias = new ArrayCollection();
         $this->steps = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
-         $this->reviews = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
 
@@ -460,6 +472,22 @@ class Experience
         return $this;
     }
 
+
+    /**
+     * @return Array
+     */
+    public function getStepsList(): Array
+    {
+        $steps= $this->steps;
+        $listStep=[];
+        foreach ($steps as $step){
+            $listStep[$step->getJour()][]=[
+               "id"=> $step->getId(),"title"=>$step->getTitle()];
+        }
+        return $listStep;
+        
+    }
+
     /**
      * @return Collection|StepExperience[]
      */
@@ -600,6 +628,18 @@ class Experience
                 $review->setExperience(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getInclude(): ?array
+    {
+        return $this->include;
+    }
+
+    public function setInclude(?array $include): self
+    {
+        $this->include = $include;
 
         return $this;
     }

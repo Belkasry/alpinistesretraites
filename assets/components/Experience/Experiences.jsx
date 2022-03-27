@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import logo from '../../img/alpinistesretraites.png'
 import { faMapMarkerAlt, faSignature, faMoneyBill } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    FontAwesomeIcon,
+} from "@fortawesome/react-fontawesome"; import {
+    faBatteryFull as faDifficulty,
+    faBatteryEmpty as faDifficultyEmpty,
+    faBatteryHalf as faDifficultyHalf
+} from "@fortawesome/free-solid-svg-icons";
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -17,6 +24,21 @@ import axios from "axios/index";
 import { ProgressBar } from 'react-bootstrap';
 import ReactStars from 'react-stars'
 import Cookies from 'universal-cookie';
+import PrettyRating from "pretty-rating-react";
+import {dateFormat} from '../../lib/utils.js';
+
+
+const icons = {
+    difficulty: {
+        complete: faDifficulty,
+        half: faDifficultyHalf,
+        empty: faDifficultyEmpty,
+    }
+};
+const colors = {
+    difficulty: ['#17a2b8', '#17a2b8', '#434b4d'],
+
+};
 
 export class Experiences extends Component {
 
@@ -76,11 +98,11 @@ export class Experiences extends Component {
             });
             let guide_condition = "";
             if (this.props.guide) {
-                guide_condition =`guide=${this.props.guide}`;
+                guide_condition = `guide=${this.props.guide}`;
             }
 
             const response = await instance.get(
-                `api/experiences?page=${page}&`+guide_condition
+                `api/experiences?page=${page}&` + guide_condition
             );
             if (response.data["hydra:member"].length < 1) {
                 this.setState({ max: true });
@@ -143,20 +165,7 @@ export class Experiences extends Component {
 
     };
 
-    dateFormat = (ladate) => {
-        var date = new Date(ladate)
-        var dd = date.getDate();
-        var mm = date.getMonth() + 1;
-
-        var yyyy = date.getFullYear();
-        if (dd < 10) {
-            dd = '0' + dd;
-        }
-        if (mm < 10) {
-            mm = '0' + mm;
-        }
-        return dd + '/' + mm + '/' + yyyy;
-    }
+  
 
     render() {
         const { experiences, isLoading, max, progressLoading } = this.state;
@@ -189,16 +198,13 @@ export class Experiences extends Component {
                                     </div>
                                 </div>
                                 <div className="card m-1 p-0 mt-0 text-start bg-light border-alpiniste-1">
-                                    <div className="card-body m-1 p-0 d-flex flex-column ">
-                                        <ReactStars
-                                            className={"m-auto"}
-                                            count={5}
-                                            size={24}
-                                            value={experience.dificulte}
-                                            edit={false}
-                                            color2={'#ffd700'} />
+                                    <div className="card-body m-1 p-0 d-flex flex-column m-auto">
+                                        <PrettyRating
+                                            max={5} value={experience.dificulte}
+                                            className={"m-auto"} icons={icons.difficulty} colors={colors.difficulty} />
                                         <span
-                                            className="badge rounded-pill bg-transparent border-cute text-success  badge-small">Du {this.dateFormat(experience.start)} au {this.dateFormat(experience.finish)} </span>
+                                            className="badge rounded-pill bg-transparent border-cute text-success  badge-small">
+                                                Du {dateFormat(experience.start)} au {dateFormat(experience.finish)} </span>
 
                                     </div>
                                 </div>

@@ -5,6 +5,18 @@ import {
     faRss,
     faSms,
     faCheckDouble, faHourglassEmpty, faMoneyBillWave, faArrowAltCircleLeft,
+    faHeart,
+    faStar,
+    faHeartBroken,
+    faStarHalfAlt,
+    faHeart as farHeart,
+    faStar as farStar,
+    faCircle as faCircle,
+    faCircleHalfStroke as faCircleHalfStroke,
+    faBatteryFull as faDifficulty,
+    faBatteryEmpty as faDifficultyEmpty,
+    faBatteryHalf as faDifficultyHalf,
+
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faInstagram, faMailchimp } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +25,26 @@ import axios from "axios/index";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 import ReactStars from 'react-stars';
+import PrettyRating from "pretty-rating-react";
+import { dateFormat } from '../../lib/utils.js';
+
+const icons = {
+    star: {
+        complete: faStar,
+        half: faStarHalfAlt,
+        empty: farStar,
+    },
+    difficulty: {
+        complete: faDifficulty,
+        half: faDifficultyHalf,
+        empty: faDifficultyEmpty,
+    }
+};
+const colors = {
+    star: ['#d9ad26', '#d9ad26', '#434b4d'],
+    difficulty: ['#17a2b8', '#17a2b8', '#434b4d'],
+
+};
 
 class CardExperienceProfil extends Component {
     constructor(props) {
@@ -119,6 +151,8 @@ class CardExperienceProfil extends Component {
 
 
     render() {
+
+        const { experience } = this.props;
         var descript = this.props.experience.description ? this.props.experience.description : "<hr/>";
         var destination = this.props.experience.destination ? this.props.experience.destination.name : "<hr/>";
         var currency = " DHS"
@@ -142,6 +176,7 @@ class CardExperienceProfil extends Component {
                             <div className="mt-2 d-flex justify-content-center ">
                                 <h2 className=" p-2 bg-light border-alpiniste-1 text-info"
                                     style={{ zIndex: 1, marginTop: "100px" }}>{this.props.experience.title}</h2>
+
                             </div>
                             <div className="d-flex justify-content-center ">
                                 <div className=" ">
@@ -186,18 +221,22 @@ class CardExperienceProfil extends Component {
                                 </div>
                                 <div></div>
                                 <div className="">
+
                                 </div>
                             </div>
                             <div className="description text-center">
                                 <div className="m-2 d-flex justify-content-center">
-                                    <div  className="p-2 bg-light border-alpiniste-1 ">
-                                        <ReactStars
-                                            className={"m-auto"}
-                                            count={5}
-                                            size={24}
-                                            value={this.props.experience.dificulte}
-                                            edit={false}
-                                            color2={'#ffd700'} />
+                                    <div className="p-2  btn btn-light disabled p-2 text-moyen border-alpiniste-1">
+                                        <PrettyRating max={5} value={this.props.experience.dificulte}
+                                            className={"m-auto"} icons={icons.difficulty} colors={colors.difficulty} />
+
+
+                                    </div>
+                                </div>
+                                <div className="m-2 d-flex justify-content-center">
+                                    <div className="p-2  btn btn-info disabled p-2 text-moyen border-alpiniste-1">
+                                        Du <strong className="text-black">{dateFormat(experience.start)}</strong>
+                                        au <b className="text-">{dateFormat(experience.finish)}</b>
                                     </div>
                                 </div>
 
