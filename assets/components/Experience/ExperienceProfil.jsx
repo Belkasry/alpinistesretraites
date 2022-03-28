@@ -20,11 +20,11 @@ import CardExperienceProfil from "./CardExperienceProfil";
 import { withRouter } from "react-router";
 import axios from "axios/index";
 import Cookies from 'universal-cookie';
-import Planning from "../Planning";
+import Planning from "./Planning";
 import { ProgressBar } from "react-bootstrap";
 import Followers from "../Followers";
 import Reviews from "../Reviews";
-// import Reviews from "./Reviews";
+import InfoPratique from "./InfoPratique";
 
 export class ExperienceProfil extends Component {
     constructor(props) {
@@ -42,7 +42,7 @@ export class ExperienceProfil extends Component {
             notice: [],
             include: [],
             subscriptions: [],
-            steps_list:{}
+            steps_list: {}
         }
 
 
@@ -112,7 +112,7 @@ export class ExperienceProfil extends Component {
         const steps = this.state.experience ? this.state.experience.steps_list : { "1": [] };
         const requirements = this.state.experience ? this.state.experience.requirement : ["---"];
         const notices = this.state.experience ? this.state.experience.notice : ["---"];
-        const includes = this.state.experience ? this.state.experience.include : ["---"];
+        const including = this.state.experience ? this.state.experience.include : ["---"];
 
 
         return <div className="container">
@@ -203,42 +203,7 @@ export class ExperienceProfil extends Component {
                     <div className="tab-pane text-center m-5 mt-2" id="info_pratique">
 
                         {this.state.renderView === 5 ?
-                            <div>
-                                <div className="card border-warning  mb-3">
-
-                                    <div class="card-header bg-light">Requirements</div>
-                                    <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 5px #ffc107", paddingLeft: "0.2rem" }}>
-                                        {
-                                            requirements.map((requirement, index) => (
-                                                <li key={"req" + index} >
-                                                    <button className={"btn btn-outline-light  p-2 text-moyen text-dark bg-white "}>
-                                                        {requirement}</button></li>
-                                            ))
-                                        }
-                                    </ol>
-                                </div>
-                                <div className="card border-danger mb-3">
-                                    <div class="card-header bg-light">Notices</div>
-                                    <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 5px #dc3545", paddingLeft: "0.2rem" }}>
-                                        {
-                                            notices.map((notice, index) => (
-                                                <li key={"not" + index} ><button className={"btn btn-outline-light  p-2 text-moyen text-dark  bg-white"}>{notice}</button></li>
-                                            ))
-                                        }
-                                    </ol>
-                                </div>
-                                <div className="card border-info  mb-3">
-                                    <div class="card-header bg-light">Including</div>
-                                    <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 5px #17a2b8", paddingLeft: "0.2rem" }}>
-                                        {
-                                            includes.map((include, index) => (
-                                                <li key={"inc" + index} ><button className={"btn btn-outline-light  p-2 text-moyen text-dark  bg-white"}>{include}</button></li>
-                                            ))
-                                        }
-                                    </ol>
-
-                                </div>
-                            </div>
+                            <InfoPratique requirements={requirements} notices={notices} including={including} />
                             : <p>naaaaaaaay</p>
 
                         }

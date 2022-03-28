@@ -12,3 +12,14 @@ export function dateFormat  (ladate) {
     }
     return dd + '/' + mm + '/' + yyyy;
 }
+
+export function datetimeformat(ladate){
+    return new Date(ladate).toLocaleDateString(
+        'en-gb',
+        {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }
+      );
+}

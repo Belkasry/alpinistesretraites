@@ -303,6 +303,9 @@
 .text-moyen{
     font-size: 1.2rem !important;
 }
+.text-petit{
+    font-size: 1rem !important;
+}
 
 .listline {
     text-align: left;
