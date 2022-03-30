@@ -56,13 +56,15 @@ class Reviews extends Component {
                 baseURL: `https://127.0.0.1:8000/`,
                 headers: { 'Authorization': 'Bearer ' + token }
             });
-            let experience_condition = "";
+            let _condition = "";
             if (this.props.experience_id) {
-                experience_condition = `experience=${this.props.experience_id}`;
+                _condition = `experience=${this.props.experience_id}`;
+            }else  if (this.props.guide_id) {
+                _condition = `guide=${this.props.guide_id}`;
             }
 
             const response = await instance.get(
-                `api/reviews?page=${page}&` + experience_condition
+                `api/reviews?page=${page}&` + _condition
             );
             if (response.data["hydra:member"].length < 1) {
                 this.setState({ max: true });
@@ -92,7 +94,7 @@ class Reviews extends Component {
 
                                 {
                                     reviews.map((review, index) => (
-                                        <div className="media media-review p-2 bg-light border-alpiniste-1 text-info card mb-2 ">
+                                        <div className="media media-review p-2 bg-light border-alpiniste-1 text-info card mb-2 " key={"review_"+index}>
 
                                             <div className="media-body">
                                                 <div className="M-flex">
@@ -103,7 +105,7 @@ class Reviews extends Component {
                                                             className={"m-auto"}
                                                             count={5}
                                                             size={24}
-                                                            value={4}
+                                                            value={review.mark}
                                                             edit={false}
                                                             color2={'#ffd700'} />
                                                     </div>

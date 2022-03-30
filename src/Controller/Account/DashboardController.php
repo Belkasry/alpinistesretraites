@@ -67,8 +67,10 @@
         public function configureMenuItems(): iterable
         {
 
+            /** @var User $user */
+            $user= ( $this->security->getUser());
+             $id_guide = $user->getGuide()->getId();
 
-            $id_guide = $this->security->getUser()->getGuide()->getId();
 
             return [
                 MenuItem::linktoDashboard('Profil', 'fa fa-user-circle'),

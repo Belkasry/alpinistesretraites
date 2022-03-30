@@ -86,7 +86,7 @@ class Planning extends Component {
         const ListLine = ({ items, days }) => (
             <div className=" col-6">{
                 days.map((day, index) => (
-                    <React.Fragment>
+                    <React.Fragment key={"day_"+index}>
                         <h5 class="card-title ">
                             <button className="btn btn-outline-danger text-moyen bg-white disabled">Jour {day}</button>
                         </h5>

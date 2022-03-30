@@ -1,7 +1,7 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import logo from '../../img/alpinistesretraites.png'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faBell, faComment, faCommentAlt, faUserAlt, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faBell, faComment, faCommentAlt, faUserAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import Cookies from 'universal-cookie';
 import {
     BrowserRouter as Router,
@@ -26,10 +26,10 @@ export class NavBar extends Component {
 
         this.state = {
             token: token,
-            valid: true,
+            valid: false,
             decoded: decoded,
             user: {},
-            comptearebour:0,
+            comptearebour: 0,
         }
         this.testToken = this.testToken.bind(this);
         this.logout = this.logout.bind(this);
@@ -37,16 +37,21 @@ export class NavBar extends Component {
 
 
     componentDidMount() {
+
         const cookies = new Cookies();
-        if (cookies.get("token") != ""&&cookies.get("user") != "")
-             this.testToken();
-        else {
+        if (cookies.get("token") !== undefined && cookies.get("user") !== undefined) {
+            this.setState({
+                valid: true
+            });
+            // this.testToken();
+        } else {
             this.setState({
                 valid: false
             });
         }
-        if (cookies.get("user") != "") {
-            let user = cookies.get('user') ? cookies.get('user') : {};
+
+        if ( cookies.get("user") !== undefined) {
+            let user = cookies.get('user') ;
             let profil = user;
             this.setState({
                 user: profil
@@ -65,6 +70,7 @@ export class NavBar extends Component {
         cookies.set('token', "");
         cookies.set('user', {});
         this.setState({
+            user:{},
             valid: false
         });
         window.location.replace("/accompagnateur/logout");
@@ -88,24 +94,24 @@ export class NavBar extends Component {
     render() {
         return <nav className="navbar navbar-expand-lg bg-light m-2 border-alpiniste">
             <div className="container-fluid">
-                <a className="navbar-brand" href="/"><img src={logo} height="120%"/></a>
+                <a className="navbar-brand" href="/"><img src={logo} height="120%" /></a>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <FontAwesomeIcon icon={faBars} color="grey"/>
+                    data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <FontAwesomeIcon icon={faBars} color="grey" />
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarColor01">
                     <ul className="navbar-nav me-auto">
                         <a href="/"
-                           className="nav-item nav-link text-alpiniste">Home</a>
+                            className="nav-item nav-link text-alpiniste">Home{}</a>
                         <a href="/accompagnateur/list"
-                           className="nav-item nav-link active text-alpiniste">Accompagnateurs</a>
+                            className="nav-item nav-link active text-alpiniste">Accompagnateurs</a>
                         <a href="/experience/list" className="nav-item nav-link text-alpiniste">Experiences</a>
                         <a href="/destinations" className="nav-item nav-link text-alpiniste">Destinations</a>
                         <div className="nav-item dropdown">
                             <a href="#" data-toggle="dropdown"
-                               className="nav-item nav-link dropdown-toggle text-alpiniste">Inscription</a>
+                                className="nav-item nav-link dropdown-toggle text-alpiniste">Inscription</a>
                             <div className="dropdown-menu">
                                 <a className="dropdown-item text-alpiniste" href="/guide/nouveau">Nouveau Guide</a>
                                 <a className="dropdown-item text-alpiniste" href="#">Nouvelle Agence</a>
@@ -117,31 +123,32 @@ export class NavBar extends Component {
                     </ul>
                     <div className="d-flex">
                         <div className="navbar-nav ml-auto action-buttons">
-                            {!this.state.valid ? <Link to={`/experience/auth`} className="nav-item nav-link text-alpiniste">Login
-                                </Link> :
+                            {(!this.state.valid || Object.keys(this.state.user).length == 0) ?
+                             <Link to={`/experience/auth`} className="nav-item nav-link text-alpiniste">Login
+                            </Link> :
                                 <div className="navbar-nav ml-auto mr-3">
                                     <a href="#" className="nav-item nav-link notifications mt-1">
-                                        <FontAwesomeIcon icon={faBell} color="#637b86"/>
+                                        <FontAwesomeIcon icon={faBell} color="#637b86" />
                                         <span className="badge">1</span></a>
                                     <a href="#" className="nav-item nav-link messages mt-1">
-                                        <FontAwesomeIcon icon={faCommentAlt} color="#637b86"/>
+                                        <FontAwesomeIcon icon={faCommentAlt} color="#637b86" />
                                         <span className="badge">10</span></a>
                                     <div className="nav-item dropdown">
                                         <a href="#" data-toggle="dropdown"
-                                           className="nav-link dropdown-toggle user-action">
+                                            className="nav-link dropdown-toggle user-action">
                                             <img
                                                 src={this.state.user && this.state.user.imageName ? "/images/guides/" + this.state.user.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"}
                                                 height="50px" className="avatar"
-                                                style={{marginRight: "1rem"}}
-                                                alt="Avatar"/>{this.state.user && this.state.user.fullName ? this.state.user.fullName : "???"}
+                                                style={{ marginRight: "1rem" }}
+                                                alt="Avatar" />{this.state.user && this.state.user.login ? this.state.user.login : "???"}
                                         </a>
                                         <div className="dropdown-menu">
                                             <a href="/account" className="dropdown-item">
-                                                <FontAwesomeIcon icon={faUserAlt} color="grey" className="mr-3"/>
+                                                <FontAwesomeIcon icon={faUserAlt} color="grey" className="mr-3" />
                                                 {"  "}Profile</a>
                                             <div className="dropdown-divider"></div>
                                             <a className="dropdown-item ml-2" onClick={this.logout} href="#">
-                                                <FontAwesomeIcon icon={faSignOutAlt} color="grey" className="mr-3"/>
+                                                <FontAwesomeIcon icon={faSignOutAlt} color="grey" className="mr-3" />
                                                 {"  "}Logout</a>
                                         </div>
                                     </div>

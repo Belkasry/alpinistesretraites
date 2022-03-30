@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *    paginationItemsPerPage=2
  * )
  * @ORM\Entity(repositoryClass=ReviewRepository::class)
- * @ApiFilter(SearchFilter::class, properties={"id": "exact", "experience": "exact", "user": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact", "experience": "exact", "user": "exact","guide":"exact"})
  */
 class Review
 {
@@ -36,6 +36,7 @@ class Review
 
     /**
      * @ORM\Column(type="float")
+      * @Groups({"read"})
      */
     private $mark;
 
@@ -61,6 +62,11 @@ class Review
      * @Groups({"read"})
      */
     private $login;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Guide::class, inversedBy="reviews")
+     */
+    private $guide;
 
 
     /**
@@ -120,6 +126,18 @@ class Review
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getGuide(): ?Guide
+    {
+        return $this->guide;
+    }
+
+    public function setGuide(?Guide $guide): self
+    {
+        $this->guide = $guide;
 
         return $this;
     }

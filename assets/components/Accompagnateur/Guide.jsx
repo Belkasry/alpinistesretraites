@@ -46,13 +46,13 @@ export class Guide extends Component {
                         height="120vh" style={{objectFit: 'cover'}}/>
                 </div>
                 <div className="card-body m-0 p-0 mt-1 bg-gradient">
-                    <p className="card-text m-0 p-0">
+                    <div className="card-text m-0 p-0">
                         {descript.substring(0, 100).replace(/<[^>]*>/g, '')}
                         {this.ntimes(
                             <FontAwesomeIcon icon={faSignature} size="xs" color="grey"/>
                             , (50 - descript.length))
                         }
-                    </p>
+                    </div>
                 </div>
             </div>
             <div className="card m-1 p-0 mt-0 text-start bg-light border-alpiniste-1">

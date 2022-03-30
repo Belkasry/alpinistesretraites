@@ -142,7 +142,7 @@ export class Guides extends Component {
         const { guides, isLoading, max, progressLoading} = this.state;
         return <React.Fragment>
             <div className="grid-container ">
-                {guides.map(v_guide => {
+                {guides.map((v_guide,index) => {
                     return <div className="grid-item"  key={Math.random().toString()}><Guide guide={v_guide}/></div>
                 })
                 }

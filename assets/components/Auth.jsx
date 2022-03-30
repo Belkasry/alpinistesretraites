@@ -43,6 +43,7 @@ class Auth extends Component {
                 const login = this.state.username;
                 const cookies = new Cookies();
                 let token = cookies.get('token');
+                console.log(token);
                 const instance = axios.create({
                     baseURL: `https://127.0.0.1:8000/`,
                     headers: { 'Authorization': 'Bearer ' + token }
@@ -62,29 +63,29 @@ class Auth extends Component {
 
                 };
                 let LeUserComplement = {};
-                if (res.guide) {
-                    LeUserComplement = {
-                        nom: res.guide.nom,
-                        prenom: res.guide.prenom,
-                        fullName: res.guide.fullName,
-                        location: res.guide.location,
-                        phone: res.guide.phone,
-                        imageName: res.guide.imageName,
-                        guide: res.guide.id
-                    };
-                }
-                if (res.utilisateur) {
-                    LeUserComplement = {
-                        nom: res.utilisateur.nom,
-                        prenom: res.utilisateur.prenom,
-                        fullName: res.utilisateur.fullName,
-                        location: res.utilisateur.location,
-                        phone: res.utilisateur.phone,
-                        imageName: res.utilisateur.imageName,
-                    };
-                }
+                // if (res.guide) {
+                //     LeUserComplement = {
+                //         nom: res.guide.nom,
+                //         prenom: res.guide.prenom,
+                //         fullName: res.guide.fullName,
+                //         location: res.guide.location,
+                //         phone: res.guide.phone,
+                //         imageName: res.guide.imageName,
+                //         guide: res.guide.id
+                //     };
+                // }
+                // if (res.utilisateur) {
+                //     LeUserComplement = {
+                //         nom: res.utilisateur.nom,
+                //         prenom: res.utilisateur.prenom,
+                //         fullName: res.utilisateur.fullName,
+                //         location: res.utilisateur.location,
+                //         phone: res.utilisateur.phone,
+                //         imageName: res.utilisateur.imageName,
+                //     };
+                // }
 
-                for (var k in LeUserComplement) Leuser[k] = LeUserComplement[k];
+                // for (var k in LeUserComplement) Leuser[k] = LeUserComplement[k];
 
                 this.setState(
                     {
@@ -94,6 +95,7 @@ class Auth extends Component {
                     });
 
                 cookies.set('user', JSON.stringify(this.state.user));
+                
                 clearInterval(this.interval);
             }
             window.location.replace("/accompagnateur/list");
@@ -164,7 +166,7 @@ class Auth extends Component {
                 });
 
         } finally {
-            console.log('----------------->>>>>>>>');
+            console.log(JSON.stringify(this.state.user));
 
         }
     }

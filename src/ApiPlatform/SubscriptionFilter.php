@@ -14,6 +14,13 @@ class SubscriptionFilter extends AbstractFilter
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null/*, array $context = []*/)
     {
 
+        if ($property == 'id') {
+            $alias = $queryBuilder->getRootAliases()[0];
+            $valueParameter = $queryNameGenerator->generateParameterName('id');
+            $searchValues = explode(" ", $value);
+            $queryBuilder->Where("$alias.id = '".$searchValues[0]."'");
+        }
+
         if ($property == 'experience') {
             $alias = $queryBuilder->getRootAliases()[0];
             $valueParameter = $queryNameGenerator->generateParameterName('experience');
@@ -22,13 +29,23 @@ class SubscriptionFilter extends AbstractFilter
                 $queryBuilder
                     ->leftJoin(sprintf('%s.experience', $alias), 'experience')->addSelect('experience')
                     // ->andWhere('experience = 2')
-                    ->andWhere(sprintf('experience = :%s ',$valueParameter.$key))
-                    ->setParameter($valueParameter.$key,  $val );
-                
-               
+                    ->andWhere(sprintf('experience = :%s ', $valueParameter . $key))
+                    ->setParameter($valueParameter . $key,  $val);
             }
-        } else
+        } elseif ($property == 'guide') {
+            $alias = $queryBuilder->getRootAliases()[0];
+            $valueParameter = $queryNameGenerator->generateParameterName('guide');
+            $searchValues = explode(" ", $value);
+            foreach ($searchValues as $key => $val) {
+                $queryBuilder
+                    ->leftJoin(sprintf('%s.guide', $alias), 'guide')->addSelect('guide')
+                    // ->andWhere('experience = 2')
+                    ->andWhere(sprintf('guide = :%s ', $valueParameter . $key))
+                    ->setParameter($valueParameter . $key,  $val);
+            }
+        } else {
             return;
+        }
     }
 
     /**

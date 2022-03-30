@@ -52,13 +52,18 @@ class Followers extends Component {
                 baseURL: `https://127.0.0.1:8000/`,
                 headers: { 'Authorization': 'Bearer ' + token }
             });
-            let experience_condition = "";
+            let _condition = "";
             if (this.props.experience_id) {
-                experience_condition = `experience=${this.props.experience_id}`;
+                _condition = `experience=${this.props.experience_id}`;
+            }
+            else if (this.props.guide_id) {
+                _condition = `guide=${this.props.guide_id}`;
             }
 
+            
+
             const response = await instance.get(
-                `api/subscriptions?page=${page}&` + experience_condition
+                `api/subscriptions?page=${page}&` + _condition
             );
             if (response.data["hydra:member"].length < 1) {
                 this.setState({ max: true });

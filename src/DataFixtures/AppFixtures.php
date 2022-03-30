@@ -8,6 +8,7 @@ use App\Entity\Referentiel;
 use App\Entity\User;
 use App\Entity\ValeurReferentiel;
 use App\Repository\ExperienceRepository;
+use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -19,10 +20,11 @@ class AppFixtures extends Fixture
     /**
      * AppFixtures constructor.
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, ExperienceRepository $expR)
+    public function __construct(UserPasswordEncoderInterface $encoder, ExperienceRepository $expR,UserRepository $usrRepo)
     {
         $this->encoder = $encoder;
         $this->expR = $expR;
+        $this->userRepo = $usrRepo;
     }
 
     public function load(ObjectManager $manager)
@@ -56,7 +58,7 @@ class AppFixtures extends Fixture
         ////                $manager->flush();
         //                $i++;
         //            }
-        $this->remplirExperience($manager, $this->expR);
+        $this->remplirUser($manager, $this->userRepo);
     }
 
     public function remplirExperience(ObjectManager $manager, ExperienceRepository $expR)
@@ -89,16 +91,17 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    public function remplirUser(ObjectManager $manager)
+    public function remplirUser(ObjectManager $manager,UserRepository $usrRepo)
     {
 
         $user = new User();
-        $user->setLogin("test");
-        $user->setEmail("test@gmail.com");
-        $user->setBirthday(new \DateTime('2011-01-01'));
-        $user->setPasswordHash($this->encoder->encodePassword($user, "test"));
-        $user->setRoles(["ROLE_ADMIN"]);
-        $user->setToken("123a");
+        $user = $usrRepo->find(5);
+        // $user->setLogin("test");
+        // $user->setEmail("test@gmail.com");
+        // $user->setBirthday(new \DateTime('2011-01-01'));
+        // $user->setPasswordHash($this->encoder->encodePassword($user, "test"));
+        $user->setRoles(["ROLE_ADMIN","ROLE_GUIDE"]);
+        // $user->setToken("123a");
         $manager->persist($user);
         $manager->flush();
     }

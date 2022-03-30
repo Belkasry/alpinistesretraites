@@ -41,3 +41,7 @@ security:
         target: login_user
 
   access_control:
+         - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/account, roles: ROLE_GUIDE }
+         - { path: ^/docs, roles: IS_AUTHENTICATED_ANONYMOUSLY } # Allows accessing API documentations and Swagger UI
+         - { path: ^/authentication_token, roles: IS_AUTHENTICATED_ANONYMOUSLY }

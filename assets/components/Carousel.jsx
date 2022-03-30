@@ -22,8 +22,8 @@ class Carousel extends Component {
                 options={flickityOptions}
 
             > {medias.length > 0 ?
-                medias.map(srcMedia => {
-                        return <img src={"/images/medias/" + srcMedia.imageName} height="100%" width="100%"
+                medias.map((srcMedia,index) => {
+                        return <img src={"/images/medias/" + srcMedia.imageName} height="100%" width="100%" key={"img_"+index}
                                     style={{objectFit: "cover"}}/>
 
                     }

@@ -35,8 +35,9 @@ export class Experience extends Component {
         return (
         <div className="card mb-2 thecard border-alpiniste ">
             <h5 className="card-header bg-light ">
-                <Link to={`/experience/profil/${this.props.experience.id}`}>
-                    <a href="#" className="text-info">{this.props.experience.title}</a></Link>
+                
+                <Link to={`/experience/profil/${this.props.experience.id}`}
+                     className="text-info">{this.props.experience.title}</Link>
             </h5>
             <div className="card-body m-1 p-1">
                 <div className="card m-0 p-0 border-alpiniste-1">
@@ -49,13 +50,13 @@ export class Experience extends Component {
                         height="120vh" style={{objectFit: 'cover'}}/>
                 </div>
                 <div className="card-body m-0 p-0 mt-1 bg-gradient">
-                    <p className="card-text m-0 p-0">
+                    <div className="card-text m-0 p-0">
                         {descript.substring(0, 100).replace(/<[^>]*>/g, '')}
                         {this.ntimes(
                             <FontAwesomeIcon icon={faSignature} size="xs" color="grey"/>
                             , (50 - descript.length))
                         }
-                    </p>
+                    </div>
                 </div>
             </div>
             <div className="card m-1 p-0 mt-0 text-start bg-light border-alpiniste-1">

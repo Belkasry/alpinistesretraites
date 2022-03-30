@@ -10,7 +10,8 @@ import {
     faPhone,
     faThumbtack,
     faRss,
-    faSms
+    faSms,
+    faListAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Experiences from "./Experiences";
@@ -55,8 +56,6 @@ export class ExperienceProfil extends Component {
             step_selected: 0,
             progressLoading: 10,
         }
-
-
     }
     leType(obj) {
         return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
@@ -142,7 +141,7 @@ export class ExperienceProfil extends Component {
                             <li className="nav-item">
                                 <button className="nav-link" href="#info_pratique" role="tab" data-toggle="tab" value={5}
                                     onClick={this.clickBtn}>
-                                    <FontAwesomeIcon icon={faPen} color="white" />{' '}
+                                    <FontAwesomeIcon icon={faListAlt} color="white" />{' '}
                                     Infos Pratiques
                                 </button>
                             </li>
@@ -193,7 +192,8 @@ export class ExperienceProfil extends Component {
                 </div>
                 <div className="tab-pane  " id="reviews">
                     <div className="m-5 mt-1">
-                        {this.state.renderView === 4 ? <Reviews experience_id={this.props.match.params.id} /> :
+                        {this.state.renderView === 4 ? 
+                        <Reviews experience_id={this.props.match.params.id} /> :
                             <p>naaaaaaaaaaay</p>
                         }
                     </div>

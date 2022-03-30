@@ -172,12 +172,11 @@ export class Experiences extends Component {
         return (
             <React.Fragment>
                 <div className="grid-container ">
-                    {experiences.map(experience => {
-                        return <div className="grid-item pl-2">
+                    {experiences.map((experience,index) => {
+                        return <div className="grid-item pl-2" key={"exp_"+index}>
                             <div className="card mb-2 thecard border-alpiniste ">
                                 <h6 className="card-header bg-light ">
-                                    <Link to={`/experience/profil/${experience.id}`}>
-                                        <a href="#" className="text-info">{experience.title}</a></Link>
+                                    <Link to={`/experience/profil/${experience.id}`} className="text-info">{experience.title}</Link>
                                 </h6>
                                 <div className="card-body m-1 p-1">
                                     <div className="card m-0 p-0 border-alpiniste-1">
@@ -191,8 +190,8 @@ export class Experiences extends Component {
                                 </div>
                                 <div className="card m-1 p-0 mt-0 text-start bg-light border-alpiniste-1">
                                     <div className="card-body m-1 p-0">
-                                        {experience.activites.map(value => {
-                                            return <span>{' '}<span
+                                        {experience.activites.map((value,index) => {
+                                            return <span key={"activite_"+index}>{' '}<span
                                                 className="badge rounded-pill bg-transparent border-cute text-dark  badge-small">{value.libelle}</span></span>
                                         })}
                                     </div>

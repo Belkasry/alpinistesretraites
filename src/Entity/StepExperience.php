@@ -55,7 +55,7 @@ class StepExperience
     private $type_etape;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      * @Groups({"list":"read"})
      */
     private $jour;

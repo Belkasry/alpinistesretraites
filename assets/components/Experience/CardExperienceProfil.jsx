@@ -180,7 +180,7 @@ class CardExperienceProfil extends Component {
                             </div>
                             <div className="d-flex justify-content-center ">
                                 <div className=" ">
-                                    <span className="m-1 badge rounded-pill bg-cute tag ">
+                                    <span className="m-1 badge rounded-pill bg-cute tag text-moyen">
                                         <FontAwesomeIcon icon={faMapMarkerAlt} />{' '} {destination}</span>
                                 </div>
                                 <div className="">
@@ -240,9 +240,9 @@ class CardExperienceProfil extends Component {
                                     </div>
                                 </div>
 
-                                <p className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2 text-moyen">
+                                <div className="mt-0 mb-3 m-5 card p-5 pt-0 pb-2 text-moyen">
                                     <div dangerouslySetInnerHTML={{ __html: descript }} />
-                                </p>
+                                </div>
                             </div>
 
                         </div>

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\ExistsFilter;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use ApiPlatform\Core\Annotation\ApiProperty;
@@ -19,12 +20,14 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiFilter(SubscriptionFilter::class)
  * @ORM\Entity(repositoryClass=SubscriptionRepository::class)
  */
+
 class Subscription
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @ApiFilter(SearchFilter::class, strategy="ipartial")
      */
     private $id;
 
