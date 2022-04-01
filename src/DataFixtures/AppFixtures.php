@@ -5,9 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\Experience;
 use App\Entity\Guide;
 use App\Entity\Referentiel;
+use App\Entity\Subscription;
 use App\Entity\User;
 use App\Entity\ValeurReferentiel;
 use App\Repository\ExperienceRepository;
+use App\Repository\SubscriptionRepository;
 use App\Repository\UserRepository;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -20,11 +22,12 @@ class AppFixtures extends Fixture
     /**
      * AppFixtures constructor.
      */
-    public function __construct(UserPasswordEncoderInterface $encoder, ExperienceRepository $expR,UserRepository $usrRepo)
+    public function __construct(UserPasswordEncoderInterface $encoder, ExperienceRepository $expR,UserRepository $usrRepo,SubscriptionRepository $expSub)
     {
         $this->encoder = $encoder;
         $this->expR = $expR;
         $this->userRepo = $usrRepo;
+        $this->expSub = $expSub;
     }
 
     public function load(ObjectManager $manager)
@@ -58,10 +61,20 @@ class AppFixtures extends Fixture
         ////                $manager->flush();
         //                $i++;
         //            }
-        $this->remplirUser($manager, $this->userRepo);
+        $this->remplirSubscription($manager, $this->expR,$this->expSub);
     }
 
-    public function remplirExperience(ObjectManager $manager, ExperienceRepository $expR)
+    public function remplirSubscription(ObjectManager $manager, ExperienceRepository $expR,SubscriptionRepository $expSub)
+    {
+        $exp = $expR->find(7);
+        $sub=new Subscription();
+        $sub=$expSub->find(1);
+        $sub->addExperience( $exp);
+
+        
+        $manager->flush();
+    }
+      public function remplirExperience(ObjectManager $manager, ExperienceRepository $expR)
     {
         $exp = new Experience();
         $exp = $expR->find(2);

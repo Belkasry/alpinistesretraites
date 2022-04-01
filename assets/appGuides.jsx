@@ -43,7 +43,7 @@ function AppGuides() {
                     </header>
                     <div className="HolyGrail-body">
                             <Switch>
-                                <Route path="/accompagnateur/auth">
+                                <Route path="/auth">
                                     <div className="m-auto">
                                     <main className="bg-light p-3 border-alpiniste border-sketchy " style={{marginLeft:"20vh"}}>
                                     <Auth/>

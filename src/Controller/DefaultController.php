@@ -13,6 +13,7 @@ class DefaultController extends AbstractController
      * @Route("/experience/profil/{id}")
      * @Route("/experience")
      * @Route("/experience/{type}")
+     * @Route("/auth")
      */
     public function index(): Response
     {

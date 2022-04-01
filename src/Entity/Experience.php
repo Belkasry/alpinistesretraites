@@ -169,7 +169,7 @@ class Experience
 
     /**
      * @ApiProperty(
-     *      readableLink=true,
+     *      readableLink=false,
      *  )
      * @Groups({"read"})
      * @ORM\ManyToMany(targetEntity=Subscription::class, mappedBy="experience")

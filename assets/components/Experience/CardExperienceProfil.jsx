@@ -27,6 +27,7 @@ import { Link } from "react-router-dom";
 import ReactStars from 'react-stars';
 import PrettyRating from "pretty-rating-react";
 import { dateFormat } from '../../lib/utils.js';
+import Follow from "../Follow";
 
 const icons = {
     star: {
@@ -52,18 +53,12 @@ class CardExperienceProfil extends Component {
         const cookies = new Cookies();
         // let user = cookies.get('user') ? cookies.get('user') : {};
         this.state = {
-            follow: false,
             // subscription:user.subscription
         }
-        this.follow_ = this.follow_.bind(this);
         // this.following = this.following.bind(this);
         // this.followed = this.followed.bind(this);
     }
 
-    follow_() {
-        this.following();
-
-    }
 
 
 
@@ -73,75 +68,6 @@ class CardExperienceProfil extends Component {
     }
 
 
-    following() {
-        try {
-
-            let abonne = this.state.follow;
-            console.log(">>>>>>>>>>>> abonne >>>>" + abonne);
-            this.setState({ follow: false });
-            console.log(">>>>>>>>>>>> this.state.follow >>>>" + this.state.follow)
-            var data = JSON.stringify({
-                "experiences": [
-                    "/api/experiences/" + this.props.experience_id,
-                ]
-            });
-
-            var base_url = "https://127.0.0.1:8000/api/subscriptions/" + this.state.subscription;
-            var config = {
-                method: abonne ? 'delete' : 'patch',
-                url: base_url + (abonne ? '/patch' : ''),
-                headers: {
-                    'Content-Type': !abonne ? 'application/merge-patch+json' : 'application/json'
-                },
-                data: data
-            };
-
-            console.log(data);
-
-            axios(config)
-                .then((response) => {
-                    console.log(JSON.stringify(response.data));
-                })
-                .catch((error) => {
-                    this.setState({ follow: !abonne });
-                    console.log(error);
-                });
-
-        } finally {
-        }
-
-
-    };
-    followed = () => {
-        try {
-            var baseUrl = 'https://127.0.0.1:8000/api/subscriptions?page=1&id=' + this.state.subscription + '&experiences.id=' + this.props.experience_id;
-            var config = {
-                method: 'get',
-                url: baseUrl,
-                headers: {}
-            };
-
-            axios(config)
-                .then((response) => {
-                    console.log(JSON.stringify(response.data));
-                    if (response.data["hydra:totalItems"] > 0) {
-                        this.setState(
-                            { follow: true }
-                        )
-                    } else {
-                        this.setState(
-                            { follow: false }
-                        )
-                    }
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-
-        } finally {
-        }
-
-    };
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.experience !== this.props.experience) {
@@ -211,13 +137,7 @@ class CardExperienceProfil extends Component {
                                     </p>
                                 </div>
                                 <div className="">
-                                    <button type="button"
-                                        className={"btn btn-outline-success " + (this.state.follow ? " clicked" : " btn-alpiniste")}
-                                        onClick={this.follow_}>
-                                        <b><FontAwesomeIcon
-                                            icon={(this.state.follow ? faCheckDouble : faRss)} /> {(this.state.follow ? "" : "Follow")}
-                                        </b>
-                                    </button>
+                                <Follow experience={this.props.experience_id}  />
                                 </div>
                                 <div></div>
                                 <div className="">

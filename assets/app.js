@@ -25,6 +25,9 @@ function App() {
           <Route path="/experience">
             <AppExperiences />
           </Route>
+          <Route path="/auth">
+            <AppGuides />
+          </Route>
         </Switch>
         </Router>
 );

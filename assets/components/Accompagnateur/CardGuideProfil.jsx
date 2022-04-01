@@ -16,33 +16,19 @@ import Follow from "../Follow";
 class CardGuideProfil extends Component {
     constructor(props) {
         super(props);
-        
-       
-
-
-
         this.state = {
             user: {},
             follow: false,
         }
+        const cookies = new Cookies();
+        let leuser = cookies.get('user') ;
+        this.setState({ user: leuser });
     }
 
-    follow_() {
-
-    }
+    follow_() {}
 
 
-
-    componentDidMount() {
-        // const cookies = new Cookies();
-        // let leuser = cookies.get('user') !== undefined ? cookies.get('user') : {
-        //     id: 0,
-        //     email: "XXXXXXXXXXXX",
-        //     login: "XXXXXXXXXXXXXXXX",
-        //     subscription: "0",
-        // };
-        // this.setState({ user: leuser });
-    }
+    componentDidMount() { }
 
 
 
@@ -84,7 +70,7 @@ class CardGuideProfil extends Component {
                                 </div>
                                 <div></div>
                                 <div className="">
-                                    <Follow guide={this.props.guide_id} subscription={user.subscription} />
+                                    <Follow guide={this.props.guide_id}  />
                                 </div>
                                 <div></div>
                                 <div className="">

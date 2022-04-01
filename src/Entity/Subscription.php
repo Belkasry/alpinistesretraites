@@ -14,9 +14,14 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use App\ApiPlatform\SubscriptionFilter;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"read"}},
+ *     denormalizationContext={"groups"={"write"}},
+ * )
+ *     
  * @ApiFilter(SubscriptionFilter::class)
  * @ORM\Entity(repositoryClass=SubscriptionRepository::class)
  */
@@ -27,28 +32,36 @@ class Subscription
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read", "write"})
      * @ApiFilter(SearchFilter::class, strategy="ipartial")
      */
     private $id;
 
     /**
+     * @Groups({"read", "write"})
      * @ORM\OneToOne(targetEntity=User::class, inversedBy="subscription", cascade={"persist", "remove"})
+     * @ApiProperty(readableLink=false)
      */
     private $user;
 
     /**
+      * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity=Guide::class, inversedBy="subscriptions")
+     * @ApiProperty(readableLink=false,writadableLink=false)
      */
     private $guide;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Experience::class, inversedBy="subscriptions")
+     * @Groups({"read", "write"})
+     * @ORM\ManyToMany(targetEntity=Experience::class, inversedBy="subscriptions", cascade={"persist"})
+     * @ApiProperty(readableLink=false)
      */
     private $experience;
 
 
 
     /**
+     * @Groups({"read"})
      * @var string
      */
     private $login;
@@ -119,8 +132,10 @@ class Subscription
         return $this->experience;
     }
 
+
     public function addExperience(Experience $experience): self
     {
+
         if (!$this->experience->contains($experience)) {
             $this->experience[] = $experience;
         }
@@ -130,7 +145,7 @@ class Subscription
 
     public function removeExperience(Experience $experience): self
     {
-        $this->experience->removeElement($experience);
+        // $this->experience->removeElement($experience);
 
         return $this;
     }
