@@ -18,8 +18,9 @@ class Reviews extends Component {
             max: false,
             reviews: [],
             isconnecte: false,
-            mark:0,
-            commentaire:"teeeeeeeeeeeeest"
+            lanote: 0,
+            commentaire: "teeeeeeeeeeeeest",
+            commentdone: false
         }
         this.review_ = this.review_.bind(this);
     }
@@ -109,15 +110,14 @@ class Reviews extends Component {
             if (this.props.experience_id) {
                 data = JSON.stringify({
                     "experience": "/api/experiences/" + this.props.experience_id,
-                    "mark": this.state.mark,
+                    "mark": this.state.lanote,
                     "comment": this.state.commentaire,
                     "user": "/api/users/" + leuser.id
                 });
-                _condition = `experience=${this.props.experience_id}`;
             } else if (this.props.guide_id) {
                 data = JSON.stringify({
                     "guide": "/api/guides/" + this.props.guide_id,
-                    "mark": this.state.mark,
+                    "mark": this.state.lanote,
                     "comment": this.state.commentaire,
                     "user": "/api/users/" + leuser.id
                 });
@@ -132,10 +132,11 @@ class Reviews extends Component {
                 data: data
             };
 
-            
+            self=this;
             axios(config)
                 .then(function (response) {
                     console.log(JSON.stringify(response.data));
+                    self.setState({commentdone:true});
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -143,20 +144,47 @@ class Reviews extends Component {
         }
     }
 
-
+    handleCommentValue = (e) => {
+        this.setState({
+            commentaire: e.target.value,
+        });
+    };
 
 
     render() {
 
-        const { reviews, isLoading, max, progressLoading, isconnecte } = this.state;
+        const { reviews, isLoading, max, progressLoading, isconnecte, commentaire, lanote, commentdone } = this.state;
+        const ratingChanged = (newRating) => {
+            this.setState({ lanote: newRating })
+        }
         return (
             <React.Fragment>
-                {isconnecte ?
-                    <button type="button"
-                        className={"btn btn-primary "}
-                        onClick={this.review_}>
-                        Commenter
-                    </button>
+                {isconnecte ? (
+                    commentdone ?
+                        <div className="alert alert-dismissible alert-success">
+                            <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
+                            <strong>Well done!</strong> You successfully reviewed <a href="#" class="alert-link">New Review ?</a>.
+                        </div> :
+                        <div className="container">
+                            <textarea value={commentaire} className="col-12"
+                                id="comments-input" onChange={this.handleCommentValue}
+                                placeholder="Add a review..." rows="3" />
+                            <div className="rating-row">
+                                <ReactStars
+                                    className={"m-auto"}
+                                    edit={true}
+                                    count={5}
+                                    size={24}
+                                    color2={'#ffd700'}
+                                    value={lanote}
+                                    onChange={ratingChanged} />
+                            </div>
+                            <button
+                                className={"btn btn-primary row"}
+                                onClick={this.review_}>
+                                Commenter
+                            </button></div>
+                )
                     :
                     <span ></span>}
                 <div className="comment-section">
