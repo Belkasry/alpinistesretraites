@@ -53,6 +53,7 @@ class Auth extends Component {
                 );
 
                 let res = response.data["hydra:member"][0];
+                console.log(res);
                 let subs = res.subscription.split('/');
 
                 let Leuser = {

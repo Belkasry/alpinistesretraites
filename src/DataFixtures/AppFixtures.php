@@ -61,7 +61,12 @@ class AppFixtures extends Fixture
         ////                $manager->flush();
         //                $i++;
         //            }
-        $this->remplirSubscription($manager, $this->expR,$this->expSub);
+        // $this->remplirSubscription($manager, $this->expR,$this->expSub);
+
+       $subscription= $this->expSub->find(1);
+       $experience=$this->expR->find(5);
+
+        var_dump( $subscription->containExperience($experience));
     }
 
     public function remplirSubscription(ObjectManager $manager, ExperienceRepository $expR,SubscriptionRepository $expSub)

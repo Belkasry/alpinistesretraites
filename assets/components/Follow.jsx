@@ -11,7 +11,8 @@ class Follow extends Component {
 
         this.state = {
             follow: false,
-            user: { subscription: 0 }
+            user: { subscription: 0 },
+            isconnecte: false,
         }
 
 
@@ -27,8 +28,14 @@ class Follow extends Component {
     }
 
     componentDidMount() {
-
-        this.isfollowed();
+        const cookies = new Cookies();
+        if (cookies.get('user')) {
+            let leuser = cookies.get('user');
+            if (leuser.subscription) {
+                this.setState({ isconnecte: true })
+                this.isfollowed();
+            }
+        }
     }
 
 
@@ -83,49 +90,48 @@ class Follow extends Component {
             if (cookies.get('user')) {
                 let leuser = cookies.get('user');
                 if (leuser.subscription) {
-
+                    var ladata = JSON.stringify({
+                        "guides": [
+                            "/api/guides/0"
+                        ]
+                    });
                     if (this.props.guide) {
                         entite = "guides";
                         id_entite = this.props.guide;
-                        ObjetData = {
-                            "guide": [
+                        ladata = JSON.stringify({
+                            "guides": [
                                 "/api/guides/" + id_entite
-                            ],
+                            ]
+                        });
 
-                        };
-
-                    } else if (this.props.experience) {
+                    }
+                    if (this.props.experience) {
                         entite = "experiences";
                         id_entite = this.props.experience;
-                        ObjetData = {
-                            "experience": [
-                                "/api/experiences/" + id_entite,
-                            ],
-                        }
+                        ladata = JSON.stringify({
+                            "experiences": [
+                                "/api/experiences/" + id_entite
+                            ]
+                        });
                     }
 
-                    var data = JSON.stringify({
-                        ObjetData
-                    });
-                    var base_url = "https://127.0.0.1:8000/api/subscriptions/" + leuser.subscription;
+                    var base_url = "https://127.0.0.1:8000/api/follow/" + leuser.subscription;
                     var config = {
-                        method: abonne ? 'delete' : 'patch',
-                        url: base_url + (abonne ? '/patch' : ''),
+                        method: 'patch',
+                        url: base_url,
                         headers: {
-                            'Content-Type': !abonne ? 'application/merge-patch+json' : 'application/json'
+                            'Content-Type': 'application/json'
                         },
-                        data: data
+                        data: ladata
                     };
 
-                    console.log("------------------->> la data experience ou guide");
-                    console.log(data);
 
                     axios(config)
                         .then((response) => {
+                            this.setState({ follow: !abonne });
                             console.log(JSON.stringify(response.data));
                         })
                         .catch((error) => {
-                            this.setState({ follow: !abonne });
                             console.log(error);
                         });
                 }
@@ -142,9 +148,9 @@ class Follow extends Component {
 
     render() {
 
-        const { } = this.state;
-        return (
-            <React.Fragment>
+        const { isconnecte } = this.state;
+        return (<React.Fragment>
+            {isconnecte ?
                 <button type="button"
                     className={"btn btn-outline-success " + (this.state.follow ? " clicked" : " btn-alpiniste")}
                     onClick={this.follow_}>
@@ -152,7 +158,10 @@ class Follow extends Component {
                         icon={(this.state.follow ? faCheckDouble : faRss)} /> {(this.state.follow ? "" : "Follow")}
                     </b>
                 </button>
-            </React.Fragment>);
+                :
+                <span ></span>}
+        </React.Fragment>
+        )
     }
 }
 

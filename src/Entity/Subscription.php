@@ -17,9 +17,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ApiResource(
- *      normalizationContext={"groups"={"read"}},
- *     denormalizationContext={"groups"={"write"}},
+ *@ApiResource(
+ *     attributes={
+ *              "input_formats"={"json"={"application/ld+json", "application/json"}},
+ *              "normalization_context"={"groups"={"read"}},
+ *              "denormalization_context"={"groups"={"write"}},
+ *              "itemOperations"={
+ *                            "get","delete","put","patch",
+ *                            "_api_item_operation_name"={
+ *                                                        "method": "PATCH",
+ *                                                        "route_name"="subscription_patch"
+ *                                                        }
+ *                            }}
  * )
  *     
  * @ApiFilter(SubscriptionFilter::class)
@@ -45,7 +54,7 @@ class Subscription
     private $user;
 
     /**
-      * @Groups({"read", "write"})
+     * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity=Guide::class, inversedBy="subscriptions")
      * @ApiProperty(readableLink=false,writadableLink=false)
      */
@@ -143,10 +152,25 @@ class Subscription
         return $this;
     }
 
-    public function removeExperience(Experience $experience): self
+    public function removeExperience(Experience $exp): self
     {
-        // $this->experience->removeElement($experience);
+            $this->experience->removeElement($exp);
+            return $this;
+    }
 
-        return $this;
+
+    public function containExperience(Experience $exp){
+        if (!$this->experience->contains($exp)) {
+            return false;
+        }
+        return true;
+
+    }
+
+    public function containGuide(Guide $gud){
+        if (!$this->guide->contains($gud)) {
+            return false;
+        }
+        return true;
     }
 }

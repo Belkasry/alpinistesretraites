@@ -30,6 +30,9 @@ class Review
     private $id;
 
     /**
+     * @ApiProperty(
+     *      readableLink=false
+     *  )
      * @ORM\ManyToOne(targetEntity=Experience::class, inversedBy="reviews")
      */
     private $experience;
@@ -64,6 +67,9 @@ class Review
     private $login;
 
     /**
+      * @ApiProperty(
+     *      readableLink=false
+     *  )
      * @ORM\ManyToOne(targetEntity=Guide::class, inversedBy="reviews")
      */
     private $guide;

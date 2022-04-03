@@ -113,6 +113,10 @@ class User implements UserInterface
     private $statut;
 
     /**
+     * @ApiProperty(
+     *    readableLink=false,
+     *    writableLink=true
+     * )
      * @Groups({"read"})
      * @ORM\OneToOne(targetEntity=Subscription::class, mappedBy="user", cascade={"persist", "remove"})
      */

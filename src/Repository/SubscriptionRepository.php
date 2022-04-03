@@ -47,4 +47,19 @@ class SubscriptionRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function removeOneExperience($subscription_id ,$experience_id) 
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "DELETE FROM `subscription_experience` where subscription_id	= $subscription_id and experience_id=$experience_id;";
+        $conn->executeStatement($sql);
+
+    }
+     public function removeOneGuide($subscription_id ,$guide_id) 
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = "DELETE FROM `subscription_guide` where subscription_id	= $subscription_id and guide_id=$guide_id;";
+        $conn->executeStatement($sql);
+    }
+    
 }

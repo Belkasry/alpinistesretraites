@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use App\ApiPlatform\ExperienceFilter;
+use JsonSerializable;
 
 /**
  *@ApiResource(
@@ -24,7 +25,7 @@ use App\ApiPlatform\ExperienceFilter;
  *  @ApiFilter(ExperienceFilter::class)
  *@ORM\Entity(repositoryClass=ExperienceRepository::class)
  */
-class Experience
+class Experience implements JsonSerializable
 {
     /**
      * @ORM\Id
@@ -476,16 +477,16 @@ class Experience
     /**
      * @return Array
      */
-    public function getStepsList(): Array
+    public function getStepsList(): array
     {
-        $steps= $this->steps;
-        $listStep=[];
-        foreach ($steps as $step){
-            $listStep[$step->getJour()][]=[
-               "id"=> $step->getId(),"title"=>$step->getTitle()];
+        $steps = $this->steps;
+        $listStep = [];
+        foreach ($steps as $step) {
+            $listStep[$step->getJour()][] = [
+                "id" => $step->getId(), "title" => $step->getTitle()
+            ];
         }
         return $listStep;
-        
     }
 
     /**
@@ -642,5 +643,13 @@ class Experience
         $this->include = $include;
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'title' => $this->getTitle(),
+        ];
     }
 }
