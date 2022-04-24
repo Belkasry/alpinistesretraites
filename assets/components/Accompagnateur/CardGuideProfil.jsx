@@ -46,7 +46,6 @@ class CardGuideProfil extends Component {
         var links = this.props.guide.links ? this.props.guide.links : {};
         return (
             <div className="row">
-                <h1>{JSON.stringify(user)}</h1>
                 <div className="" style={{ zIndex: 3 }}>
                     <img
                         src={this.props.guide.imageName ? "/images/guides/" + this.props.guide.imageName : "https://via.placeholder.com/150/FF0000/FFFFFF?Alpiniste"}

@@ -19,7 +19,7 @@ use JsonSerializable;
 
 /**
  *@ApiResource(
- *     normalizationContext={"groups"={"read"}},
+ *     normalizationContext={"groups"={"read","read_grid"}},
  *     paginationItemsPerPage=8
  * )
  *  @ApiFilter(ExperienceFilter::class)
@@ -30,7 +30,7 @@ class Experience implements JsonSerializable
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @Groups({"read"})
+     * @Groups({"read","read_grid"})
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -53,6 +53,7 @@ class Experience implements JsonSerializable
     private $dificulte;
 
     /**
+      *  @Groups({"read","read_grid"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $nbr_participant;
@@ -63,7 +64,7 @@ class Experience implements JsonSerializable
     private $nbr_participant_restant;
 
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_grid"})
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
     private $prix;
@@ -76,6 +77,7 @@ class Experience implements JsonSerializable
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"read_grid"})
      */
     private $etat;
 
@@ -86,13 +88,13 @@ class Experience implements JsonSerializable
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read","read_grid"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read"})
+     * @Groups({"read","read_grid"})
      */
     private $finish;
 
@@ -119,7 +121,7 @@ class Experience implements JsonSerializable
     private $medias;
 
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_grid"})
      * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      */
@@ -163,7 +165,7 @@ class Experience implements JsonSerializable
 
 
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_grid"})
      * @ORM\Column(name="duree",type="integer", nullable=true)
      */
     private $duree;
