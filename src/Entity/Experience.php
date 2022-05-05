@@ -19,7 +19,7 @@ use JsonSerializable;
 
 /**
  *@ApiResource(
- *     normalizationContext={"groups"={"read","read_grid"}},
+ *     normalizationContext={"groups"={"read","read_grid","read_item"}},
  *     paginationItemsPerPage=8
  * )
  *  @ApiFilter(ExperienceFilter::class)
@@ -30,14 +30,16 @@ class Experience implements JsonSerializable
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @Groups({"read","read_grid"})
+     * @Groups({"read","read_grid","read_item"})
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"read"})
+     * @Assert\NotBlank
+     * @Assert\NotNull
+     * @Groups({"read_grid","read"})
      */
     private $title;
 
@@ -48,12 +50,12 @@ class Experience implements JsonSerializable
      *      max = 5,
      *      notInRangeMessage = "Difficulte entre 0 et 5",
      * )
-     *  @Groups({"read"})
+     *  @Groups({"read_grid","read","read_item"})
      */
     private $dificulte;
 
     /**
-      *  @Groups({"read","read_grid"})
+     *  @Groups({"read","read_item","read_grid"})
      * @ORM\Column(type="integer", nullable=true)
      */
     private $nbr_participant;
@@ -64,37 +66,37 @@ class Experience implements JsonSerializable
     private $nbr_participant_restant;
 
     /**
-     * @Groups({"read","read_grid"})
+     * @Groups({"read","read_item","read_grid"})
      * @ORM\Column(type="decimal", precision=10, scale=0)
      */
-    private $prix;
+    private $prix = 0.00;
 
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      * @ORM\Column(type="text")
      */
-    private $description;
+    private $description = "";
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"read_grid"})
+     * @Groups({"read_grid","read_item"})
      */
-    private $etat;
+    private $etat = false;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean",options={"default" : false})
      */
-    private $fixe;
+    private $fixe = false;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read","read_grid"})
+     * @Groups({"read","read_item","read_grid"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read","read_grid"})
+     * @Groups({"read","read_item","read_grid"})
      */
     private $finish;
 
@@ -105,11 +107,11 @@ class Experience implements JsonSerializable
 
 
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      */
     private $guide_eager;
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      * @ORM\ManyToMany(targetEntity=ValeurReferentiel::class, fetch="EAGER")
      */
     private $activites;
@@ -121,7 +123,7 @@ class Experience implements JsonSerializable
     private $medias;
 
     /**
-     * @Groups({"read","read_grid"})
+     * @Groups({"read","read_item","read_grid"})
      * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      */
@@ -137,13 +139,13 @@ class Experience implements JsonSerializable
 
     /**
      * @var array
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      */
     private $steps_list;
 
     /**
      * @var array
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      * @ORM\Column(name="requirement", type="json_array", nullable=true)
      */
     private $requirement = [];
@@ -152,20 +154,20 @@ class Experience implements JsonSerializable
 
     /**
      * @var array
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      * @ORM\Column(name="notice", type="json_array", nullable=true)
      */
     private $notice = [];
 
     /**
-     * @Groups({"read"})
+     * @Groups({"read","read_item"})
      * @ORM\Column(type="json", nullable=true)
      */
     private $include = [];
 
 
     /**
-     * @Groups({"read","read_grid"})
+     * @Groups({"read","read_item","read_grid"})
      * @ORM\Column(name="duree",type="integer", nullable=true)
      */
     private $duree;
@@ -184,7 +186,7 @@ class Experience implements JsonSerializable
      *      readableLink=true,
      *  )
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
-     * @Groups({"read"})
+     * @Groups({"read",})
      */
     private $reviews;
 

@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Experience;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -26,12 +28,22 @@ class ExperienceRepository extends ServiceEntityRepository
         $sort =  $criterias["sort_by"];
         $order = $criterias["order_by"];
         $q = $this->createQueryBuilder('exp');
-        foreach ($criterias["where"] as $criteria) {
+        $q_count = $this->createQueryBuilder('exp')->select('count(exp.id) as total');
+
+        $wheres = key_exists("where", $criterias) ? $criterias["where"] : [];
+        foreach ($wheres as $criteria) {
             $q->andWhere($criteria);
+            $q_count->andWhere($criteria);
         }
-        foreach ($criterias["params"] as $key => $param) {
-            $q->setParameter($key, $param);
+
+        $parametres = new ArrayCollection();
+        $params = key_exists("params", $criterias) ? $criterias["params"] : [];
+        foreach ($params as $key => $param) {
+            $parametres->add(new Parameter($key, $param[0], $param[1]));
         }
+
+        $q->setParameters($parametres);
+        $q_count->setParameters($parametres);
         $q->setFirstResult($offset);
         $q->setMaxResults($items_per_page);
         $q->addOrderBy("exp.$sort", $order);
@@ -41,8 +53,12 @@ class ExperienceRepository extends ServiceEntityRepository
         // ->setMaxResults($items_per_page)
         // ->addOrderBy($sort, $order);
 
-        echo ($q->getQuery()->getSql());
-        exit;
-        return $q->getQuery()->getResult();
+        // dd($q->getQuery()->getSQL());
+        // dd($q->getQuery()->getParameters());
+        // exit;
+        $resultat["total"] = $q_count->getQuery()->getResult();
+        $resultat["data"] = $q->getQuery()->getResult();
+
+        return $resultat;
     }
 }

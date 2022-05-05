@@ -17,7 +17,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class ApiController extends AbstractController
 {
@@ -44,7 +47,7 @@ class ApiController extends AbstractController
         EntityManagerInterface $entityManager
     ): JsonResponse {
         $params = $request->query->all();
-        $validate_params = ['id', "nbr_participant", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree"];
+        $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree"];
         $validate_params[] = "order_by";
         $validate_params[] = "sort_by";
         $validate_params[] = "page";
@@ -55,6 +58,58 @@ class ApiController extends AbstractController
         $offset = ($page - 1) * $items_per_page;
         // dd($parametres);
         $experiences = $expRepo->getExperiences($parametres, $items_per_page, $offset);
-        return $this->json($experiences, 200, [], ["groups" => "read_grid"]);
+        $data = key_exists("data", $experiences) ? $experiences["data"] : [];
+        $total = key_exists("total", $experiences) ? $experiences["total"] : ["total" => 0];
+        return $this->json(array_merge($data, $total), 200,  [], ["groups" => "read_grid"]);
+    }
+
+    /**
+     * @Route(
+     *     name="experience_get",
+     *     path="/rest/experiences/{id}",
+     *     methods={"GET"}
+     * )
+     *rest/experiences/1
+     */
+    public function exp_show(
+        $id,
+        Request $request,
+        UriReaderService $uriReaderService,
+        ExperienceRepository $expRepo,
+        EntityManagerInterface $entityManager
+    ): JsonResponse {
+        $params = $request->query->all();
+        $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree"];
+        $validate_params[] = "page";
+        // dd($parametres);
+        $experience = $expRepo->find($id);
+        return $this->json($experience, 200,  [], ["groups" => "read_item"]);
+    }
+
+    /**
+     * @Route(
+     *     name="experience_post",
+     *     path="/rest/experiences",
+     *     methods={"POST"}
+     * )
+     */
+    public function exp_store(
+        Request $request,
+        UriReaderService $uriReaderService,
+        ExperienceRepository $expRepo,
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validatorInterface,
+        SerializerInterface $serializer
+    ): JsonResponse {
+        $jsonRecu = $request->getContent();
+        try {
+            // $experience = new Experience();
+            $experience = $serializer->deserialize($jsonRecu, Experience::class, 'json');
+            $entityManager->persist($experience);
+            $entityManager->flush();
+            return $this->json($experience, 200);
+        } catch (NotEncodableValueException $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()], 400);
+        }
     }
 }
