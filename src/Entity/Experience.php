@@ -37,8 +37,8 @@ class Experience implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     * @Assert\NotNull
+     * @Assert\NotBlank(groups={"write","brouillon"})
+     * @Assert\NotNull(groups={"write","brouillon"})
      * @Groups({"read_grid","read"})
      */
     private $title;
@@ -49,14 +49,16 @@ class Experience implements JsonSerializable
      *      min = 0,
      *      max = 5,
      *      notInRangeMessage = "Difficulte entre 0 et 5",
+     *      groups={"brouillon"}
      * )
      *  @Groups({"read_grid","read","read_item"})
      */
     private $dificulte;
 
     /**
-     *  @Groups({"read","read_item","read_grid"})
+     * @Groups({"read","read_item","read_grid"})
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(type="integer",groups={"brouillon"})
      */
     private $nbr_participant;
 
@@ -67,19 +69,22 @@ class Experience implements JsonSerializable
 
     /**
      * @Groups({"read","read_item","read_grid"})
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=10, scale=4)
+     * @Assert\Type(type="Numeric",groups={"brouillon"})
      */
     private $prix = 0.00;
 
     /**
      * @Groups({"read","read_item"})
      * @ORM\Column(type="text")
+     * @Assert\Type(type="string",groups={"brouillon"})
      */
     private $description = "";
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"read_grid","read_item"})
+     * @Assert\Type(type="boolean",groups={"brouillon"},message="The value {{ value }} is not a valid {{ type }}.")
      */
     private $etat = false;
 
@@ -124,7 +129,6 @@ class Experience implements JsonSerializable
 
     /**
      * @Groups({"read","read_item","read_grid"})
-     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      */
     private $destination;
