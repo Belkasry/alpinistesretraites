@@ -56,7 +56,7 @@ class Subscription
     /**
      * @Groups({"read", "write"})
      * @ORM\ManyToMany(targetEntity=Guide::class, inversedBy="subscriptions")
-     * @ApiProperty(readableLink=false,writadableLink=false)
+     * @ApiProperty(readableLink=false)
      */
     private $guide;
 

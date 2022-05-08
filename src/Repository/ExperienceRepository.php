@@ -25,8 +25,8 @@ class ExperienceRepository extends ServiceEntityRepository
     public function getExperiences($criterias, $items_per_page, $offset)
     {
 
-        $sort =  $criterias["sort_by"];
-        $order = $criterias["order_by"];
+        $sort =  key_exists("sort_by", $criterias) ? $criterias["sort_by"]  : "id";
+        $order = key_exists("order_by", $criterias) ? $criterias["order_by"]  : "DESC";
         $q = $this->createQueryBuilder('exp');
         $q_count = $this->createQueryBuilder('exp')->select('count(exp.id) as total');
 

@@ -19,12 +19,12 @@ use JsonSerializable;
 
 /**
  *@ApiResource(
- *     normalizationContext={"groups"={"read","read_grid","read_item"}},
+ *     normalizationContext={"groups"={"read"}},
  *     paginationItemsPerPage=8
  * )
  *  @ApiFilter(ExperienceFilter::class)
- *@ORM\Entity(repositoryClass=ExperienceRepository::class)
- */
+ * @ORM\Entity(repositoryClass=ExperienceRepository::class)
+ **/
 class Experience implements JsonSerializable
 {
     /**
@@ -37,21 +37,21 @@ class Experience implements JsonSerializable
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"read_grid","read","read_item"})
      * @Assert\NotBlank(groups={"write","brouillon"})
      * @Assert\NotNull(groups={"write","brouillon"})
-     * @Groups({"read_grid","read"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="smallint", nullable=true)
+     *  @Groups({"read_grid","read","read_item"})
      * @Assert\Range(
      *      min = 0,
      *      max = 5,
      *      notInRangeMessage = "Difficulte entre 0 et 5",
      *      groups={"brouillon"}
      * )
-     *  @Groups({"read_grid","read","read_item"})
      */
     private $dificulte;
 
@@ -83,8 +83,8 @@ class Experience implements JsonSerializable
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"read_grid","read_item"})
-     * @Assert\Type(type="boolean",groups={"brouillon"},message="The value {{ value }} is not a valid {{ type }}.")
+     * @Groups({"read","read_item","read_grid"})
+     * @Assert\Type(type="boolean",groups={"brouillon"})
      */
     private $etat = false;
 
@@ -96,12 +96,14 @@ class Experience implements JsonSerializable
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"read","read_item","read_grid"})
+     * @Assert\Type(type="datetime",groups={"brouillon"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Groups({"read","read_item","read_grid"})
+     * @Assert\Type(type="datetime",groups={"brouillon"})
      */
     private $finish;
 
@@ -190,7 +192,7 @@ class Experience implements JsonSerializable
      *      readableLink=true,
      *  )
      * @ORM\OneToMany(targetEntity=Review::class, mappedBy="experience")
-     * @Groups({"read",})
+     * @Groups({"read"})
      */
     private $reviews;
 
@@ -443,9 +445,9 @@ class Experience implements JsonSerializable
     public function getGuideEager()
     {
         $g = [];
-        $g["id"] = $this->guide->getId();
-        $g["fullName"] = $this->guide->getFullName();
-        $g["imageName"] = $this->guide->getImageName();
+        $g["id"] = $this->guide ? $this->guide->getId() : null;
+        $g["fullName"] = $this->guide ? $this->guide->getFullName() : "undefined";
+        $g["imageName"] = $this->guide ? $this->guide->getImageName() : "";
         return $g;
     }
 
