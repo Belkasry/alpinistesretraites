@@ -47,14 +47,15 @@ class UriReaderService
 
 
         $k = 1;
+        $result["sort_by"] = "$table.id";
+        $result["order_by"] = "asc";
         foreach ($params as $key => $value) {
-            $result["sort_by"] = "id";
-            $result["order_by"] = "asc";
+
             if (!in_array($key, $validateparam)) {;
             } elseif ($key == "page") {
                 $result["page"] = $value;
             } elseif ($key == "sort_by") {
-                $result["sort_by"] = "$table \." . $value;
+                $result["sort_by"] = "$table.$value";
             } elseif ($key == "order_by") {
                 $result["order_by"] = in_array(strtolower($value), ["desc", "asc"]) ? $value : "asc";
             } elseif (is_array($value)) {
@@ -68,7 +69,7 @@ class UriReaderService
                     $result["where"][] =  "$column $operator $valeur";
                     if ($op == "in") {
                         $result["params"][$key . $op] =  [explode(',', $v), Connection::PARAM_STR_ARRAY];
-                    } elseif (in_array($op,["dgt","dlt"])) {
+                    } elseif (in_array($op, ["dgt", "dlt"])) {
                         $result["params"][$key . $op] =  [$v, ParameterType::STRING];
                     } else {
                         $result["params"][$key . $op] = ($op) == "like" ? ["%$v%", ParameterType::STRING] : [$v, ParameterType::INTEGER];
@@ -80,7 +81,6 @@ class UriReaderService
                 $result["params"][$key] =  [$value, null];
             }
         }
-        // dd($result);
         return $result;
     }
 }

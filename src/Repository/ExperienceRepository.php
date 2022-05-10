@@ -46,7 +46,7 @@ class ExperienceRepository extends ServiceEntityRepository
         $q_count->setParameters($parametres);
         $q->setFirstResult($offset);
         $q->setMaxResults($items_per_page);
-        $q->addOrderBy("exp.$sort", $order);
+        $q->addOrderBy("$sort", $order);
         // $q->add('where', 'exp.nbr_participant < :nbr_participant');
         // $q->setParameter('nbr_participant', 20);
         // ->setFirstResult($offset)
@@ -56,7 +56,9 @@ class ExperienceRepository extends ServiceEntityRepository
         // dd($q->getQuery()->getSQL());
         // dd($q->getQuery()->getParameters());
         // exit;
-        $resultat["total"] = $q_count->getQuery()->getResult();
+
+      
+        $resultat["total"]=$q_count->getQuery()->getSingleScalarResult();
         $resultat["data"] = $q->getQuery()->getResult();
 
         return $resultat;

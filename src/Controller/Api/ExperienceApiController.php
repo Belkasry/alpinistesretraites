@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class ExperienceApiController extends AbstractController
 {
     public const PAGE = 1;
-    public const ITEMS_PER_PAGE = 4;
+    public const ITEMS_PER_PAGE = 5;
     public function __construct()
     {
     }
@@ -66,9 +66,7 @@ class ExperienceApiController extends AbstractController
         $offset = ($page - 1) * $items_per_page;
         // dd($parametres);
         $experiences = $expRepo->getExperiences($parametres, $items_per_page, $offset);
-        $data = key_exists("data", $experiences) ? $experiences["data"] : [];
-        $total = key_exists("total", $experiences) ? $experiences["total"] : ["total" => 0];
-        return $this->json(array_merge($data, $total), 200,  [], ["groups" => "read_grid"]);
+        return $this->json($experiences, 200,  [], ["groups" => "read_grid"]);
     }
 
     /**
