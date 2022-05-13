@@ -3,15 +3,13 @@ import './css/bootstrap.min.css';
 import './css/couche-bootstrap.css';
 
 import React, { useState, useContext } from "react";
-
-import ExperiencesTable from './components/agent/ExperiencesTable';
+import ExperiencesGridTable from './components/agent/ExperiencesGridTable';
 import PrimarySearchAppBar from './components/agent/MenuAgent';
 import CustomizedBreadcrumbs from './components/agent/Breadcrumbs';
 import { AlertTitle, Alert, Box, Button, ButtonGroup, Grid, Stack, Typography, Pagination } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import AddIcon from '@mui/icons-material/Add';
-
 
 function AppAgent() {
 
@@ -26,7 +24,6 @@ function AppAgent() {
             <div class="menu">
                 <PrimarySearchAppBar />
             </div>
-            <navbar>
                 <Box sx={{ flexGrow: 1 }} m={2}>
                     <Stack
                         direction="row"
@@ -43,7 +40,6 @@ function AppAgent() {
                         </Stack>
                     </Stack>
                 </Box>
-            </navbar>
             <Stack
                 direction="row"
                 justifyContent="center"
@@ -74,15 +70,10 @@ function AppAgent() {
                 alignItems="stretch"
                 m={5}
             >
-                <ExperiencesTable />
-                <Stack alignItems="flex-end">
-                    <Pagination count={10} variant="outlined" shape="rounded" />
-                </Stack>
+                <ExperiencesGridTable />
+                
             </Stack>
-
         </div>
-
     );
 }
-
 export default AppAgent

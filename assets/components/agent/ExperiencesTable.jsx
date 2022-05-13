@@ -1,12 +1,14 @@
 import React from 'react';
 import { CircularProgress, Typography } from '@mui/material';
-import MUIDataTable from "mui-datatables"; import axios from 'axios';
-;
+import MUIDataTable from "mui-datatables";
+import axios from 'axios';
+
+
 
 class ExperiencesTable extends React.Component {
 
   state = {
-    page: 1,
+    page: 0,
     count: 1,
     rowsPerPage: 5,
     sortOrder: {},
@@ -21,25 +23,42 @@ class ExperiencesTable extends React.Component {
             console.dir(tableMeta);
             return value;
           },
+          filter: true,
+          customFilterListRender: v => `Titre: ${v}`,
+          filterType: "textField"
         },
       },
       {
         name: 'title',
         label: 'Titre',
-        options: {},
+        options: {
+          filter: true,
+          customFilterListRender: v => `Titre: ${v}`,
+          filterType: "textField"
+        },
       },
       {
         name: 'dificulte',
         label: 'Difficulté',
-        options: {},
+        options: {
+          filter: false
+        },
       }, {
         name: 'nbr_participant',
         label: 'Nombre de Participants',
-        options: {},
+        options: {
+          filter: true,
+          customFilterListRender: v => `Nbr Participant: ${v}`,
+          filterType: "textField"
+        },
       }, {
         name: 'prix',
         label: 'Prix',
-        options: {},
+        options: {
+          filter: true,
+          customFilterListRender: v => `Prix: ${v}`,
+          filterType: "textField"
+        },
       }, {
         name: 'etat',
         label: 'Etat',
@@ -62,6 +81,7 @@ class ExperiencesTable extends React.Component {
         label: 'Durèe',
         options: {},
       },
+
     ],
     isLoading: false,
   };
@@ -76,8 +96,9 @@ class ExperiencesTable extends React.Component {
   // "destination": "/api/destinations/1",
   // "duree": 2
 
+
   componentDidMount() {
-    this.getData('https://127.0.0.1:8000/', 1);
+    this.getData('https://127.0.0.1:8000/', 0);
   }
 
   // get data
@@ -86,37 +107,10 @@ class ExperiencesTable extends React.Component {
     this.xhrRequest(url, page);
   };
 
-  getSrcData = () => {
-    return [
-      { fullName: 'Gabby George', title: 'Business Analyst', location: 'Minneapolis' },
-      { fullName: 'Aiden Lloyd', title: 'Business Consultant', location: 'Dallas' },
-      { fullName: 'Jaden Collins', title: 'Attorney', location: 'Santa Ana' },
-      { fullName: 'Franky Rees', title: 'Business Analyst', location: 'St. Petersburg' },
-      { fullName: 'Aaren Rose', title: 'Business Analyst', location: 'Toledo' },
-
-      { fullName: 'John George', title: 'Business Analyst', location: 'Washington DC' },
-      { fullName: 'Pat Lloyd', title: 'Computer Programmer', location: 'Baltimore' },
-      { fullName: 'Joe Joe Collins', title: 'Attorney', location: 'Las Cruces' },
-      { fullName: 'Franky Hershy', title: 'Paper Boy', location: 'El Paso' },
-      { fullName: 'Aaren Smalls', title: 'Business Analyst', location: 'Tokyo' },
-
-      { fullName: 'Boogie G', title: 'Police Officer', location: 'Unknown' },
-      { fullName: 'James Roulf', title: 'Business Consultant', location: 'Video Game Land' },
-      { fullName: 'Mike Moocow', title: 'Burger King Employee', location: 'New York' },
-      { fullName: 'Mimi Gerock', title: 'Business Analyst', location: 'McCloud' },
-      { fullName: 'Jason Evans', title: 'Business Analyst', location: 'Mt Shasta' },
-
-      { fullName: 'Simple Sam', title: 'Business Analyst', location: 'Mt Shasta' },
-      { fullName: 'Marky Mark', title: 'Business Consultant', location: 'Las Cruces' },
-      { fullName: 'Jaden Jam', title: 'Attorney', location: 'El Paso' },
-      { fullName: 'Holly Jo', title: 'Business Analyst', location: 'St. Petersburg' },
-      { fullName: 'Suzie Q', title: 'Business Analyst', location: 'New York' },
-    ];
-  };
 
   sort = (page, sortOrder) => {
     this.setState({ isLoading: true });
-    this.xhrRequest('https://127.0.0.1:8000/', 1, sortOrder);
+    this.xhrRequest('https://127.0.0.1:8000/', page, sortOrder);
   };
 
 
@@ -131,7 +125,7 @@ class ExperiencesTable extends React.Component {
         headers: { 'Authorization': 'Bearer ' + token }
       });
       const response = await instance.get(
-        `rest/experiences?page${lpage}`, { params: { page: lpage, sort_by: lsortOrder.name, order_by: lsortOrder.direction } }
+        `rest/experiences`, { params: { page: (lpage + 1), sort_by: lsortOrder.name, order_by: lsortOrder.direction } }
       );
       console.log(response.data.data);
       this.setState(
@@ -159,15 +153,7 @@ class ExperiencesTable extends React.Component {
     this.setState({
       isLoading: true,
     });
-    this.xhrRequest(`/rest/experiences?page=${page}`, page, sortOrder).then(res => {
-      this.setState({
-        isLoading: false,
-        page: res.page,
-        sortOrder,
-        data: res.data,
-        count: res.total,
-      });
-    });
+    this.xhrRequest('https://127.0.0.1:8000/', page, sortOrder);
   };
 
   render() {
@@ -203,8 +189,13 @@ class ExperiencesTable extends React.Component {
 
     // console.log('COLUMNS');
     // console.dir(JSON.parse(JSON.stringify(this.state.columns)));
-
+    const filterModel = {
+      columnField: 'nbr_participant',
+      operatorValue: '>',
+      value: '2.5',
+    };
     return (
+
       <div>
         <MUIDataTable
           title={
@@ -213,6 +204,7 @@ class ExperiencesTable extends React.Component {
               {isLoading && <CircularProgress size={24} style={{ marginLeft: 15, position: 'relative', top: 4 }} />}
             </Typography>
           }
+          filterModel={filterModel}
           data={data}
           columns={this.state.columns}
           options={options}
