@@ -21,7 +21,7 @@ class UriReaderService
 
         $operators = [];
 
-        $operators["eq"] = "="; // =	Equal
+        $operators["equals"] = "="; // =	Equal
         $operators["seq"] = "<=>"; // <=>	Equal (Safe to compare NULL values)
         $operators["neq"] = "!="; // !=	Not Equal
         $operators["gt"] = ">"; // >	Greater Than
@@ -36,9 +36,11 @@ class UriReaderService
         $operators["not"] = "not"; // NOT	Negates a condition
         $operators["is"] = "="; //  condition
         // $operastor["between"]="=";// BETWEEN	Within a range (inclusive)
-        $operators["isn"] = "IS NULL"; // IS NULL	NULL value
-        $operators["isnn"] = "IS NOT NULL"; // IS NOT NULL	Non-NULL value
-        $operators["like"] = "like"; // LIKE	Pattern matching with % and _
+        $operators["isEmpty"] = "IS NULL"; // IS NULL	NULL value //
+        $operators["isNotEmpty"] = "IS NOT NULL"; // IS NOT NULL	Non-NULL value //
+        $operators["contains"] = "like"; // LIKE	Pattern matching with % and _ //
+        $operators["startsWith"] = "="; // LIKE	Pattern matching with % and _ //
+        $operators["endsWith"] = "="; // LIKE	Pattern matching with % and _ //
 
         $result = [];
 
@@ -72,7 +74,7 @@ class UriReaderService
                     } elseif (in_array($op, ["dgt", "dlt"])) {
                         $result["params"][$key . $op] =  [$v, ParameterType::STRING];
                     } else {
-                        $result["params"][$key . $op] = ($op) == "like" ? ["%$v%", ParameterType::STRING] : [$v, ParameterType::INTEGER];
+                        $result["params"][$key . $op] = ($op == "contains") ? ["%$v%", ParameterType::STRING] : [$v, ParameterType::INTEGER];
                     }
                     $k++;
                 }

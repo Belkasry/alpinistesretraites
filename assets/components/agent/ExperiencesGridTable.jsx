@@ -8,7 +8,7 @@ import {
   useGridSelector,
 } from '@mui/x-data-grid';
 import axios from 'axios';
-import { dateFormat } from '../../lib/utils.js';
+import { dateFormat, convertoperator } from '../../lib/utils.js';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Typography, Pagination, Stack, Chip } from '@mui/material';
 
@@ -55,6 +55,7 @@ class ExperiencesGridTable extends React.Component {
           field: 'start',
           headerName: 'Date de début - Date de fin',
           flex: 2,
+          type: "date",
           valueGetter: (params) =>
             `${dateFormat(params.row.start) || ''} - ${dateFormat(params.row.finish) || ''}`,
         },
@@ -76,7 +77,7 @@ class ExperiencesGridTable extends React.Component {
         sort: 'desc'
       },], filterModel: {
         items: [
-          { columnField: "dificulte", id: 93654, operatorValue: ">=", value: "4" }
+          { columnField: "id", id: 93654, operatorValue: "!=", value: "0" }
         ],
         linkOperator: "and"
       }
@@ -105,22 +106,52 @@ class ExperiencesGridTable extends React.Component {
 
   };
 
-  changepage = (page) => {
-    console.log(this.state.page);
-    this.setState({ isLoading: true });
-    this.xhrRequest('https://127.0.0.1:8000/', page, this.state.sortModel);
-    console.log(this.state.page);
+  filter = (filter) => {
+    this.setState({ isLoading: true, page: 1 });
+    this.xhrRequest('https://127.0.0.1:8000/', 1, {}, filter);
+
   };
 
-  xhrRequest = async (lurl, lpage, lsortModel = {}) => {
+  changepage = (page) => {
+    this.setState({ isLoading: true });
+    this.xhrRequest('https://127.0.0.1:8000/', page);
+  };
+
+  xhrRequest = async (lurl, lpage, lsortModel = {}, lfilterModel = { items: [] }) => {
     try {
+      if (lpage == 0) {
+        lpage = 1;
+      }
+      if (jQuery.isEmptyObject(lsortModel)) {
+        lsortModel = this.state.sortModel[0];
+      }
+      if (jQuery.isEmptyObject(lfilterModel) || lfilterModel.items.length < 1) {
+        lfilterModel = this.state.filterModel;
+      }
+
+
+
       let token = "";
       const instance = axios.create({
         baseURL: lurl,
         headers: { 'Authorization': 'Bearer ' + token }
       });
+
+      // { columnField: "dificulte", id: 93654, operatorValue: ">=", value: "4" }
+      let filtres = []; let url_ext = "";
+      lfilterModel.items.forEach(element => {
+        url_ext += element.columnField + "[" + convertoperator(element.operatorValue) + "]=" + element.value + "&";
+      });
+      url_ext = url_ext.slice(0, -1);
+
+      console.log("--------------------");
+      console.log(lsortModel.sort);
+      console.log("_____________");
+      console.log(lsortModel["sort"]);
+
+
       const response = await instance.get(
-        `rest/experiences`, { params: { page: (lpage), sort_by: lsortModel.field, order_by: lsortModel.sort } }
+        `rest/experiences?${url_ext}`, { params: { page: (lpage), sort_by: lsortModel.field, order_by: lsortModel.sort } }
       );
       this.setState(
         {
@@ -201,7 +232,9 @@ class ExperiencesGridTable extends React.Component {
 
           filterMode="server"
           onFilterModelChange={(filter) => {
-            console.log(filter);
+            this.setState({ filterModel: filter });
+            this.filter(filter);
+            // console.log(convertoperator(filter.items[0].operatorValue));
           }}
 
         />
