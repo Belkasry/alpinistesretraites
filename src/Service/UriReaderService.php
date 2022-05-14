@@ -16,7 +16,7 @@ class UriReaderService
     {
         // ->where('exp.nbr_participant < :nbr_participant')
         // ->setParameter('nbr_participant', 20)
-
+        $options = [TRUE, FALSE, 'true', 'false', 1, 0, '1', '0', 'on', 'off', 'yes', 'no'];
 
 
         $operators = [];
@@ -41,6 +41,8 @@ class UriReaderService
         $operators["contains"] = "like"; // LIKE	Pattern matching with % and _ //
         $operators["startsWith"] = "="; // LIKE	Pattern matching with % and _ //
         $operators["endsWith"] = "="; // LIKE	Pattern matching with % and _ //
+        $operators["after"] = ">="; // LIKE	Pattern matching with % and _ //
+        $operators["before"] = "<="; // LIKE	Pattern matching with % and _ //
 
         $result = [];
 
@@ -61,18 +63,30 @@ class UriReaderService
             } elseif ($key == "order_by") {
                 $result["order_by"] = in_array(strtolower($value), ["desc", "asc"]) ? $value : "asc";
             } elseif (is_array($value)) {
-
                 foreach ($value as $op => $v) {
                     $operator = $operators[$op];
                     $startoperator = ($op == "in") ? "(" : ":";
                     $endoperator = ($op == "in") ? ")" : "";
                     $column = "$table.$key";
+
+                    if(in_array(strtolower($key),["start","finish"]))
+                    {
+                        $column = "date($table.$key)";
+                    }
+
                     $valeur = "$startoperator$key$op$endoperator";
                     $result["where"][] =  "$column $operator $valeur";
                     if ($op == "in") {
                         $result["params"][$key . $op] =  [explode(',', $v), Connection::PARAM_STR_ARRAY];
                     } elseif (in_array($op, ["dgt", "dlt"])) {
                         $result["params"][$key . $op] =  [$v, ParameterType::STRING];
+                    } elseif ($op == "is") {
+                        if (DateTime::createFromFormat('Y-m-d H:i:s', $v) !== false || DateTime::createFromFormat('Y-m-d', $v) !== false) {
+                            $result["params"][$key . $op] =  [$v, ParameterType::STRING];
+                        } else {
+                            $bool = filter_var($v, FILTER_VALIDATE_BOOLEAN);
+                            $result["params"][$key . $op] =  [(int)$bool, ParameterType::INTEGER];
+                        }
                     } else {
                         $result["params"][$key . $op] = ($op == "contains") ? ["%$v%", ParameterType::STRING] : [$v, ParameterType::INTEGER];
                     }
@@ -83,6 +97,7 @@ class UriReaderService
                 $result["params"][$key] =  [$value, null];
             }
         }
+        // dd($result);
         return $result;
     }
 }

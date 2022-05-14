@@ -97,18 +97,18 @@ class ExperiencesGridTable extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    this.getData('https://127.0.0.1:8000/', 1);
+    this.getData('https://127.0.0.1:8000/', 0);
   }
 
   sort = (model) => {
-    this.setState({ isLoading: true, page: 1 });
-    this.xhrRequest('https://127.0.0.1:8000/', 1, model);
+    this.setState({ isLoading: true, page: 0 });
+    this.xhrRequest('https://127.0.0.1:8000/', 0, model);
 
   };
 
   filter = (filter) => {
-    this.setState({ isLoading: true, page: 1 });
-    this.xhrRequest('https://127.0.0.1:8000/', 1, {}, filter);
+    this.setState({ isLoading: true, page: 0 });
+    this.xhrRequest('https://127.0.0.1:8000/', 0, {}, filter);
 
   };
 
@@ -119,17 +119,16 @@ class ExperiencesGridTable extends React.Component {
 
   xhrRequest = async (lurl, lpage, lsortModel = {}, lfilterModel = { items: [] }) => {
     try {
-      if (lpage == 0) {
-        lpage = 1;
-      }
+      console.log("------------"+lpage);
+      // if (lpage == 0) {
+      //   lpage = 1;
+      // }
       if (jQuery.isEmptyObject(lsortModel)) {
         lsortModel = this.state.sortModel[0];
       }
       if (jQuery.isEmptyObject(lfilterModel) || lfilterModel.items.length < 1) {
         lfilterModel = this.state.filterModel;
       }
-
-
 
       let token = "";
       const instance = axios.create({
@@ -138,20 +137,19 @@ class ExperiencesGridTable extends React.Component {
       });
 
       // { columnField: "dificulte", id: 93654, operatorValue: ">=", value: "4" }
-      let filtres = []; let url_ext = "";
+      let filtres = [];
+       let url_ext = "";
       lfilterModel.items.forEach(element => {
         url_ext += element.columnField + "[" + convertoperator(element.operatorValue) + "]=" + element.value + "&";
       });
       url_ext = url_ext.slice(0, -1);
 
-      console.log("--------------------");
-      console.log(lsortModel.sort);
-      console.log("_____________");
-      console.log(lsortModel["sort"]);
+      
+     
 
 
       const response = await instance.get(
-        `rest/experiences?${url_ext}`, { params: { page: (lpage), sort_by: lsortModel.field, order_by: lsortModel.sort } }
+        `rest/experiences?${url_ext}`, { params: { page: (lpage+1), sort_by: lsortModel.field, order_by: lsortModel.sort } }
       );
       this.setState(
         {
@@ -188,10 +186,10 @@ class ExperiencesGridTable extends React.Component {
         <Pagination
           color="secondary"
           count={pageCount}
-          page={page}
+          page={page + 1}
           variant="outlined"
           shape="rounded"
-          onChange={(event, value) => { apiRef.current.setPage(value) }}
+          onChange={(event, value) => { apiRef.current.setPage(value-1) }}
         />
       </Stack>
 

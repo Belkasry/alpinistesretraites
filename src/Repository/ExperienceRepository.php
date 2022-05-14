@@ -53,7 +53,7 @@ class ExperienceRepository extends ServiceEntityRepository
         // ->setMaxResults($items_per_page)
         // ->addOrderBy($sort, $order);
 
-        // dd($q->getQuery()->getSQL());
+        // echo ($q->getQuery()->getSQL());
         // dd($q->getQuery()->getParameters());
         // exit;
 

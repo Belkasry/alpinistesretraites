@@ -55,7 +55,7 @@ class ExperienceApiController extends AbstractController
         EntityManagerInterface $entityManager
     ): JsonResponse {
         $params = $request->query->all();
-        $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree"];
+        $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree","dificulte"];
         $validate_params[] = "order_by";
         $validate_params[] = "sort_by";
         $validate_params[] = "page";

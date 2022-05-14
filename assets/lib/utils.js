@@ -29,13 +29,13 @@ export function convertoperator(op) {
     operators["="] = "equals"; // =	Equal
     operators["<=>"] = "seq"; // <=>	Equal (Safe to compare NULL values)
     operators["!="] = "neq"; // !=	Not Equal
-    operators[">"] = "dgt"; // >	Greater Than
+    operators[">"] = "gt"; // >	Greater Than
     // operators["dgt"] = ">"; // >	Greater Than
-    operators[">="] = "dgte"; // >=	Greater Than or Equal
+    operators[">="] = "gte"; // >=	Greater Than or Equal
     // operators["dgte"] = ">="; // >=	Greater Than or Equal
-    operators["<"] = "dlt"; // <	Less Than
+    operators["<"] = "lt"; // <	Less Than
     // operators["dlt"] = "<"; // <	Less Than
-    operators["<="] = "dlte"; // <=	Less Than or Equal
+    operators["<="] = "lte"; // <=	Less Than or Equal
     // operators["<="] = "dlte";
 
     if(operators[op] !== undefined){
