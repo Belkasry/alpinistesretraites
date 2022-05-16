@@ -160,13 +160,7 @@ class ExperienceApiController extends AbstractController
     }
 
 
-     /**
-     * @Route(
-     *     name="experience_post",
-     *     path="/rest/experiences/{id}",
-     *     methods={"PUT"}
-     * )
-     */
+     
     public function exp_edit(
         $id,
         Request $request,

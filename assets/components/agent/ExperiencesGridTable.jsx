@@ -8,14 +8,17 @@ import {
   useGridSelector,
 } from '@mui/x-data-grid';
 import axios from 'axios';
-import { dateFormat, convertoperator } from '../../lib/utils.js';
+import { dateFormat, convertoperator,getParameterByName } from '../../lib/utils.js';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Typography, Pagination, Stack, Chip } from '@mui/material';
+import { Typography, Pagination, Stack, Chip, GlobalStyles } from '@mui/material';
+import { red } from '@mui/material/colors';
+import { Block } from '@mui/icons-material';
 
 
 
 class ExperiencesGridTable extends React.Component {
   constructor(props) {
+    
     super(props)
     this.state = {
       page: 0,
@@ -30,18 +33,18 @@ class ExperiencesGridTable extends React.Component {
         },
         {
           field: 'title',
-          headerName: 'Titre', flex: 1
+          headerName: 'Titre', flex: 2
         },
         {
           field: 'dificulte',
           headerName: 'Difficulté',
-          type: "number", flex: 1,
+          type: "number", flex: 0.5,
           valueGetter: (params) =>
             `${params.row.dificulte || ''} /5`,
         }, {
           field: 'nbr_participant',
           headerName: 'Nombre de Participants',
-          type: "number", flex: 1
+          type: "number", flex:0.5
         }, {
           field: 'prix',
           headerName: 'Prix',
@@ -65,17 +68,24 @@ class ExperiencesGridTable extends React.Component {
         }, {
           field: 'duree',
           headerName: 'Durèe',
-          type: "number", flex: 1,
+          type: "number", flex: 0.5,
           valueGetter: (params) =>
             `${params.row.duree || ''} jour`,
+        }, {
+          field: 'createdAt',
+          headerName: 'Date de création',
+          flex: 1,
+          valueGetter: (params) =>
+            `${dateFormat(params.row.createdAt,"avecheure") || ''}`,
         },
 
 
       ],
       sortModel: [{
-        field: 'id',
+        field: 'createdAt',
         sort: 'desc'
-      },], filterModel: {
+      },],
+      filterModel: {
         items: [
           { columnField: "id", id: 93654, operatorValue: "!=", value: "0" }
         ],
@@ -86,11 +96,12 @@ class ExperiencesGridTable extends React.Component {
   }
 
 
+
   componentWillMount() {
     this.setState({
       sortModel: [{
-        field: 'id',
-        sort: 'asc'
+        field: 'createdAt',
+        sort: 'desc'
       },]
     });
   }
@@ -119,7 +130,7 @@ class ExperiencesGridTable extends React.Component {
 
   xhrRequest = async (lurl, lpage, lsortModel = {}, lfilterModel = { items: [] }) => {
     try {
-      console.log("------------"+lpage);
+      console.log("------------" + lpage);
       // if (lpage == 0) {
       //   lpage = 1;
       // }
@@ -138,18 +149,18 @@ class ExperiencesGridTable extends React.Component {
 
       // { columnField: "dificulte", id: 93654, operatorValue: ">=", value: "4" }
       let filtres = [];
-       let url_ext = "";
+      let url_ext = "";
       lfilterModel.items.forEach(element => {
         url_ext += element.columnField + "[" + convertoperator(element.operatorValue) + "]=" + element.value + "&";
       });
       url_ext = url_ext.slice(0, -1);
 
-      
-     
+
+
 
 
       const response = await instance.get(
-        `rest/experiences?${url_ext}`, { params: { page: (lpage+1), sort_by: lsortModel.field, order_by: lsortModel.sort } }
+        `rest/experiences?${url_ext}`, { params: { page: (lpage + 1), sort_by: lsortModel.field, order_by: lsortModel.sort } }
       );
       this.setState(
         {
@@ -189,7 +200,7 @@ class ExperiencesGridTable extends React.Component {
           page={page + 1}
           variant="outlined"
           shape="rounded"
-          onChange={(event, value) => { apiRef.current.setPage(value-1) }}
+          onChange={(event, value) => { apiRef.current.setPage(value - 1) }}
         />
       </Stack>
 
@@ -198,10 +209,32 @@ class ExperiencesGridTable extends React.Component {
 
   render() {
     const { page, count, isLoading, rowsPerPage, rows, columns, sortModel } = this.state;
-
+    //   bgcolor: (theme) =>
+    //   getBackgroundColor(theme.palette.info.main, theme.palette.mode),
+    // '&:hover': {
+    //   bgcolor: (theme) =>
+    //     getHoverBackgroundColor(theme.palette.info.main, theme.palette.mode),
+    // },
     return (
       <div style={{ height: 400, width: '100%' }}>
+        <GlobalStyles
+          styles={{
+            ".new-row": {
+              border: "1px #5cb660 solid",
+              animation: 'blink 2s',
+              animationIterationCount: 10
+            },
+            "@keyframes blink": {
+              "50%": {
+                borderColor: '#fff'
+              }
+            }
+          }}
+        />
         <DataGrid
+          getRowClassName={(params) =>
+            params.id == getParameterByName('newid') ? 'new-row' : ''
+          }
           rowCount={parseInt(count, 10)}
           rows={rows}
           columns={columns}

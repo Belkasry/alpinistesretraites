@@ -1,7 +1,11 @@
-export function dateFormat(ladate) {
+export function dateFormat(ladate, format = "default") {
     var date = new Date(ladate)
     var dd = date.getDate();
     var mm = date.getMonth() + 1;
+    var heures = date.getHours();
+    var minutes = date.getMinutes();
+    var secondes = date.getSeconds();
+
 
     var yyyy = date.getFullYear();
     if (dd < 10) {
@@ -10,8 +14,16 @@ export function dateFormat(ladate) {
     if (mm < 10) {
         mm = '0' + mm;
     }
-    return dd + '/' + mm + '/' + yyyy;
+    ladate = dd + '/' + mm + '/' + yyyy;
+
+    if (format == "avecheure") {
+        ladate += " " + heures + ":" + minutes + ":" + secondes
+    }
+
+    return ladate;
 }
+
+
 
 export function datetimeformat(ladate) {
     return new Date(ladate).toLocaleDateString(
@@ -25,7 +37,7 @@ export function datetimeformat(ladate) {
 }
 
 export function convertoperator(op) {
-    let operators=[];
+    let operators = [];
     operators["="] = "equals"; // =	Equal
     operators["<=>"] = "seq"; // <=>	Equal (Safe to compare NULL values)
     operators["!="] = "neq"; // !=	Not Equal
@@ -38,10 +50,18 @@ export function convertoperator(op) {
     operators["<="] = "lte"; // <=	Less Than or Equal
     // operators["<="] = "dlte";
 
-    if(operators[op] !== undefined){
+    if (operators[op] !== undefined) {
         return operators[op];
     }
     return op;
-   
 
+
+}
+export function getParameterByName(name, url = window.location.href) {
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }

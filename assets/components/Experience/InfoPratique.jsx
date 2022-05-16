@@ -25,7 +25,7 @@ class InfoPratique extends Component {
             <React.Fragment>
                 <div className="card border-warning  mb-3">
 
-                    <div class="card-header bg-light">Requirements</div>
+                    <div className="card-header bg-light">Requirements</div>
                     <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 3px #ffc107", paddingLeft: "0.2rem" }}>
                         {
                             requirements.map((requirement, index) => (
@@ -37,7 +37,7 @@ class InfoPratique extends Component {
                     </ol>
                 </div>
                 <div className="card border-danger mb-3">
-                    <div class="card-header bg-light">Notices</div>
+                    <div className="card-header bg-light">Notices</div>
                     <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 3px #dc3545", paddingLeft: "0.2rem" }}>
                         {
                             notices.map((notice, index) => (
@@ -47,7 +47,7 @@ class InfoPratique extends Component {
                     </ol>
                 </div>
                 <div className="card border-info  mb-3">
-                    <div class="card-header bg-light">Including</div>
+                    <div className="card-header bg-light">Including</div>
                     <ol className="m-3" style={{ listStyle: "none", textAlign: "left", borderLeft: "solid 3px #17a2b8", paddingLeft: "0.2rem" }}>
                         {
                             including.map((include, index) => (

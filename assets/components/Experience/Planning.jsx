@@ -87,7 +87,7 @@ class Planning extends Component {
             <div className=" col-6">{
                 days.map((day, index) => (
                     <React.Fragment key={"day_"+index}>
-                        <h5 class="card-title ">
+                        <h5 className="card-title ">
                             <button className="btn btn-outline-danger text-moyen bg-white disabled">Jour {day}</button>
                         </h5>
                         <ul className="listline card border-alpiniste">
@@ -110,9 +110,9 @@ class Planning extends Component {
                 <div className=" col-6 mr-1" style={{ height: "fit-content", float: "right" }}>
                     <div className="card border-primary mb-3 " id="ScrollThenFix" style={{ position: "absolute" }} >
                         <div className="card-header">
-                            <h5 class="card-title"> {step_experience.title}</h5>
+                            <h5 className="card-title"> {step_experience.title}</h5>
                         </div>
-                        <div class="card-body">
+                        <div className="card-body">
                             <p className={"btn btn-outline-warning disabled p-2 text-petit "} >
                                 <b className="text-alpiniste" >
                                     <FontAwesomeIcon icon={faHourglassEmpty} />

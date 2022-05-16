@@ -84,7 +84,7 @@ class Followers extends Component {
         return (
             <React.Fragment>
                 <div className="container">
-                    <div class="row justify-content-md-center">
+                    <div className="row justify-content-md-center">
                         {
                             subscriptions.map((subscription, index) => (
                                 <div key={"not" + index} className="col" ><button className={"btn btn-outline-secondary  p-2 text-moyen text-dark  bg-white"}>

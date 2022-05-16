@@ -15,15 +15,18 @@ use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\JoinColumn;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use App\ApiPlatform\ExperienceFilter;
+use DateTime;
+use DateTimeImmutable;
 use JsonSerializable;
 
 /**
- *@ApiResource(
+ * @ApiResource(
  *     normalizationContext={"groups"={"read"}},
  *     paginationItemsPerPage=8
  * )
- *  @ApiFilter(ExperienceFilter::class)
+ * @ApiFilter(ExperienceFilter::class)
  * @ORM\Entity(repositoryClass=ExperienceRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  **/
 class Experience implements JsonSerializable
 {
@@ -196,6 +199,20 @@ class Experience implements JsonSerializable
      */
     private $reviews;
 
+    /**
+     * @Groups({"read","read_grid","read_item"})
+     * @ORM\Column(type="datetime_immutable" , nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @Groups({"read","read_grid","read_item"})
+     * @ORM\Column(type="datetime_immutable",nullable=true)
+     */
+    private $updatedAt;
+
+
+
 
     public function __construct()
     {
@@ -204,6 +221,18 @@ class Experience implements JsonSerializable
         $this->steps = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps(): void
+    {
+        $this->setUpdatedAt(new DateTimeImmutable('now'));
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new DateTimeImmutable('now'));
+        }
     }
 
 
@@ -661,5 +690,29 @@ class Experience implements JsonSerializable
             'id' => $this->getId(),
             'title' => $this->getTitle(),
         ];
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

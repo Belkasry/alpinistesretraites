@@ -163,7 +163,7 @@ class Reviews extends Component {
                     commentdone ?
                         <div className="alert alert-dismissible alert-success">
                             <button type="button" className="btn-close" data-bs-dismiss="alert"></button>
-                            <strong>Well done!</strong> You successfully reviewed <a href="#" class="alert-link">New Review ?</a>.
+                            <strong>Well done!</strong> You successfully reviewed <a href="#" className="alert-link">New Review ?</a>.
                         </div> :
                         <div className="container">
                             <textarea value={commentaire} className="col-12"
