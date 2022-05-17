@@ -55,7 +55,7 @@ class ExperienceApiController extends AbstractController
         EntityManagerInterface $entityManager
     ): JsonResponse {
         $params = $request->query->all();
-        $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree","dificulte"];
+        $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree", "dificulte"];
         $validate_params[] = "order_by";
         $validate_params[] = "sort_by";
         $validate_params[] = "page";
@@ -107,14 +107,6 @@ class ExperienceApiController extends AbstractController
         ValidatorInterface $validator,
         SerializerInterface $serializer
     ): JsonResponse {
-
-        // $experience = new Experience();
-        // $experience = $serializer->deserialize($jsonRecu, Experience::class, 'json');
-
-        // $errors =  $validator->validate($experience, null, ["brouillon"]);
-        // if (count($errors)) {
-        //     return $this->json($errors, Response::HTTP_BAD_REQUEST);
-        // }
         try {
             $experience = new Experience();
             try {
@@ -140,9 +132,9 @@ class ExperienceApiController extends AbstractController
 
                 return $this->json($violations, 400);
             } catch (NotNormalizableValueException $e) {
-                return $this->json(["violations"=>["propertyPath" => $e->getPath(), "title" => $e->getMessage()]], 400);
+                return $this->json(["violations" => ["propertyPath" => $e->getPath(), "title" => $e->getMessage()]], 400);
             } catch (Exception $e) {
-               
+
                 return $this->json($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
 
@@ -160,7 +152,13 @@ class ExperienceApiController extends AbstractController
     }
 
 
-     
+    /**
+     * @Route(
+     *     name="experience_put",
+     *     path="/rest/experiences/{id}",
+     *     methods={"PUT"}
+     * )
+     */
     public function exp_edit(
         $id,
         Request $request,
@@ -170,9 +168,10 @@ class ExperienceApiController extends AbstractController
         ExperienceRepository $expRepo
     ): JsonResponse {
 
-    
+
         try {
             $experience = $expRepo->find($id);
+
             try {
                 $serializer->deserialize($request->getContent(), Experience::class, 'json', ['object_to_populate' => $experience]);
 
@@ -194,9 +193,9 @@ class ExperienceApiController extends AbstractController
 
                 return $this->json($violations, 400);
             } catch (NotNormalizableValueException $e) {
-                return $this->json(["violations"=>["propertyPath" => $e->getPath(), "title" => $e->getMessage()]], 400);
+                return $this->json(["violations" => ["propertyPath" => $e->getPath(), "title" => $e->getMessage()]], 400);
             } catch (Exception $e) {
-               
+
                 return $this->json($e->getMessage(), Response::HTTP_BAD_REQUEST);
             }
 
@@ -204,6 +203,38 @@ class ExperienceApiController extends AbstractController
 
             $entityManager->flush();
             return $this->json($experience, 200);
+        } catch (NotEncodableValueException $e) {
+            return $this->json(['status' => 400, 'message' => $e->getMessage()], 400);
+        }
+    }
+
+
+    /**
+     * @Route(
+     *     name="experience_delete",
+     *     path="/rest/experiences/{id}",
+     *     methods={"DELETE"}
+     * )
+     */
+    public function exp_delete(
+        $id,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validator,
+        SerializerInterface $serializer,
+        ExperienceRepository $expRepo
+    ): JsonResponse {
+
+        try {
+
+            $experience = $expRepo->find($id);
+            if (!$experience)
+                return $this->json(['status' => 400, 'message' => "No Experience with id : $id "], 400);
+                
+            $titre = $experience->getTitle();
+            $entityManager->remove($experience);
+            $entityManager->flush();
+            return $this->json(['status' => 200, 'message' => "$id -- $titre is removed"], 200);
         } catch (NotEncodableValueException $e) {
             return $this->json(['status' => 400, 'message' => $e->getMessage()], 400);
         }

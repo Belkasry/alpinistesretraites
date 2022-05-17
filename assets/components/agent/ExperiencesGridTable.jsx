@@ -8,18 +8,27 @@ import {
   useGridSelector,
 } from '@mui/x-data-grid';
 import axios from 'axios';
-import { dateFormat, convertoperator,getParameterByName } from '../../lib/utils.js';
+import { dateFormat, convertoperator, getParameterByName } from '../../lib/utils.js';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Typography, Pagination, Stack, Chip, GlobalStyles } from '@mui/material';
+import { Typography, Pagination, Stack, Chip, GlobalStyles, Button, IconButton, Switch, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { red } from '@mui/material/colors';
 import { Block } from '@mui/icons-material';
-
+import LoupeIcon from '@mui/icons-material/Loupe';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import SwitchState from './Composants/SwitchState.jsx';
+import { async } from 'regenerator-runtime';
+import { messageService } from '../../_services/AlertToast.js';
 
 
 class ExperiencesGridTable extends React.Component {
   constructor(props) {
-    
-    super(props)
+
+    super(props);
+    const renderActionButton = (params) => {
+      return this.actionButtons(params)
+    };
+
     this.state = {
       page: 0,
       count: 1,
@@ -44,7 +53,7 @@ class ExperiencesGridTable extends React.Component {
         }, {
           field: 'nbr_participant',
           headerName: 'Nombre de Participants',
-          type: "number", flex:0.5
+          type: "number", flex: 0.5
         }, {
           field: 'prix',
           headerName: 'Prix',
@@ -52,9 +61,12 @@ class ExperiencesGridTable extends React.Component {
         }, {
           field: 'etat',
           headerName: 'Etat',
+          editable: true,
           type: "boolean",
-          flex: 1
-        }, {
+          flex: 1,
+          renderCell: (params) => <SwitchState id={params.row.id} etat={params.row.etat} />
+        },
+        {
           field: 'start',
           headerName: 'Date de début - Date de fin',
           flex: 2,
@@ -76,7 +88,13 @@ class ExperiencesGridTable extends React.Component {
           headerName: 'Date de création',
           flex: 1,
           valueGetter: (params) =>
-            `${dateFormat(params.row.createdAt,"avecheure") || ''}`,
+            `${dateFormat(params.row.createdAt, "avecheure") || ''}`,
+        }, {
+          field: 'actions',
+          sortable: false,
+          headerName: 'Actions',
+          flex: 1,
+          renderCell: renderActionButton,
         },
 
 
@@ -90,13 +108,70 @@ class ExperiencesGridTable extends React.Component {
           { columnField: "id", id: 93654, operatorValue: "!=", value: "0" }
         ],
         linkOperator: "and"
-      }
+      },
+      openConfirm: false,
+      id_action_row: null,
+      actionOnRow: "",
+
+
     };
 
+
+  }
+  sendMessage(message, type) {
+    // send message to subscribers via observable subject
+    messageService.sendMessage(message, type);
+  }
+
+  clearMessages() {
+    messageService.clearMessages();
   }
 
 
 
+  actionButtons(params) {
+    return (
+      <Stack
+        direction="row"
+        spacing={1}
+        justifyContent="flex-start"
+        alignItems="baseline">
+        <IconButton aria-label="detail"
+          variant="contained"
+          color="secondary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            this.setState({ openConfirm: true, actionOnRow: "edit", id_action_row: params.row.id })
+          }}
+        >
+          <LoupeIcon fontSize="inherit" />
+        </IconButton>
+        <IconButton aria-label="delete"
+          variant="contained"
+          color="warning"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            this.setState({ openConfirm: true, actionOnRow: "delete", id_action_row: params.row.id })
+          }}
+        >
+          <DeleteIcon />
+        </IconButton>
+        <IconButton aria-label="edit"
+          variant="contained"
+          color="info"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            alert(params.row.id)
+          }}
+        >
+          <EditIcon />
+        </IconButton>
+      </Stack>
+    )
+  }
   componentWillMount() {
     this.setState({
       sortModel: [{
@@ -108,27 +183,27 @@ class ExperiencesGridTable extends React.Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    this.getData('https://127.0.0.1:8000/', 0);
+    this.getData(0);
   }
 
   sort = (model) => {
     this.setState({ isLoading: true, page: 0 });
-    this.xhrRequest('https://127.0.0.1:8000/', 0, model);
+    this.xhrRequest(0, model);
 
   };
 
   filter = (filter) => {
     this.setState({ isLoading: true, page: 0 });
-    this.xhrRequest('https://127.0.0.1:8000/', 0, {}, filter);
+    this.xhrRequest(0, {}, filter);
 
   };
 
   changepage = (page) => {
     this.setState({ isLoading: true });
-    this.xhrRequest('https://127.0.0.1:8000/', page);
+    this.xhrRequest(page);
   };
 
-  xhrRequest = async (lurl, lpage, lsortModel = {}, lfilterModel = { items: [] }) => {
+  xhrRequest = async (lpage, lsortModel = {}, lfilterModel = { items: [] }) => {
     try {
       console.log("------------" + lpage);
       // if (lpage == 0) {
@@ -143,7 +218,7 @@ class ExperiencesGridTable extends React.Component {
 
       let token = "";
       const instance = axios.create({
-        baseURL: lurl,
+        baseURL: window.location.origin,
         headers: { 'Authorization': 'Bearer ' + token }
       });
 
@@ -176,10 +251,48 @@ class ExperiencesGridTable extends React.Component {
 
   };
 
-  getData = async (url, page) => {
+  getData = async (page) => {
     this.setState({ isLoading: true });
-    this.xhrRequest(url, page);
+    this.xhrRequest(page);
   };
+
+  deleteRow = async (id_row) => {
+    var array = [...this.state.rows]; // make a separate copy of the array
+    var index = (this.state.rows.findIndex(x => x.id == id_row));
+    if (index !== -1) {
+      array.splice(index, 1);
+      this.setState({ rows: array });
+    }
+    const headers = {};
+    let token = "";
+    const instance = axios.create({
+      baseURL: window.location.origin,
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    let self = this;
+    instance.delete('rest/experiences/' + id_row, { headers })
+      .then((response) => self.sendMessage(response.data.message, "warning"))
+      .then(this.getData(this.state.page));
+
+  }
+
+  handleCloseConfirm = () => {
+    this.setState({ openConfirm: false })
+  }
+
+  handleYesDialog = () => {
+    switch (this.state.actionOnRow) {
+      case "delete":
+        this.deleteRow(this.state.id_action_row);
+        this.setState({ openConfirm: false })
+        break;
+      case "edit":
+        alert(this.state.id_action_row);
+        break;
+      default:
+        break;
+    }
+  }
 
 
   CustomPagination() {
@@ -207,16 +320,15 @@ class ExperiencesGridTable extends React.Component {
     );
   }
 
+
+
+
   render() {
-    const { page, count, isLoading, rowsPerPage, rows, columns, sortModel } = this.state;
-    //   bgcolor: (theme) =>
-    //   getBackgroundColor(theme.palette.info.main, theme.palette.mode),
-    // '&:hover': {
-    //   bgcolor: (theme) =>
-    //     getHoverBackgroundColor(theme.palette.info.main, theme.palette.mode),
-    // },
+    const { page, count, isLoading, rowsPerPage, rows, columns, sortModel, openConfirm, message_alert } = this.state;
+
     return (
       <div style={{ height: 400, width: '100%' }}>
+
         <GlobalStyles
           styles={{
             ".new-row": {
@@ -231,6 +343,19 @@ class ExperiencesGridTable extends React.Component {
             }
           }}
         />
+        <Dialog
+          open={openConfirm}
+          onClose={this.handleCloseConfirm}>
+          <DialogTitle id="alert-dialog-title">
+            {"Etes vous sure ?"}
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleCloseConfirm}>Disagree</Button>
+            <Button onClick={this.handleYesDialog} autoFocus>
+              YES
+            </Button>
+          </DialogActions>
+        </Dialog>
         <DataGrid
           getRowClassName={(params) =>
             params.id == getParameterByName('newid') ? 'new-row' : ''

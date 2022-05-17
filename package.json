@@ -33,7 +33,9 @@
         "@fortawesome/free-brands-svg-icons": "^6.0.0",
         "@fortawesome/free-solid-svg-icons": "^6.0.0",
         "@fortawesome/react-fontawesome": "^0.1.17",
+        "@material-ui/lab": "^4.0.0-alpha.61",
         "@mui/icons-material": "^5.6.2",
+        "@mui/lab": "^5.0.0-alpha.81",
         "@mui/material": "^5.6.4",
         "@mui/x-data-grid": "^5.10.0",
         "css-loader": "^6.6.0",
@@ -48,6 +50,7 @@
         "react-router-dom": "^5.3.0",
         "react-simple-rating": "^0.0.9",
         "react-stars": "^2.2.5",
+        "rxjs": "^7.5.5",
         "universal-cookie": "^4.0.4"
     }
 }
