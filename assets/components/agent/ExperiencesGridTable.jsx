@@ -42,22 +42,27 @@ class ExperiencesGridTable extends React.Component {
         },
         {
           field: 'title',
-          headerName: 'Titre', flex: 2
+          headerName: 'Titre', flex: 1.5
         },
         {
           field: 'dificulte',
           headerName: 'Difficulté',
-          type: "number", flex: 0.5,
-          valueGetter: (params) =>
-            `${params.row.dificulte || ''} /5`,
+          type: "number", flex: 0.7,
+          valueFormatter: (params) => {
+            if (params.value == null) {
+              return '';
+            }
+            return `${params.value || ''} /5`
+          }
         }, {
           field: 'nbr_participant',
-          headerName: 'Nombre de Participants',
-          type: "number", flex: 0.5
+          headerName: 'Participants',
+          type: "number", flex: 0.7
         }, {
           field: 'prix',
           headerName: 'Prix',
-          type: "number", flex: 1
+          type: "number",
+           flex: 1
         }, {
           field: 'etat',
           headerName: 'Etat',
@@ -68,11 +73,29 @@ class ExperiencesGridTable extends React.Component {
         },
         {
           field: 'start',
-          headerName: 'Date de début - Date de fin',
-          flex: 2,
+          headerName: 'Date de début',
+          flex: 1,
           type: "date",
-          valueGetter: (params) =>
-            `${dateFormat(params.row.start) || ''} - ${dateFormat(params.row.finish) || ''}`,
+          valueFormatter: (params) => {
+            if (params.value == null) {
+              return '';
+            }
+
+            return `${dateFormat(params.value) || ''}`
+          }
+        },
+        {
+          field: 'finish',
+          headerName: 'Date de Fin',
+          flex: 1,
+          type: "date",
+          valueFormatter: (params) => {
+            if (params.value == null) {
+              return '';
+            }
+
+            return `${dateFormat(params.value) || ''}`
+          }
         },
         {
           field: 'destination',
@@ -81,19 +104,27 @@ class ExperiencesGridTable extends React.Component {
           field: 'duree',
           headerName: 'Durèe',
           type: "number", flex: 0.5,
-          valueGetter: (params) =>
-            `${params.row.duree || ''} jour`,
+          valueFormatter: (params) => {
+            if (params.value == null) {
+              return '';
+            }
+            return `${params.value || ''} jour`
+          }
         }, {
           field: 'createdAt',
           headerName: 'Date de création',
           flex: 1,
-          valueGetter: (params) =>
-            `${dateFormat(params.row.createdAt, "avecheure") || ''}`,
+          valueFormatter: (params) => {
+            if (params.value == null) {
+              return new Date();
+            }
+            return `${dateFormat(params.value, "avecheure") || ''}`
+          }
         }, {
           field: 'actions',
           sortable: false,
           headerName: 'Actions',
-          flex: 1,
+          flex: 2,
           renderCell: renderActionButton,
         },
 

@@ -1,15 +1,15 @@
-import './App.css';
-import './css/bootstrap.min.css';
-import './css/couche-bootstrap.css';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
+    useRouteMatch,
 } from "react-router-dom";
 import React, { useState, useContext, Component } from "react";
 import AppAgentListExperiences from './components/agent/AppAgentListExperiences';
 import { Alert, Button, Snackbar } from '@mui/material';
 import { messageService } from './_services/AlertToast'
+import AppAgentEditExperience from './components/agent/AppAgentEditExperience';
+import PrimarySearchAppBar from './components/agent/MenuAgent';
 
 class AppAgent extends Component {
     constructor(props) {
@@ -47,16 +47,16 @@ class AppAgent extends Component {
         const { open, message, severity } = this.state;
         return (
             <React.Fragment>
-                <Router>
-                    <Switch>
-                        <Route path="/agent/experiences/2">
-                            <p>une experience</p>
-                        </Route>
-                        <Route path="/agent/experiences">
-                            <AppAgentListExperiences />
-                        </Route>
-                    </Switch>
-                </Router>
+                <PrimarySearchAppBar />
+                <Switch>
+                    <Route exact path="/">
+                        <p>---------</p>
+                    </Route>
+                    <Route exact path="/agent/experiences">
+                        <AppAgentListExperiences />
+                    </Route>
+                    <Route path="/agent/experiences/:id/edit" children={(props) => <AppAgentEditExperience {...props} />} />
+                </Switch>
                 <Snackbar open={open} autoHideDuration={6000} onClose={this.handleClose}>
                     <Alert onClose={this.handleClose} severity={message.severity ? message.severity : "success"} sx={{ width: '100%' }}>
                         {message.text}

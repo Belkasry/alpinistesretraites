@@ -59,7 +59,7 @@ class UriReaderService
             } elseif ($key == "page") {
                 $result["page"] = $value;
             } elseif ($key == "sort_by") {
-                $result["sort_by"] = "$table.$value";
+                $result["sort_by"] = in_array($value, $validateparam) ? "$table.$value" : "$table.id";
             } elseif ($key == "order_by") {
                 $result["order_by"] = in_array(strtolower($value), ["desc", "asc"]) ? $value : "asc";
             } elseif (is_array($value)) {
@@ -69,8 +69,7 @@ class UriReaderService
                     $endoperator = ($op == "in") ? ")" : "";
                     $column = "$table.$key";
 
-                    if(in_array(strtolower($key),["start","finish"]))
-                    {
+                    if (in_array(strtolower($key), ["start", "finish"])) {
                         $column = "date($table.$key)";
                     }
 

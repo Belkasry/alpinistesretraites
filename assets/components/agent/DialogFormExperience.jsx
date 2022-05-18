@@ -31,9 +31,10 @@ class DialogFormExperience extends React.Component {
 
             errors["title"] = new Array();
             errors["title"].push("Cannot be empty");
+            this.setState({ loading_save:false});
         }
 
-        this.setState({ errors: errors });
+        this.setState({ errors: errors ,loading_save:false});
         return formIsValid;
     }
 
@@ -83,6 +84,7 @@ class DialogFormExperience extends React.Component {
         return false;
 
     }
+    
     renderul(arr) {
         return "" +
             arr.map(item => (

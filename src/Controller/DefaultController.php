@@ -29,6 +29,7 @@ class DefaultController extends AbstractController
      * @Route("/auth")
      * @Route("/agent")
      * @Route("/agent/experiences")
+     * @Route("/agent/experiences/{id}/edit")
      */
     public function index(): Response
     {
