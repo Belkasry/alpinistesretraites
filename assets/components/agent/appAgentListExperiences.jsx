@@ -90,7 +90,7 @@ class AppAgentListExperiences extends React.Component {
                         alignItems="stretch"
                         m={5}
                     >
-                        <ExperiencesGridTable newId={31} />
+                        <ExperiencesGridTable  />
                     </Stack>
                 </Box>
             </div >

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios/index";
-import { Stack, Switch, Typography } from '@mui/material';
+import { FormControlLabel, Stack, Switch, Typography } from '@mui/material';
 import { messageService } from "../../../_services/AlertToast";
 class SwitchState extends Component {
 
@@ -21,7 +21,7 @@ class SwitchState extends Component {
         };
         axios.put('/rest/experiences/' + this.props.id, experience, { headers })
             .then(response => this.setState({ active: !etatinitial })).then(
-                messageService.sendMessage(this.props.id + " " + (!etatinitial ? 'ACTIVE' : 'DESACTIVE'),  (!etatinitial ? 'info' : 'warning'))
+                messageService.sendMessage(this.props.id + " " + (!etatinitial ? 'ACTIVE' : 'DESACTIVE'), (!etatinitial ? 'info' : 'warning'))
             );
     }
 
@@ -29,12 +29,18 @@ class SwitchState extends Component {
 
         const { active } = this.state;
         return (
-            <Switch
-                onChange={() => {
-                    this.switchetat(active)
-                }}
-                checked={active}
-                inputProps={{ 'aria-label': 'controlled' }}
+            <FormControlLabel
+                control={
+                    <Switch
+                        onChange={() => {
+                            this.switchetat(active)
+                        }}
+                        checked={active}
+                        inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                }
+                label="Activer"
+                labelPlacement="end"
             />
         )
     }

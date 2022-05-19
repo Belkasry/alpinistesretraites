@@ -22,6 +22,11 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = 3;
     })
+    .configureWatchOptions(function(watchOptions) {
+        // enable polling and check for changes every 250ms
+        // polling is useful when running Encore inside a Virtual Machine
+        watchOptions.poll = 250;
+    });
 
 ;
 
