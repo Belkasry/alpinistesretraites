@@ -1,4 +1,6 @@
 import './App.css';
+import './css/couche-bootstrap-material.css';
+import './css/flickity.css';
 import './css/bootstrap.min.css';
 import './css/couche-bootstrap.css';
 import Guide from "./components/accompagnateur/Guide";

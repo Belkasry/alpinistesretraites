@@ -1,6 +1,8 @@
 import './App.css';
 import './css/bootstrap.min.css';
 import './css/couche-bootstrap.css';
+import './css/couche-bootstrap-material.css';
+import './css/flickity.css';
 // import Experience from "./components/Experience";
 import NavBar from "./components/partials/NavBar";
 import axios from 'axios';

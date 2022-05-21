@@ -7,9 +7,10 @@ import React, { useState, useContext, Component } from "react";
 import {
     Alert, Autocomplete, Box, Button, Card, Chip, Grid, IconButton,
     InputAdornment, List, ListItem, ListItemText, Paper, Rating, Snackbar,
-    Stack, TextField, Typography, FormControl, InputLabel, OutlinedInput, Container, Divider, Input
+    Stack, TextField, Typography, FormControl, InputLabel, OutlinedInput, Container, Divider, Input, FormHelperText
 } from '@mui/material';
-
+import { styled, ThemeProvider } from '@mui/styles';
+import { createTheme } from '@mui/material/styles';
 import CustomizedBreadcrumbs from './Breadcrumbs';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
@@ -24,12 +25,16 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 import SwitchState from "./Composants/SwitchState";
 import SwipeableTextMobileStepper from "./Composants/SwipeableTextMobileStepper";
+import MUIRichTextEditor from "mui-rte";
+import { Editor, EditorState, convertFromRaw } from "draft-js";
+import MenuDot from "./Composants/MenuDot";
 
 
 
 class AppAgentEditExperience extends Component {
     constructor(props) {
         super(props);
+        const block = { "blocks": [{ "key": "7v0t4", "text": "ssssssssss", "type": "unstyled", "depth": 0, "inlineStyleRanges": [], "entityRanges": [], "data": {} }], "entityMap": {} };
         this.state = {
             fields: { notices: [], includes: [], requirements: [] },
             errors: {},
@@ -53,10 +58,25 @@ class AppAgentEditExperience extends Component {
             notice: { id: null, value: "" },
             include: { id: null, value: "" },
             requirement: { id: null, value: "" },
+            editorState: EditorState.createWithContent(convertFromRaw(block)),
         }
         this.addtoNoticeList = this.addtoNoticeList.bind(this);
+        this.deletefromNoticeList = this.deletefromNoticeList.bind(this);
+        this.editfromNoticeList = this.editfromNoticeList.bind(this);
+
         this.addtoIncludeList = this.addtoIncludeList.bind(this);
+        this.editfromIncludeList = this.editfromIncludeList.bind(this);
+        this.deletefromIncludeList = this.deletefromIncludeList.bind(this);
+
         this.addtoRequirementList = this.addtoRequirementList.bind(this);
+        this.deletefromRequirementList = this.deletefromRequirementList.bind(this);
+        this.editfromRequirementList = this.editfromRequirementList.bind(this);
+
+
+
+        this.handleValidation = this.handleValidation.bind(this);
+        this.savedraft = this.savedraft.bind(this);
+        this.testMenu = this.testMenu.bind(this);
     }
 
     componentDidMount() {
@@ -75,7 +95,54 @@ class AppAgentEditExperience extends Component {
             formIsValid = false;
 
             errors["title"] = new Array();
-            errors["title"].push("Cannot be empty");
+            errors["title"].push("Champs requis");
+        }
+        if (fields["dificulte"]) {
+            var dificulte = fields["dificulte"];
+            errors["dificulte"] = new Array();
+            if (!(!isNaN(parseFloat(dificulte)) && dificulte >= 0 && dificulte <= 5)) {
+                formIsValid = false;
+                errors["dificulte"].push("Valeur doit etre entre 0 et 5");
+            }
+        }
+
+        if (fields["prix"]) {
+            var prix = fields["prix"];
+            errors["prix"] = new Array();
+            if (!(/^[+-]?([0-9]*[.])?[0-9]+$/.test(prix))) {
+                formIsValid = false;
+                errors["prix"].push("Valeur doit etre entre un decimal");
+            }
+        }
+
+        if (fields["duree"]) {
+            var duree = fields["duree"];
+            errors["duree"] = new Array();
+            if (!(/^-?\d+$/.test(duree))) {
+                formIsValid = false;
+                errors["duree"].push("Valeur doit etre numérique");
+            }
+        }
+
+        if (fields["nbr_participant"]) {
+            var nbr_participant = fields["nbr_participant"];
+            errors["nbr_participant"] = new Array();
+            if (!(/^-?\d+$/.test(nbr_participant))) {
+                formIsValid = false;
+                errors["nbr_participant"].push("Valeur doit etre numérique");
+            }
+        }
+        if (fields["nbr_participant_restant"]) {
+            var nbr_participant_restant = fields["nbr_participant_restant"];
+            errors["nbr_participant_restant"] = new Array();
+            if (!(/^-?\d+$/.test(nbr_participant_restant))) {
+                formIsValid = false;
+                errors["nbr_participant_restant"].push("Valeur  doit etre numérique");
+            }
+            if (fields["nbr_participant_restant"] && parseInt(nbr_participant_restant) > parseInt(fields["nbr_participant"])) {
+                formIsValid = false;
+                errors["nbr_participant_restant"].push("Valeur doit etre numérique et inférieur à celle des participants");
+            }
         }
 
         this.setState({ errors: errors, loading_save: false });
@@ -95,6 +162,14 @@ class AppAgentEditExperience extends Component {
     }
 
     addtoNoticeList() {
+        let errors = this.state.errors;
+        errors["notices"] = new Array();
+        if (!this.state.notice.value) {
+            errors["notices"].push("Inserer la notice");
+            this.setState({ errors });
+            return;
+        }
+
         let fields = this.state.fields;
 
         let notices = fields.notices;
@@ -105,7 +180,7 @@ class AppAgentEditExperience extends Component {
             value: this.state.notice.value
         }
         fields.notices = notices;
-        this.setState({ fields, notice: { id: null, value: "" } });
+        this.setState({ fields, notice: { id: null, value: "" }, errors });
     }
 
     deletefromNoticeList(id) {
@@ -123,6 +198,14 @@ class AppAgentEditExperience extends Component {
 
 
     addtoIncludeList() {
+        let errors = this.state.errors;
+        errors["includes"] = new Array();
+        if (!this.state.include.value) {
+            errors["includes"].push("Inserer la include");
+            this.setState({ errors });
+            return;
+        }
+
         let fields = this.state.fields;
 
         let includes = fields.includes;
@@ -133,9 +216,10 @@ class AppAgentEditExperience extends Component {
             value: this.state.include.value
         }
         fields.includes = includes;
-        this.setState({ fields, include: { id: null, value: "" } });
+        this.setState({ fields, include: { id: null, value: "" }, errors });
     }
     deletefromIncludeList(id) {
+
         let fields = this.state.fields;
         let includes = fields.includes;
 
@@ -148,6 +232,14 @@ class AppAgentEditExperience extends Component {
     }
 
     addtoRequirementList() {
+        let errors = this.state.errors;
+        errors["requirements"] = new Array();
+        if (!this.state.requirement.value) {
+            errors["requirements"].push("Inserer la requirement");
+            this.setState({ errors });
+            return;
+        }
+
         let fields = this.state.fields;
 
         let requirements = fields.requirements;
@@ -158,7 +250,7 @@ class AppAgentEditExperience extends Component {
             value: this.state.requirement.value
         }
         fields.requirements = requirements;
-        this.setState({ fields, requirement: { id: null, value: "" } });
+        this.setState({ fields, requirement: { id: null, value: "" }, errors });
     }
     deletefromRequirementList(id) {
         let fields = this.state.fields;
@@ -174,11 +266,12 @@ class AppAgentEditExperience extends Component {
 
 
     renderul(arr) {
-        return "" +
-            arr.map(item => (
-                " ☹ " + item + " , \n "
-            ))
-            + "";
+        return <ul>
+            {arr.map((item) => (
+                <li>{item}</li>
+            ))}
+        </ul>
+
     }
     handleSubmit = async () => {
         this.setState({ loading_save: true });
@@ -186,17 +279,61 @@ class AppAgentEditExperience extends Component {
             alert("submit");
         } return false;
     }
+    savedraft = (data) => {
+        console.log(data);
+        let fields = this.state.fields;
+        fields["description"] = data;
+        this.setState({
+            editorState: EditorState.createWithContent(
+                convertFromRaw(JSON.parse(data)),
+            ),
+            fields
+        })
+
+
+    };
+    onEditorChange = (event) => {
+    };
+
+    testMenu = () => {
+        console.log("-----------");
+    };
 
     render() {
         const { errors, fields, titre, destinations, activites, value_activite, include, requirement,
-            notice, notices, value_destination, inputValue_destination } = this.state;
+            notice, notices, value_destination, inputValue_destination, editorState } = this.state;
         const id_exp = this.props.match.params.id;
-        
+
+
+        const theme = createTheme();
+
+        Object.assign(theme, {
+            overrides: {
+                MUIRichTextEditor: {
+                    root: {
+                    },
+                    editor: {
+                        height: "200px",
+                        padding: "10px",
+                        overflowY: "auto",
+                    },
+                    placeHolder: {
+                        margin: "10px",
+                        fontWeight: "lighter",
+                        color: "lightgray"
+                    }
+                }
+            }
+        })
+
+
 
         return (
-            <Container maxWidth="lg" p={2}>
+            <Container maxWidth="lg" p={2} >
 
-                <Box sx={{ flexGrow: 1 }} m={2}>
+                <Paper sx={{
+                    p: 2, m: 2
+                }}>
                     <Stack
                         direction={{ xs: 'column', sm: 'row' }}
                         spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -211,12 +348,13 @@ class AppAgentEditExperience extends Component {
                             <Button variant="outlined" color="secondary" startIcon={<ArrowBackIosIcon />} size="small" />
 
                             <SwitchState id={id_exp} etat={false} />
-                            <Button variant="outlined" color="secondary" startIcon={<SaveAsIcon />}>Valider</Button>
+                            <Button variant="outlined" color="secondary" startIcon={<SaveAsIcon />} onClick={this.handleValidation}
+                            >Valider</Button>
                             <Button variant="outlined" color="error" startIcon={<DeleteIcon />} >Delete</Button>
                             <Button variant="contained" color="primary" endIcon={<SaveIcon />} >Save </Button>
                         </Stack>
                     </Stack>
-                </Box>
+                </Paper>
                 <Paper sx={{
                     p: 2, m: 2
                 }}>
@@ -233,8 +371,7 @@ class AppAgentEditExperience extends Component {
                                     onChange={this.handleChange.bind(this, "title")}
                                     value={fields["title"]}
                                     error={(errors.hasOwnProperty("title") && errors.title.length) > 0 ? true : false}
-                                    helperText={(errors.hasOwnProperty("title") && errors.title.length > 0) ? `${this.renderul(errors["title"])}` : 'Champ obligatoire'}
-
+                                    helperText={(errors.hasOwnProperty("title") && errors.title.length > 0) ? this.renderul(errors["title"]) : 'Champ obligatoire'}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4} md={4} >
@@ -262,9 +399,7 @@ class AppAgentEditExperience extends Component {
                             </Grid>
                             <Grid item xs={12} sm={4} md={4} >
                                 <TextField
-                                    error={(errors.hasOwnProperty("prix") && errors.prix.length) > 0 ? true : false}
-                                    helperText={(errors.hasOwnProperty("prix") && errors.prix.length > 0) ? `${this.renderul(errors["prix"])}` : ''}
-
+                                    pattern="[0-9]*"
                                     label="Prix"
                                     type="text"
                                     fullWidth
@@ -272,8 +407,16 @@ class AppAgentEditExperience extends Component {
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">MAD</InputAdornment>,
                                     }}
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
                                     onChange={this.handleChange.bind(this, "prix")}
                                     value={fields["prix"]}
+                                    error={(errors.hasOwnProperty("prix") && errors.prix.length) > 0 ? true : false}
+                                    helperText={(errors.hasOwnProperty("prix") && errors.prix.length > 0) ? this.renderul(errors["prix"]) : 'Champ obligatoire'}
+
                                 />
                             </Grid>
                             <Grid item xs={6} sm={4} md={2} >
@@ -310,11 +453,16 @@ class AppAgentEditExperience extends Component {
                                     label="Durée"
                                     type="text"
                                     fullWidth
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
                                     variant="outlined"
                                     value={fields["duree"]}
                                     onChange={this.handleChange.bind(this, "duree")}
                                     error={(errors.hasOwnProperty("duree") && errors.duree.length) > 0 ? true : false}
-                                    helperText={(errors.hasOwnProperty("duree") && errors.duree.length > 0) ? `${this.renderul(errors["duree"])}` : 'Durée est déterminé par le choix de date début et de date de fin'}
+                                    helperText={(errors.hasOwnProperty("duree") && errors.duree.length > 0) ? this.renderul(errors["duree"]) : ''}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={4} md={4} >
@@ -343,35 +491,51 @@ class AppAgentEditExperience extends Component {
                                             onChange={this.handleChange.bind(this, "dificulte")}
                                             value={fields["dificulte"]}
                                         />
+
                                         <Box sx={{ ml: 2 }}>{fields["dificulte"] || 0}/5</Box>
                                     </Stack>
+                                    <Typography color='error'>
+                                        {(errors.hasOwnProperty("dificulte") && errors.dificulte.length > 0) ? this.renderul(errors["dificulte"]) : ''}
+                                    </Typography>
                                 </Box>
                             </Grid>
                             <Grid item xs={6} sm={6} md={2} >
                                 <TextField
                                     id="nbr_participant"
-
                                     label="Nombre de participants"
                                     type="text"
                                     fullWidth
                                     variant="outlined"
-                                    helperText=" --"
                                     onChange={this.handleChange.bind(this, "nbr_participant")}
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
                                     value={fields["nbr_participant"]}
                                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                    error={(errors.hasOwnProperty("nbr_participant") && errors.nbr_participant.length) > 0 ? true : false}
+                                    helperText={(errors.hasOwnProperty("nbr_participant") && errors.nbr_participant.length > 0) ? this.renderul(errors["nbr_participant"]) : ''}
+
                                 />
                             </Grid>
                             <Grid item xs={6} sm={6} md={2} >
                                 <TextField
                                     id="nbr_participant_restant"
-
                                     label="Nombre de résérvation"
                                     fullWidth
                                     variant="outlined"
-                                    helperText=" --"
                                     onChange={this.handleChange.bind(this, "nbr_participant_restant")}
+                                    onKeyPress={(event) => {
+                                        if (!/[0-9]/.test(event.key)) {
+                                            event.preventDefault();
+                                        }
+                                    }}
                                     value={fields["nbr_participant_restant"]}
                                     inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                                    error={(errors.hasOwnProperty("nbr_participant_restant") && errors.nbr_participant_restant.length) > 0 ? true : false}
+                                    helperText={(errors.hasOwnProperty("nbr_participant_restant") && errors.nbr_participant_restant.length > 0) ? this.renderul(errors["nbr_participant_restant"]) : ''}
+
                                 />
                             </Grid>
                             <Grid item xs={12} sm={12} md={4} >
@@ -395,212 +559,168 @@ class AppAgentEditExperience extends Component {
                                 />
 
                             </Grid>
-                            <Grid item xs={12} sm={12} md={4} >
-                                <label htmlFor="icon-button-file">
-                                    <Input accept="image/*" id="icon-button-file" type="file" sx={{display: 'none'}}/>
-                                    <IconButton color="primary" aria-label="upload picture" component="span">
-                                        <PhotoCameraIcon />
-                                    </IconButton>
-                                </label>
-                            </Grid>
-                            <Grid item xs={12} sm={12}  >
-                            </Grid>
-                            <Grid item xs={12} sm={12} md={8} >
-                                <TextField
-                                    id="description"
-                                    fullWidth
-                                    variant="outlined"
-                                    label="Description"
-                                    multiline
-                                    onChange={this.handleChange.bind(this, "description")}
-                                    value={fields["description"]}
-                                    error={(errors.hasOwnProperty("description") && errors.title.length) > 0 ? true : false}
-                                    helperText={(errors.hasOwnProperty("description") && errors.title.length > 0) ? `${this.renderul(errors["description"])}` : 'Helper description'}
+                            <Grid item xs={12} sm={12} md={12} sx={{ mb: 2 }}>
+                                <Paper variant="outlined" >
+                                    <ThemeProvider theme={theme}>
+                                        <MUIRichTextEditor
+                                            label="Type something here..."
+                                            onSave={this.savedraft}
+                                            onFocus={this.save}
+                                            onBlur={this.save}
+                                            inlineToolbar={true}
 
-                                />
+                                        />
+                                    </ThemeProvider>
+                                </Paper>
+                                {/* <Editor editorState={editorState} readOnly={true} sx={{ display: 'none' }} /> */}
                             </Grid>
-                            <Grid item xs={12} sm={12} md={12}>
-                                <Stack direction={{ xs: 'column', sm: 'row' }}
-                                    divider={<Divider orientation="vertical" flexItem />}
-                                    spacing={2} >
-                                    <Grid item xs={12} sm={12} md={4}>
-                                        <Paper elevation={1}>
-                                            <FormControl fullWidth>
-                                                <InputLabel htmlFor="outlined-adornment-includes">Includes</InputLabel>
-                                                <OutlinedInput
-                                                    id="outlined-adornment-includes"
-                                                    value={include.value}
-                                                    onChange={(newValue) => { this.setState({ include: { id: include.id, value: newValue.target.value } }) }}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') {
-                                                            this.addtoIncludeList();
-                                                        }
-                                                    }}
-                                                    endAdornment={
-                                                        <InputAdornment position="end">
-                                                            <IconButton
-                                                                onClick={this.addtoIncludeList}
-                                                                edge="end" >
-                                                                <AddIcon />
-                                                            </IconButton>
-                                                        </InputAdornment>
-                                                    }
-                                                    label="Includes"
+
+                            <Grid item xs={12} sm={12} md={6}>
+                                <Paper elevation={1}>
+                                    <FormControl fullWidth sx={{ mb: 1 }}>
+                                        <InputLabel htmlFor="outlined-adornment-includes">Includes</InputLabel>
+                                        <OutlinedInput
+                                            multiline
+                                            maxRows={3}
+                                            id="outlined-adornment-includes"
+                                            value={include.value}
+                                            onChange={(newValue) => { this.setState({ include: { id: include.id, value: newValue.target.value } }) }}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={this.addtoIncludeList}
+                                                        edge="end" >
+                                                        <AddIcon />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            label="Includes"
+                                            error={(errors.hasOwnProperty("includes") && errors.includes.length) > 0 ? true : false}
+                                        />
+                                        <FormHelperText>{(errors.hasOwnProperty("includes") && errors.includes.length > 0) ? this.renderul(errors["includes"]) : '--'}</FormHelperText>
+                                    </FormControl>
+                                    <List>
+                                        {fields.includes.map(note =>
+                                            <ListItem key={note.id}
+                                                secondaryAction={
+                                                    <MenuDot
+                                                        note_id={note.id}
+                                                        note_value={note.value}
+                                                        onDelete={this.deletefromIncludeList}
+                                                        onEdit={this.editfromIncludeList} />
+                                                }
+                                            >
+                                                <ListItemText
+                                                    primary={note.value}
                                                 />
-                                            </FormControl>
-                                            <List>
-                                                {fields.includes.map(note =>
-                                                    <ListItem key={note.id}
-                                                        secondaryAction={
-                                                            <Stack
-                                                                direction={{ xs: 'column', sm: 'row' }}
-                                                                spacing={{ xs: 1, sm: 2, md: 4 }}
-                                                            >
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="delete"
-                                                                    onClick={() => this.deletefromIncludeList(note.id)}  >
-                                                                    <DeleteIcon />
-                                                                </IconButton>
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="edit"
-                                                                    onClick={() => this.editfromIncludeList(note.id, note.value)}
-                                                                >
-                                                                    <EditIcon />
-                                                                </IconButton>
-                                                            </Stack>
-                                                        }
-                                                    >
-                                                        <ListItemText
-                                                            primary={note.value}
-                                                        />
-                                                    </ListItem>
-                                                )}
-                                            </List>
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={4}>
-                                        <Paper elevation={1}>
-                                            <FormControl fullWidth>
-                                                <InputLabel htmlFor="outlined-adornment-notices">Notices</InputLabel>
-                                                <OutlinedInput
-                                                    id="outlined-adornment-notices"
-                                                    value={notice.value}
-                                                    onChange={(newValue) => { this.setState({ notice: { id: notice.id, value: newValue.target.value } }) }}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') {
-                                                            this.addtoNoticeList();
-                                                        }
-                                                    }}
-                                                    endAdornment={
-                                                        <InputAdornment position="end">
-                                                            <IconButton
-                                                                onClick={this.addtoNoticeList}
-                                                                edge="end" >
-                                                                <AddIcon />
-                                                            </IconButton>
-                                                        </InputAdornment>
-                                                    }
-                                                    label="Notices"
+                                            </ListItem>
+                                        )}
+                                    </List>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={6}>
+                                <Paper elevation={1}>
+                                    <FormControl fullWidth>
+                                        <InputLabel htmlFor="outlined-adornment-notices">Notices</InputLabel>
+                                        <OutlinedInput
+                                            multiline
+                                            maxRows={3}
+                                            id="outlined-adornment-notices"
+                                            value={notice.value}
+                                            onChange={(newValue) => { this.setState({ notice: { id: notice.id, value: newValue.target.value } }) }}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={this.addtoNoticeList}
+                                                        edge="end" >
+                                                        <AddIcon />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            label="Notices"
+                                            error={(errors.hasOwnProperty("notices") && errors.notices.length) > 0 ? true : false}
+                                        />
+                                        <FormHelperText>{(errors.hasOwnProperty("notices") && errors.notices.length > 0) ? this.renderul(errors["notices"]) : '--'}
+                                        </FormHelperText>
+                                    </FormControl>
+                                    <List>
+                                        {fields.notices.map(note =>
+                                            <ListItem key={note.id}
+                                                secondaryAction={
+                                                    <MenuDot
+                                                        note_id={note.id}
+                                                        note_value={note.value}
+                                                        onDelete={this.deletefromNoticeList}
+                                                        onEdit={this.editfromNoticeList} />
+                                                }
+                                            >
+                                                <ListItemText
+                                                    primary={note.value}
                                                 />
-                                            </FormControl>
-                                            <List>
-                                                {fields.notices.map(note =>
-                                                    <ListItem key={note.id}
-                                                        secondaryAction={
-                                                            <Stack
-                                                                direction={{ xs: 'column', sm: 'row' }}
-                                                                spacing={{ xs: 1, sm: 2, md: 4 }}
-                                                            >
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="delete"
-                                                                    onClick={() => this.deletefromNoticeList(note.id)}  >
-                                                                    <DeleteIcon />
-                                                                </IconButton>
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="edit"
-                                                                    onClick={() => this.editfromNoticeList(note.id, note.value)}
-                                                                >
-                                                                    <EditIcon />
-                                                                </IconButton>
-                                                            </Stack>
-                                                        }
-                                                    >
-                                                        <ListItemText
-                                                            primary={note.value}
-                                                        />
-                                                    </ListItem>
-                                                )}
-                                            </List>
-                                        </Paper>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={4}>
-                                        <Paper elevation={1}>
-                                            <FormControl fullWidth>
-                                                <InputLabel htmlFor="outlined-adornment-requirements">Requirements</InputLabel>
-                                                <OutlinedInput
-                                                    id="outlined-adornment-requirements"
-                                                    value={requirement.value}
-                                                    onChange={(newValue) => { this.setState({ requirement: { id: requirement.id, value: newValue.target.value } }) }}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') {
-                                                            this.addtoRequirementList();
-                                                        }
-                                                    }}
-                                                    endAdornment={
-                                                        <InputAdornment position="end">
-                                                            <IconButton
-                                                                onClick={this.addtoRequirementList}
-                                                                edge="end" >
-                                                                <AddIcon />
-                                                            </IconButton>
-                                                        </InputAdornment>
-                                                    }
-                                                    label="Requirements"
+                                            </ListItem>
+                                        )}
+                                    </List>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={6}>
+                                <Paper elevation={1}>
+                                    <FormControl fullWidth>
+                                        <InputLabel htmlFor="outlined-adornment-requirements">Requirements</InputLabel>
+                                        <OutlinedInput
+                                            multiline
+                                            maxRows={3}
+                                            id="outlined-adornment-requirements"
+                                            value={requirement.value}
+                                            onChange={(newValue) => { this.setState({ requirement: { id: requirement.id, value: newValue.target.value } }) }}
+                                            endAdornment={
+                                                <InputAdornment position="end">
+                                                    <IconButton
+                                                        onClick={this.addtoRequirementList}
+                                                        edge="end" >
+                                                        <AddIcon />
+                                                    </IconButton>
+                                                </InputAdornment>
+                                            }
+                                            label="Requirements"
+                                            error={(errors.hasOwnProperty("requirements") && errors.requirements.length) > 0 ? true : false}
+                                        />
+                                        <FormHelperText>{(errors.hasOwnProperty("requirements") && errors.requirements.length > 0) ? this.renderul(errors["requirements"]) : '--'}
+                                        </FormHelperText>
+                                    </FormControl>
+                                    <List>
+                                        {fields.requirements.map(note =>
+                                            <ListItem key={note.id}
+                                                secondaryAction={
+                                                    <MenuDot
+                                                        note_id={note.id}
+                                                        note_value={note.value}
+                                                        onDelete={this.deletefromRequirementList}
+                                                        onEdit={this.editfromRequirementList} />
+                                                }
+                                            >
+                                                <ListItemText
+                                                    primary={note.value}
                                                 />
-                                            </FormControl>
-                                            <List>
-                                                {fields.requirements.map(note =>
-                                                    <ListItem key={note.id}
-                                                        secondaryAction={
-                                                            <Stack
-                                                                direction={{ xs: 'column', sm: 'row' }}
-                                                                spacing={{ xs: 1, sm: 2, md: 4 }}
-                                                            >
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="delete"
-                                                                    onClick={() => this.deletefromRequirementList(note.id)}  >
-                                                                    <DeleteIcon />
-                                                                </IconButton>
-                                                                <IconButton
-                                                                    edge="end"
-                                                                    aria-label="edit"
-                                                                    onClick={() => this.editfromRequirementList(note.id, note.value)}
-                                                                >
-                                                                    <EditIcon />
-                                                                </IconButton>
-                                                            </Stack>
-                                                        }
-                                                    >
-                                                        <ListItemText
-                                                            primary={note.value}
-                                                        />
-                                                    </ListItem>
-                                                )}
-                                            </List>
-                                        </Paper>
-                                    </Grid>
-                                </Stack>
+                                            </ListItem>
+                                        )}
+                                    </List>
+                                </Paper>
+                            </Grid>
+
+                            <Grid item xs={12} sm={12} md={4} alignItems="center"
+                                justifyContent="center">
+                                <label htmlFor="icon-button-file">
+                                    <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} />
+                                    <Button variant="outlined" aria-label="upload picture" component="span" size="large"
+                                        color="secondary" startIcon={<PhotoCameraIcon />}>PHOTOS</Button>
+                                </label>
                             </Grid>
                         </Grid>
                     </Box>
                 </Paper>
                 <p>{JSON.stringify(fields)}</p>
-            </Container>);
+                <p>{JSON.stringify(errors)}</p>
+            </Container >);
 
     }
 }
