@@ -135,14 +135,13 @@ https://flickity.metafizzy.co
     opacity: 1
 }
 
-.ReactGridGallery_tile-viewport img{
-    height: 100% !important;
-    width: auto !important;
-    object-fit: cover !important;
-    object-position: center !important;
+.ReactGridGallery_tile {
+    display: inline-block;
+    /* height: 250px; */
+    width: 20vh;
+    margin: auto;
 }
-.ReactGridGallery_tile{
-    background: transparent !important;
-    border: 2px solid #547484 !important;
-    border-radius: 5px 5px 5px 5px/25px 25px 25px 5px !important;
+.ReactGridGallery_tile-viewport{
+    display: flex;
+    justify-content: center;
 }

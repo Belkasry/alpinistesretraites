@@ -39,7 +39,6 @@ class SwitchState extends Component {
                         inputProps={{ 'aria-label': 'controlled' }}
                     />
                 }
-                label="Activer"
                 labelPlacement="end"
             />
         )

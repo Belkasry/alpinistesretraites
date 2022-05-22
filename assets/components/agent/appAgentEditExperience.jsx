@@ -71,9 +71,6 @@ class AppAgentEditExperience extends Component {
         this.addtoRequirementList = this.addtoRequirementList.bind(this);
         this.deletefromRequirementList = this.deletefromRequirementList.bind(this);
         this.editfromRequirementList = this.editfromRequirementList.bind(this);
-
-
-
         this.handleValidation = this.handleValidation.bind(this);
         this.savedraft = this.savedraft.bind(this);
         this.testMenu = this.testMenu.bind(this);
@@ -390,7 +387,7 @@ class AppAgentEditExperience extends Component {
                                     onInputChange={(event, newInputValue) => {
                                         this.setState({ inputValue_destination: newInputValue })
                                     }}
-                                    getOptionLabel={(option) => option.name}
+                                    getOptionLabel={(option) => option ? option.name : ""}
                                     renderInput={(params) =>
                                         <TextField {...params}
                                             label="Destination"
@@ -545,7 +542,7 @@ class AppAgentEditExperience extends Component {
                                     limitTags={2}
                                     id="activites"
                                     options={activites}
-                                    getOptionLabel={(option) => option.libelle}
+                                    getOptionLabel={(option) => option ? option.libelle : ""}
                                     value={value_activite}
                                     onChange={(event, newValue) => {
                                         this.setState({ value_activite: newValue });
@@ -707,14 +704,6 @@ class AppAgentEditExperience extends Component {
                                 </Paper>
                             </Grid>
 
-                            <Grid item xs={12} sm={12} md={4} alignItems="center"
-                                justifyContent="center">
-                                <label htmlFor="icon-button-file">
-                                    <Input accept="image/*" id="icon-button-file" type="file" sx={{ display: 'none' }} />
-                                    <Button variant="outlined" aria-label="upload picture" component="span" size="large"
-                                        color="secondary" startIcon={<PhotoCameraIcon />}>PHOTOS</Button>
-                                </label>
-                            </Grid>
                         </Grid>
                     </Box>
                 </Paper>

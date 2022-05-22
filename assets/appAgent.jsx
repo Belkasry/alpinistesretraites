@@ -1,3 +1,4 @@
+import './css/agent.css';
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,6 +10,7 @@ import AppAgentListExperiences from './components/agent/AppAgentListExperiences'
 import { Alert, Button, Snackbar } from '@mui/material';
 import { messageService } from './_services/AlertToast'
 import AppAgentEditExperience from './components/agent/AppAgentEditExperience';
+import Medias from './components/agent/Medias';
 import PrimarySearchAppBar from './components/agent/MenuAgent';
 
 class AppAgent extends Component {
@@ -47,21 +49,24 @@ class AppAgent extends Component {
         const { open, message, severity } = this.state;
         return (
             <React.Fragment>
-                <PrimarySearchAppBar />
-                <Switch>
-                    <Route exact path="/">
-                        <p>---------</p>
-                    </Route>
-                    <Route exact path="/agent/experiences">
-                        <AppAgentListExperiences />
-                    </Route>
-                    <Route path="/agent/experiences/:id/edit" children={(props) => <AppAgentEditExperience {...props} />} />
-                </Switch>
-                <Snackbar open={open} autoHideDuration={6000} onClose={this.handleClose}>
-                    <Alert onClose={this.handleClose} severity={message.severity ? message.severity : "success"} sx={{ width: '100%' }}>
-                        {message.text}
-                    </Alert>
-                </Snackbar>
+                <div className='mainDiv'>
+                    <PrimarySearchAppBar />
+                    <Switch>
+                        <Route exact path="/">
+                            <p>---------</p>
+                        </Route>
+                        <Route exact path="/agent/experiences">
+                            <AppAgentListExperiences />
+                        </Route>
+                        <Route path="/agent/experiences/:id/edit" children={(props) => <AppAgentEditExperience {...props} />} />
+                        <Route path="/agent/experiences/:id/media" children={(props) => <Medias {...props} />} />
+                    </Switch>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={this.handleClose}>
+                        <Alert onClose={this.handleClose} severity={message.severity ? message.severity : "success"} sx={{ width: '100%' }}>
+                            {message.text}
+                        </Alert>
+                    </Snackbar>
+                </div>
             </React.Fragment>
 
         );

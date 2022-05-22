@@ -7,7 +7,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use ApiPlatform\Core\Api\IriConverterInterface;
 use App\Entity\Experience;
+use App\Entity\Media;
 use App\Entity\Subscription;
+use App\Form\MediaType;
 use App\Repository\ExperienceRepository;
 use App\Repository\SubscriptionRepository;
 use App\Service\UriReaderService;
@@ -226,11 +228,10 @@ class ExperienceApiController extends AbstractController
     ): JsonResponse {
 
         try {
-
             $experience = $expRepo->find($id);
             if (!$experience)
                 return $this->json(['status' => 400, 'message' => "No Experience with id : $id "], 400);
-                
+
             $titre = $experience->getTitle();
             $entityManager->remove($experience);
             $entityManager->flush();
@@ -239,4 +240,6 @@ class ExperienceApiController extends AbstractController
             return $this->json(['status' => 400, 'message' => $e->getMessage()], 400);
         }
     }
+
+   
 }

@@ -41,7 +41,7 @@ class AppAgentListExperiences extends React.Component {
         return (
             <div>
                 <Box sx={{ width: 3 / 4, mx: 'auto' }} >
-                    <Box sx={{ flexGrow: 1 }} m={2}>
+                    <Paper sx={{ p: 2, m:2,flexGrow: 1 }} >
                         <Stack
                             direction="row"
                             justifyContent="space-between"
@@ -51,20 +51,21 @@ class AppAgentListExperiences extends React.Component {
                             <Typography variant="h3" component="h1">
                                 {titre}
                             </Typography>
-                            <CustomizedBreadcrumbs chemin={["Experiences"]}/>
+                            <CustomizedBreadcrumbs chemin={["Experiences"]} />
                             <Stack direction="row" spacing={2}>
                                 <Button onClick={this.Open} variant="outlined" color="secondary" startIcon={<AddIcon />}>Add</Button>,
                                 <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete</Button>,
                                 <Button variant="contained" color="secondary" endIcon={<SendIcon />}>Send </Button>
                             </Stack>
                         </Stack>
-                    </Box>
+                    </Paper>
                     <DialogFormExperience ouvrir={this.state.open} onClose={this.onClose} />
                     <Stack
                         direction="row"
                         justifyContent="center"
                         alignItems="stretch"
                         spacing={2}
+                       sx={{ p: 2, m:2}}
                     >
                         <Alert severity="info" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
                             <AlertTitle>Nombre d'Expériences Active</AlertTitle>
@@ -83,15 +84,16 @@ class AppAgentListExperiences extends React.Component {
                             <strong><Box sx={{ fontSize: 34 }}>32</Box></strong>
                         </Alert>
                     </Stack>
-                    <Stack
-                        direction="column"
-                        justifyContent="center"
-                        spacing={2}
-                        alignItems="stretch"
-                        m={5}
-                    >
-                        <ExperiencesGridTable  />
-                    </Stack>
+                    <Paper elevation={1} sx={{ p: 2, m:2}}>
+                        <Stack
+                            direction="column"
+                            justifyContent="center"
+                            spacing={2}
+                            alignItems="stretch"
+                        >
+                            <ExperiencesGridTable />
+                        </Stack>
+                    </Paper>
                 </Box>
             </div >
         );

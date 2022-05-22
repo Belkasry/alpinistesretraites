@@ -1,0 +1,49 @@
+{# templates/default/base_font.html.twig #}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+    <title>
+      {% block title %}
+        Welcome!
+              
+      {% endblock %}
+    </title>
+    {% block stylesheets %}{% endblock %}
+    {{ encore_entry_link_tags('app') }}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons">
+    <link rel="stylesheet" href="https://rawgit.com/creativetimofficial/material-kit/master/assets/css/material-kit.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  </head>
+  <body>
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+      {{ encore_entry_script_tags('app') }}
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+      <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+      <script>
+      $(document).ready(function(){
+        $(window).bind('scroll', function() {
+        var navHeight = $( window ).height() - 70;
+          if ($(window).scrollTop() > navHeight) {
+            $('#ScrollThenFix').addClass('ScrollFix');
+          }
+          else {
+            $('#ScrollThenFix').removeClass('ScrollFix');
+          }
+       });
+     });
+    </script>
+    <!-- Renders app.js & a webpack runtime.js file
+                <script src="/build/runtime.js" defer></script>
+                <script src="/build/app.js" defer></script>
+                See note below about the "defer" attribute -->
+    {% endblock %}
+  </body>
+</html>
