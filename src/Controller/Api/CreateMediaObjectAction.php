@@ -5,21 +5,34 @@ namespace App\Controller\Api;
 use ApiPlatform\Core\Api\IriConverterInterface;
 use ApiPlatform\Core\Exception\ItemNotFoundException;
 use App\Entity\Media;
+use App\Service\Base64FileExtractor;
+use App\Service\UploadedBase64File;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class CreateMediaObjectAction
 {
-    public function __invoke(Request $request, IriConverterInterface $iriConverter): Media
+    public function __invoke(Request $request, IriConverterInterface $iriConverter, Base64FileExtractor $base64FileExtractor): Media
     {
         $uploadedFile = $request->files->get('file');
-        if (!$uploadedFile) {
+        $base64Image = $request->request->get('base64Image');
+
+
+        $mediaObject = new Media();
+
+        if ($uploadedFile) {
+            $mediaObject->setImageFile($uploadedFile);
+        } elseif ($base64Image) {
+            $base64Image = $base64FileExtractor->extractBase64String($base64Image);
+            $name = $request->request->get("name");
+            $imageFile = new UploadedBase64File($base64Image, $name ? $name : "");
+            $mediaObject->setImageFile($imageFile);
+        } else {
             throw new BadRequestHttpException('"file" is required');
         }
 
-        $mediaObject = new Media();
-        $mediaObject->setImageFile($uploadedFile);
+
 
         $guide_iri = $request->request->get("guide");
         $experience_iri = $request->request->get("experience");

@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import SaveIcon from "@mui/icons-material/Save";
+import axios from "axios";
 
 
 class UploadImages extends Component {
@@ -14,19 +15,46 @@ class UploadImages extends Component {
         super(props);
 
         this.state = {
-            images: []
+            images: [],
+            confirmer: false
         }
         this.onChange = this.onChange.bind(this);
+        this.onUploadtest = this.onUploadtest.bind(this);
     }
 
     onChange = (imageList, addUpdateIndex) => {
         console.log(imageList, addUpdateIndex);
-        this.setState({ images: imageList });
+        this.setState({ images: imageList, confirmer: (imageList.length > 0) });
     };
+
+    async onUploadtest() {
+
+        let images = this.state.images;
+        if (images.length <= 0)
+            return;
+
+
+        let data_url = images[0].data_url;
+        const form = new FormData();
+        form.append("base64Image", data_url);
+        form.append("experience", "/api/experiences/" + this.props.experience);
+        form.append("name", "photo6044042163102267173.jpg");
+
+        await axios.post('/api/media', form, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'content-type': 'multipart/form-data; boundary=---011000010111000001101001'
+            }
+        }).then(function (response) {
+            console.log(response.data);
+        }).catch(function (error) {
+            console.error(error);
+        });
+    }
 
     render() {
         const maxNumber = 69;
-        const { images } = this.state;
+        const { images, confirmer } = this.state;
         return (
             <div className="UploadImages" >
                 <ImageUploading
@@ -62,7 +90,7 @@ class UploadImages extends Component {
                                     {...dragProps}
                                 >Click or Drop here</Button>
                                 <Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={onImageRemoveAll} >Delete All</Button>
-                                <Button variant="outlined" color="primary" startIcon={<SaveIcon />} onClick={onImageRemoveAll} >Confirmer Upload</Button>
+                                <Button variant="outlined" color="primary" startIcon={<SaveIcon />} onClick={this.onUploadtest} disabled={!confirmer}>Confirmer Upload</Button>
                             </Stack>
                             <Grid container spacing={{ xs: 2, md: 1 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                                 {imageList.map((image, index) => (
