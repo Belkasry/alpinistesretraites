@@ -18,7 +18,6 @@ final class CreateMediaObjectAction
         $uploadedFile = $request->files->get('file');
         $base64Image = $request->request->get('base64Image');
 
-
         $mediaObject = new Media();
 
         if ($uploadedFile) {

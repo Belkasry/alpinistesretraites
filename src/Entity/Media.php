@@ -47,9 +47,11 @@ use App\ApiPlatform\GuideFilter;
  *                 }
  *             }
  *         }
- *     }, paginationItemsPerPage=14
+ *     },
+ *  paginationItemsPerPage=14,
+ * attributes={"order":{"updatedAt"="DESC"}}
  * )
- * @ApiFilter(SearchFilter::class, properties={"id": "exact","guide":"exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact","guide.id":"exact","guide":"exact","experience.id":"exact","experience":"exact"})
  * @ORM\Entity(repositoryClass=MediaRepository::class)
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable

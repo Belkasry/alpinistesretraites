@@ -10,27 +10,26 @@ class Medias extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
+            update: 0
         }
+        this.updateGallerie=this.updateGallerie.bind(this);
+
+    }
+
+    updateGallerie = () => {
+        console.log(this.state.update);
+        this.setState({ update: Math.random() * Math.random() * 10000 })
     }
 
 
-    changeHandler = (e) => {
-        const { files } = e.target
-        for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            console.log(file) // OR const file = files.item(i);
-        }
-
-    }
 
     render() {
-
+        const { update } = this.state;
         return (
             <Box sx={{ width: 3 / 4, mx: 'auto' }} >
                 <Paper elevation={1} sx={{ p: 2, m: 2 }}>
-                    <UploadImages experience={5}/>
+                    <UploadImages experience={this.props.match.params.id} updateGallerie={this.updateGallerie} />
                 </Paper>
                 <Paper elevation={1} sx={{ p: 2, m: 2 }}>
                     <Stack
@@ -39,7 +38,7 @@ class Medias extends Component {
                         spacing={2}
                         alignItems="stretch"
                     >
-                        <MediaGallerie experience={5} />
+                        <MediaGallerie experience={this.props.match.params.id} update={update} />
                     </Stack>
                 </Paper>
             </Box>

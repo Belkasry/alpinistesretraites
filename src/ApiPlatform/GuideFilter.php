@@ -13,7 +13,6 @@
          */
         protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, string $operationName = null/*, array $context = []*/)
         {
-
             if ($property == 'all') {
                 $alias = $queryBuilder->getRootAliases()[0];
                 $valueParameter = $queryNameGenerator->generateParameterName('all');
@@ -22,7 +21,6 @@
                 $queryBuilder->andWhere(sprintf('%s.nom LIKE :%s OR %s.prenom LIKE :%s OR %s.description LIKE :%s', $alias, $valueParameter.$key, $alias, $valueParameter.$key, $alias, $valueParameter.$key))
                     ->setParameter($valueParameter.$key, '%' . $val . '%');
                 }
-
             } elseif ($property == 'fullName') {
                 $alias = $queryBuilder->getRootAliases()[0];
                 $valueParameter = $queryNameGenerator->generateParameterName('fullName');
