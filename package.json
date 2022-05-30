@@ -55,6 +55,7 @@
         "react-grid-gallery": "^0.5.5",
         "react-images-uploading": "^3.1.6",
         "react-materialui-tags": "^1.0.4",
+        "react-mui-fileuploader": "^0.2.0",
         "react-router-dom": "^5.3.0",
         "react-simple-rating": "^0.0.9",
         "react-stars": "^2.2.5",

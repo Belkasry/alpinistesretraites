@@ -1344,7 +1344,7 @@
     "@emotion/cache" "^11.7.1"
     prop-types "^15.8.1"
 
-"@mui/styles@^5.8.0":
+"@mui/styles@^5.6.2", "@mui/styles@^5.8.0":
   version "5.8.0"
   resolved "https://registry.yarnpkg.com/@mui/styles/-/styles-5.8.0.tgz#43ac26adaf30e911c97b71d60c536d55398d4993"
   integrity sha512-kssqBWhCFo7AMiu93QziR8qxq3z8bJm2qCYdmNadE5NvEla7Xwu3twNJUWnCEoeDeoFMk/2H0ACMOdrasI9ANw==
@@ -5211,6 +5211,18 @@ react-materialui-tags@^1.0.4:
     lodash "4.17.11"
     memoize-one "5.0.0"
     prop-types "15.7.0"
+
+react-mui-fileuploader@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-mui-fileuploader/-/react-mui-fileuploader-0.2.0.tgz#484eaf9340bb1bdf3259b5175b8456108ae2fa1a"
+  integrity sha512-EKBdOgZfgfKm4DDJBwRBbN7hoD0PngbFnv0DkUYWbcTEZKHMxtb4JTCc4l3y/paJIsvujiwUmwT4UkW+pjRPOg==
+  dependencies:
+    "@emotion/react" "^11.9.0"
+    "@emotion/styled" "^11.8.1"
+    "@mui/icons-material" "^5.6.2"
+    "@mui/material" "^5.6.4"
+    "@mui/styles" "^5.6.2"
+    prop-types "^15.8.1"
 
 react-prop-toggle@^1.0.2:
   version "1.0.2"

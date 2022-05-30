@@ -327,7 +327,6 @@ class AppAgentEditExperience extends Component {
 
         return (
             <Container maxWidth="lg" p={2} >
-
                 <Paper sx={{
                     p: 2, m: 2
                 }}>
@@ -341,7 +340,7 @@ class AppAgentEditExperience extends Component {
                             {`${titre} : ${id_exp}`}
                         </Typography>
                         <CustomizedBreadcrumbs chemin={["Experiences", id_exp]} />
-                        <Stack direction="row" spacing={2}>
+                        <Stack  spacing={2}  direction={{ xs: 'column', md: 'row' }} >
                             <Button variant="outlined" color="secondary" startIcon={<ArrowBackIosIcon />} size="small" />
 
                             <SwitchState id={id_exp} etat={false} />

@@ -38,11 +38,13 @@ class ExperiencesGridTable extends React.Component {
       columns: [
         {
           field: 'id',
-          headerName: 'Identifiant', flex: 1
+          headerName: 'Identifiant',
+          flex: 1.5
         },
         {
           field: 'title',
-          headerName: 'Titre', flex: 1.5
+          headerName: 'Titre',
+          flex: 2
         },
         {
           field: 'dificulte',
@@ -62,7 +64,7 @@ class ExperiencesGridTable extends React.Component {
           field: 'prix',
           headerName: 'Prix',
           type: "number",
-           flex: 1
+          flex: 1
         }, {
           field: 'etat',
           headerName: 'Etat',
@@ -163,10 +165,11 @@ class ExperiencesGridTable extends React.Component {
   actionButtons(params) {
     return (
       <Stack
-        direction="row"
-        spacing={1}
+
+        direction={{ xs: 'column', md: 'row' }}
         justifyContent="flex-start"
-        alignItems="baseline">
+        alignItems="flex-start"
+        spacing={0.5}>
         <IconButton aria-label="detail"
           variant="contained"
           color="secondary"
@@ -334,11 +337,12 @@ class ExperiencesGridTable extends React.Component {
 
     return (
       <Stack
-        direction="row"
+        direction={{ xs: 'column', md: 'row' }}
         justifyContent="space-around"
         spacing={2}>
         <Chip variant="outlined" color="secondary" label={"Total elements : " + totalCount} />
         <Pagination
+          size='small' 
           color="secondary"
           count={pageCount}
           page={page + 1}

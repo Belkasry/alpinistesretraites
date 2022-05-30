@@ -10,7 +10,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
- *     normalizationContext={"groups"={"read"}},
+ *     normalizationContext={
+ *      "groups"={"read"},
+ *     "datetime_format" = "H:i"
+ * }
  * )
  * @ORM\Entity(repositoryClass=StepExperienceRepository::class)
  */

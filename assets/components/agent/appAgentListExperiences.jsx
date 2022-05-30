@@ -40,60 +40,63 @@ class AppAgentListExperiences extends React.Component {
         const { titre } = this.state;
         return (
             <div>
-                <Box sx={{ width: 3 / 4, mx: 'auto' }} >
-                    <Paper sx={{ p: 2, m:2,flexGrow: 1 }} >
+                <Box mx={{ xs: 0, md: "auto" }} width={{ xs: 1, md: 3 / 4 }}>
+                    <Paper sx={{ p: 2, m: 2, flexGrow: 1 }} >
                         <Stack
-                            direction="row"
-                            justifyContent="space-between"
+                            direction={{ xs: 'column', md: 'row' }}
+                            spacing={{ xs: 1, sm: 2, md: 4 }}
+                            justifyContent="space-around"
                             alignItems="center"
-                            spacing={2}
                         >
-                            <Typography variant="h3" component="h1">
+                            <Typography variant="h4" component="h1" sx={{ fontSize: "1.5rem" }}>
                                 {titre}
                             </Typography>
                             <CustomizedBreadcrumbs chemin={["Experiences"]} />
-                            <Stack direction="row" spacing={2}>
-                                <Button onClick={this.Open} variant="outlined" color="secondary" startIcon={<AddIcon />}>Add</Button>,
-                                <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete</Button>,
+                            <Stack direction={{ xs: 'column', md: 'row' }} spacing={2}>
+                                <Button onClick={this.Open} variant="outlined" color="secondary" startIcon={<AddIcon />}>Add</Button>
+                                <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>Delete</Button>
                                 <Button variant="contained" color="secondary" endIcon={<SendIcon />}>Send </Button>
                             </Stack>
                         </Stack>
                     </Paper>
                     <DialogFormExperience ouvrir={this.state.open} onClose={this.onClose} />
-                    <Stack
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="stretch"
-                        spacing={2}
-                       sx={{ p: 2, m:2}}
-                    >
-                        <Alert severity="info" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
-                            <AlertTitle>Nombre d'Expériences Active</AlertTitle>
-                            <strong><Box sx={{ fontSize: 34 }}>10</Box></strong>
-                        </Alert>
-                        <Alert severity="success" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
-                            <AlertTitle>Nombre de Participants</AlertTitle>
-                            <strong><Box sx={{ fontSize: 34 }}>156</Box></strong>
-                        </Alert>
-                        <Alert severity="info" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
-                            <AlertTitle>Nombre de Reviews</AlertTitle>
-                            <strong><Box sx={{ fontSize: 34 }}>66</Box></strong>
-                        </Alert>
-                        <Alert severity="secondary" icon={<CheckIcon fontSize="inherit" />} elevation={1}>
-                            <AlertTitle>Nombre de Followers</AlertTitle>
-                            <strong><Box sx={{ fontSize: 34 }}>32</Box></strong>
-                        </Alert>
-                    </Stack>
-                    <Paper elevation={1} sx={{ p: 2, m:2}}>
+                    <Stack direction={{ xs: 'column-reverse', md: 'column' }}>
+                        <Stack
+                            direction={{ xs: 'column', md: 'row' }}
+                            justifyContent="center"
+                            alignItems="stretch"
+                            spacing={2}
+                            sx={{ p: 2, m: 2 }}
+                        >
+                            <Alert severity="info" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
+                                <AlertTitle>Nombre d'Expériences Active</AlertTitle>
+                                <strong><Box sx={{ fontSize: 34 }}>10</Box></strong>
+                            </Alert>
+                            <Alert severity="success" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
+                                <AlertTitle>Nombre de Participants</AlertTitle>
+                                <strong><Box sx={{ fontSize: 34 }}>156</Box></strong>
+                            </Alert>
+                            <Alert severity="info" icon={<CommentIcon fontSize="inherit" />} elevation={1}>
+                                <AlertTitle>Nombre de Reviews</AlertTitle>
+                                <strong><Box sx={{ fontSize: 34 }}>66</Box></strong>
+                            </Alert>
+                            <Alert severity="secondary" icon={<CheckIcon fontSize="inherit" />} elevation={1}>
+                                <AlertTitle>Nombre de Followers</AlertTitle>
+                                <strong><Box sx={{ fontSize: 34 }}>32</Box></strong>
+                            </Alert>
+                        </Stack>
                         <Stack
                             direction="column"
                             justifyContent="center"
                             spacing={2}
                             alignItems="stretch"
+                            mx={{ xs: 0, md: 3 }}
                         >
-                            <ExperiencesGridTable />
+                            <Paper elevation={1} sx={{ p: 2, m: 2 }} >
+                                <ExperiencesGridTable />
+                            </Paper>
                         </Stack>
-                    </Paper>
+                    </Stack>
                 </Box>
             </div >
         );
