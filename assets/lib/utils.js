@@ -65,3 +65,30 @@ export function getParameterByName(name, url = window.location.href) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+export function findWithAttr(array, attr, values) {
+    var indexes = [];
+    for (var i = 0; i < array.length; i += 1) {
+        if (values.includes(array[i][attr])) {
+            indexes.push(i);
+        }
+
+    }
+    return indexes;
+}
+export function findOneWithAttr(array, attr, value) {
+    for(var i = 0; i < array.length; i += 1) {
+        if(array[i][attr] === value) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+export function isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}

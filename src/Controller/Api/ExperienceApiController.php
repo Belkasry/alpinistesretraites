@@ -75,23 +75,28 @@ class ExperienceApiController extends AbstractController
      * @Route(
      *     name="experience_get",
      *     path="/rest/experiences/{id}",
+     *     defaults={ "groups": "read_item"},
      *     methods={"GET"}
      * )
-     *rest/experiences/1
+     *rest/experiences/1?groups=read_date
      */
     public function exp_show(
         $id,
+        $groups,
         Request $request,
         UriReaderService $uriReaderService,
         ExperienceRepository $expRepo,
         EntityManagerInterface $entityManager
     ): JsonResponse {
         $params = $request->query->all();
+        if ($request->query->get('groups')) {
+            $groups = $request->query->get('groups');
+        }
         $validate_params = ['id', "title", "nbr_participant", "prix", "etat", "start", "finish", "destination", "duree"];
         $validate_params[] = "page";
         // dd($parametres);
         $experience = $expRepo->find($id);
-        return $this->json($experience, 200,  [], ["groups" => "read_item"]);
+        return $this->json($experience, 200,  [], ["groups" => $groups]);
     }
 
     /**
@@ -240,6 +245,4 @@ class ExperienceApiController extends AbstractController
             return $this->json(['status' => 400, 'message' => $e->getMessage()], 400);
         }
     }
-
-   
 }

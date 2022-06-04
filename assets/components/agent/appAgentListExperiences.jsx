@@ -41,7 +41,7 @@ class AppAgentListExperiences extends React.Component {
         return (
             <div>
                 <Box mx={{ xs: 0, md: "auto" }} width={{ xs: 1, md: 3 / 4 }}>
-                    <Paper sx={{ p: 2, m: 2, flexGrow: 1 }} >
+                    <Paper sx={{ p: 2, m: 2, flexGrow: 1 }} elevation={2}>
                         <Stack
                             direction={{ xs: 'column', md: 'row' }}
                             spacing={{ xs: 1, sm: 2, md: 4 }}
@@ -92,7 +92,7 @@ class AppAgentListExperiences extends React.Component {
                             alignItems="stretch"
                             mx={{ xs: 0, md: 3 }}
                         >
-                            <Paper elevation={1} sx={{ p: 2, m: 2 }} >
+                            <Paper sx={{ p: 2, m: 2 }} elevation={2}>
                                 <ExperiencesGridTable />
                             </Paper>
                         </Stack>

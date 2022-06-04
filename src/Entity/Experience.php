@@ -33,7 +33,7 @@ class Experience implements JsonSerializable
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
-     * @Groups({"read","read_grid","read_item"})
+     * @Groups({"read","read_grid","read_item","read_date"})
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -98,14 +98,14 @@ class Experience implements JsonSerializable
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read","read_item","read_grid"})
+     * @Groups({"read","read_item","read_grid","read_date"})
      * @Assert\Type(type="datetime",groups={"brouillon"})
      */
     private $start;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"read","read_item","read_grid"})
+     * @Groups({"read","read_item","read_grid","read_date"})
      * @Assert\Type(type="datetime",groups={"brouillon"})
      */
     private $finish;
@@ -176,7 +176,7 @@ class Experience implements JsonSerializable
 
 
     /**
-     * @Groups({"read","read_item","read_grid"})
+     * @Groups({"read","read_item","read_grid","read_date"})
      * @ORM\Column(name="duree",type="integer", nullable=true)
      */
     private $duree;

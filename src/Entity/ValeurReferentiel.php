@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
 use ApiPlatform\Core\Annotation\ApiFilter as ApiFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use App\Repository\StepExperienceRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
@@ -14,6 +17,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
  *     normalizationContext={"groups"={"read"}},
  * )
  * @ORM\Entity(repositoryClass=ValeurReferentielRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"id_ref": "exact","id_ref.id":"exact"})
  */
 class ValeurReferentiel
 {
@@ -26,6 +30,7 @@ class ValeurReferentiel
 
     /**
      * @ORM\ManyToOne(targetEntity=Referentiel::class)
+     * @Groups({"list":"read"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $id_ref;

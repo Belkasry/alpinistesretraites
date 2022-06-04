@@ -24,6 +24,7 @@
         /**
          * @ORM\Id
          * @ORM\GeneratedValue
+          * @Groups({"list":"read"})
          * @ORM\Column(type="integer")
          */
         private $id;

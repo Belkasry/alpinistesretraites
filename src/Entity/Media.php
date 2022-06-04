@@ -112,6 +112,11 @@ class Media
     private $updatedAt;
 
     /**
+     * @ORM\OneToOne(targetEntity=StepExperience::class, mappedBy="media", cascade={"persist", "remove"})
+     */
+    private $stepExperience;
+
+    /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -205,5 +210,27 @@ class Media
     public function unserialize($serialized)
     {
         $this->imageFile = base64_decode($this->imageFile);
+    }
+
+    public function getStepExperience(): ?StepExperience
+    {
+        return $this->stepExperience;
+    }
+
+    public function setStepExperience(?StepExperience $stepExperience): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($stepExperience === null && $this->stepExperience !== null) {
+            $this->stepExperience->setMedia(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($stepExperience !== null && $stepExperience->getMedia() !== $this) {
+            $stepExperience->setMedia($this);
+        }
+
+        $this->stepExperience = $stepExperience;
+
+        return $this;
     }
 }

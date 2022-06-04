@@ -3,19 +3,24 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Serializer\Annotation\Groups;
 use App\Repository\StepExperienceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 
 /**
  * @ApiResource(
  *     normalizationContext={
- *      "groups"={"read"},
- *     "datetime_format" = "H:i"
+ *      "groups"={"read"}
  * }
  * )
  * @ORM\Entity(repositoryClass=StepExperienceRepository::class)
+ * @ApiFilter(SearchFilter::class, properties={"id": "exact","guide.id":"exact","guide":"exact","experience.id":"exact","experience":"exact"})
+
  */
 class StepExperience
 {
@@ -40,7 +45,7 @@ class StepExperience
     private $resume;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer" , nullable=true )
      * @Groups({"list":"read"})
      */
     private $duree;
@@ -48,6 +53,8 @@ class StepExperience
     /**
      * @ORM\ManyToOne(targetEntity=Experience::class, inversedBy="steps")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups({"list":"read"})
+     * @ApiProperty(readableLink=false)
      */
     private $experience;
 
@@ -70,11 +77,16 @@ class StepExperience
     private $debut;
 
     /**
-     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity=Destination::class, inversedBy="experiences")
      * @Groups({"read"})
      */
     private $destination;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Media::class, inversedBy="stepExperience", cascade={"persist", "remove"})
+      * @Groups({"read"})
+     */
+    private $media;
 
 
 
@@ -176,6 +188,18 @@ class StepExperience
     public function setDestination(?Destination $destination): self
     {
         $this->destination = $destination;
+
+        return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?Media $media): self
+    {
+        $this->media = $media;
 
         return $this;
     }
